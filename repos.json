@@ -1,0 +1,26 @@
+{
+     "Author's": [
+          {
+               "name": "Cool Scrollbar",
+               "link": "*",
+               "linkText": "All sites"
+          },
+          {
+               "name": "Chat-GTP Amoled",
+               "link": "chat.openai.com"
+          },
+          {
+               "name": "Material GTP",
+               "link": "chat.openai.com"
+          },
+          {
+               "name": "Youtube Amoled",
+               "link": "www.youtube.com"
+          },
+          {
+               "name": "Anilibria Amoled",
+               "link": "anilibria.tv"
+          }
+     ],
+     "Community": []
+}
