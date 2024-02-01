@@ -1,14 +1,78 @@
+* {
+     font-family: 'Google Sans', sans-serif;
+}
+body::-webkit-scrollbar-track {
+     background-color: black !important;
+}
+
+*::-webkit-scrollbar {
+     width: 5px;
+}
+*::-webkit-scrollbar-track {
+     background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+     background-color: #888888;
+     border: 1px solid #1a1a1a;
+     border-radius: 1px;
+}
+
 :root {
      --primary: rgb(137, 162, 231);
      --secondary: rgb(38, 44, 60);
 }
 
 body {
-     width: 230px;
+     width: 270px;
      height: fit-content;
      background-color: black;
      color: white;
      margin: 4px;
+}
+
+tab {
+     width: 100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     border: 2px solid var(--secondary);
+     border-radius: 20px;
+     overflow: hidden;
+     margin-bottom: 10px;
+     font-size: 14px;
+}
+tab div {
+     text-align: center;
+     width: 50%;
+     cursor: pointer;
+     padding: 6px;
+     transition: 0.3s all;
+}
+
+tab div:hover,
+tab div.selected {
+     background-color: var(--secondary);
+}
+
+#footer {
+     display: flex;
+     justify-content: space-around;
+}
+
+.btn {
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     align-items: center;
+     padding: 8px;
+
+     background: rgba(103, 80, 164, 0.12);
+
+     color: var(--primary);
+     border: 2px solid var(--primary);
+     border-radius: 20px;
+     cursor: pointer;
 }
 
 main {
@@ -16,15 +80,23 @@ main {
      height: 100%;
      border-radius: 20px;
      background-color: #090909;
+     padding: 10px;
+     margin-bottom: 6px;
+     box-sizing: border-box;
 }
 
 container {
      display: flex;
      justify-content: space-between;
      flex-direction: column;
+     max-height: 260px;
+     overflow-y: auto;
 }
 
 h1 {
+     margin: 0;
+     margin-bottom: 10px;
+     padding: 0;
      text-align: center;
 }
 
@@ -40,6 +112,19 @@ a,
      -ms-user-select: none;
 }
 
+.themeData {
+     display: flex;
+     flex-direction: column;
+     max-width: 75%;
+     text-overflow: ellipsis;
+     overflow: hidden;
+}
+.themeData a {
+     max-width: 100%;
+     text-overflow: ellipsis;
+     overflow: hidden;
+}
+
 .links {
      padding: 10px;
 }
@@ -47,7 +132,7 @@ a,
 .switch-container {
      display: flex;
      align-items: center;
-     padding: 6px;
+     padding: 6px 0 6px 0;
      flex-direction: row;
      justify-content: space-between;
 }

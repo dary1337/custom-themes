@@ -1,26 +1,66 @@
 {
      "Author's": [
           {
-               "name": "Cool Scrollbar",
+               "id": 1706780460,
+               "name": "Smaller Scrollbar",
                "link": "*",
-               "linkText": "All sites"
+               "cssLink": ""
           },
           {
+               "id": 1706780471,
                "name": "Chat-GPT Amoled",
-               "link": "chat.openai.com"
+               "link": "https://chat.openai.com",
+               "cssLink": "https://raw.githubusercontent.com/dary1337/chatgpt-amoled/master/main.css"
           },
           {
+               "id": 1706780477,
                "name": "Material GPT",
-               "link": "chat.openai.com"
+               "link": "https://chat.openai.com",
+               "cssLink": "https://raw.githubusercontent.com/dary1337/chatgpt-material-ui/master/main.css"
           },
           {
-               "name": "Youtube Amoled",
-               "link": "www.youtube.com"
+               "id": 1706780481,
+               "name": "YouTube Amoled",
+               "link": "https://www.youtube.com",
+               "cssLink": "https://raw.githubusercontent.com/dary1337/youtube-amoled/master/main.css"
           },
           {
+               "id": 1706780485,
                "name": "Anilibria Amoled",
-               "link": "anilibria.tv"
+               "link": "https://anilibria.tv",
+               "cssLink": "https://raw.githubusercontent.com/dary1337/chatgpt-material-ui/master/main.css"
+          },
+          {
+               "id": 1706780601,
+               "name": "Win10T Forum Fix",
+               "link": "https://win10tweaker.ru",
+               "cssLink": "https://raw.githubusercontent.com/dary1337/chatgpt-material-ui/master/main.css"
           }
      ],
-     "Community": []
+     "Community": [
+          {
+               "id": 1706780490,
+               "name": "Material Discord",
+               "author": "CapnKitten",
+               "authorLink": "https://github.com/CapnKitten",
+               "link": "https://discord.com",
+               "cssLink": "https://capnkitten.github.io/BetterDiscord/Themes/Material-Discord/css/source.css"
+          },
+          {
+               "id": 1706780494,
+               "name": "Material Discord Add-on",
+               "author": "CapnKitten",
+               "authorLink": "https://github.com/CapnKitten",
+               "link": "https://discord.com",
+               "cssLink": "https://capnkitten.github.io/BetterDiscord/Themes/Material-Discord/css/addons/material-you/source.css"
+          },
+          {
+               "id": 1706780498,
+               "name": "AMOLED-Cord",
+               "author": "luckfire",
+               "authorLink": "https://github.com/luckfire",
+               "link": "https://discord.com",
+               "cssLink": "https://luckfire.github.io/amoled-cord/src/amoled-cord.css"
+          }
+     ]
 }

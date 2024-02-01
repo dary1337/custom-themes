@@ -1,0 +1,48 @@
+/* исправление статуса непрочитанных сообщений для темной темы  */
+.forum-status.unread i {
+     color: #2276b0;
+}
+
+/* исправление статуса непрочитанных сообщений для темной темы в топиках  */
+.topic-status.unread i {
+     color: #2276b0;
+}
+
+/* исправление панели реакций на всю ширину поста  */
+.post-reactions-summary {
+     width: 240px;
+     margin-left: auto;
+}
+
+/* изменение цвета при наведени на дерево тем под заголовком (Форум / Тема / Пост) */
+span[itemprop='itemListElement'] a span:hover {
+     color: #5ca4db;
+}
+
+/* закругление заголовка со всех сторон  */
+#af-wrapper #forum-header {
+     border-radius: 5px;
+}
+
+/* эффект для Flashr для светлой темы с наименьшим контрастом */
+div#forum-51 {
+     box-shadow: 0 6px 6px -6px #2ebbab, 0 -6px 6px -6px #2ebbab, 6px 0 6px -6px #2ebbab,
+          -6px 0 6px -6px #2ebbab;
+}
+.wp-night-mode-on div#forum-51 {
+     box-shadow: 0 0 6px #2ebbab, 0 0 26px #00c0ff8a !important;
+}
+
+/* Скругленные края для панельки "Вы должны войти..." */
+.notice-panel {
+     border-radius: 5px;
+}
+/* Скругленные края для тем (dark mode) */
+.wp-night-mode-on #af-wrapper div {
+     border-radius: 5px;
+}
+
+/* Больше пространства кнопке смены темы */
+.wpnm-button.style-5 {
+     margin-top: 10px;
+}
