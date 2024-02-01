@@ -1,4 +1,4 @@
 {
-     "useLocalFiles": true,
-     "useLocalJsonRepo": true
+     "useLocalFiles": false,
+     "useLocalJsonRepo": false
 }

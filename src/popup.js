@@ -9,12 +9,11 @@ async function getConfig() {
 }
 
 //
-
-let useLocalJsonRepo = false;
+let config = {};
 let storage;
 
 async function setConfig() {
-     useLocalJsonRepo = (await getConfig()).useLocalJsonRepo;
+     config = await getConfig();
      storage = await new Promise((resolve) =>
           chrome.storage.local.get('userSettings', (result) => resolve(result.userSettings || {}))
      );
@@ -66,6 +65,18 @@ let data;
 const page = async () => {
      try {
           if (!pageLoaded) {
+               const cssUrl = config.useLocalFiles
+                    ? 'src/main.css'
+                    : 'https://raw.githubusercontent.com/dary1337/custom-themes/master/src/main.css';
+
+               fetch(cssUrl)
+                    .then((response) => response.text())
+                    .then((cssCode) => {
+                         const style = document.createElement('style');
+                         style.textContent = cssCode;
+                         document.head.appendChild(style);
+                    });
+
                pageLoaded = true;
                const html = `
                     <main id="tab" class="noSelect">
@@ -87,7 +98,7 @@ const page = async () => {
 
                document.body.insertAdjacentHTML('beforeend', html);
 
-               data = useLocalJsonRepo ? await loadLocalRepos() : await loadRepos();
+               data = config.useLocalJsonRepo ? await loadLocalRepos() : await loadRepos();
 
                if (!data || !data["Author's"].length) {
                     const labelElement = document.createElement('label');
@@ -99,7 +110,7 @@ const page = async () => {
                     updateBtn.style.marginTop = '12px';
                     updateBtn.textContent = 'Load local version';
                     updateBtn.addEventListener('click', () => {
-                         useLocalJsonRepo = true;
+                         config.useLocalJsonRepo = true;
                          page();
                     });
 
