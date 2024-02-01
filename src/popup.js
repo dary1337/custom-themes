@@ -62,20 +62,76 @@ let activeTab = "Author's";
 let pageLoaded = false;
 let data;
 
+function checkUpdates(update = false) {
+     if (!config.checkForUpdate) return;
+
+     const versionUrl =
+          'https://raw.githubusercontent.com/dary1337/custom-themes/master/version.txt';
+
+     function getCurrentVersion() {
+          return chrome.runtime.getManifest().version;
+     }
+
+     if (!config.useLocalFiles)
+          fetch(versionUrl)
+               .then((response) => response.text())
+               .then((version) => {
+                    if (version !== getCurrentVersion()) {
+                         if (update) {
+                              chrome.tabs.create({
+                                   url: 'https://github.com/dary1337/custom-themes',
+                              });
+                         }
+                         //
+                         else {
+                              const main = document.createElement('main');
+                              const updateBtn = document.createElement('button');
+                              updateBtn.className = 'btn';
+                              updateBtn.textContent = 'Update extension';
+                              updateBtn.addEventListener('click', () => checkUpdates(true));
+                              main.append(updateBtn);
+                              document.body.prepend(main);
+                         }
+                    }
+               })
+               .catch((error) => console.error('Unable to update:', error));
+}
+
+function remoteCss() {
+     const remoteCssUrl =
+          'https://raw.githubusercontent.com/dary1337/custom-themes/master/src/main.css';
+
+     fetch(remoteCssUrl)
+          .then((response) => response.text())
+          .then((newCssCode) => {
+               const existingStyle = document.getElementById('mainStyles');
+               if (existingStyle) existingStyle.textContent = newCssCode;
+          });
+}
+
+function tabChanger() {
+     const tabElements = document.querySelectorAll('tab div');
+     tabElements.forEach((tabElement) => {
+          tabElement.addEventListener('click', () => {
+               tabElements.forEach((el) => el.classList.remove('selected'));
+
+               tabElement.classList.add('selected');
+
+               activeTab = tabElement.getAttribute('tabName');
+
+               page();
+          });
+     });
+}
+
 const page = async () => {
      try {
-          if (!pageLoaded) {
-               const cssUrl = config.useLocalFiles
-                    ? 'src/main.css'
-                    : 'https://raw.githubusercontent.com/dary1337/custom-themes/master/src/main.css';
+          if (!data && pageLoaded) {
+               data = config.useLocalJsonRepo ? await loadLocalRepos() : await loadRepos();
+          }
 
-               fetch(cssUrl)
-                    .then((response) => response.text())
-                    .then((cssCode) => {
-                         const style = document.createElement('style');
-                         style.textContent = cssCode;
-                         document.head.appendChild(style);
-                    });
+          if (!pageLoaded) {
+               remoteCss();
 
                pageLoaded = true;
                const html = `
@@ -93,45 +149,45 @@ const page = async () => {
                     </main>
                     <main id="footer" class="noSelect">
                          <a href="https://github.com/dary1337/custom-themes" target="_blank">Gihub</a>
-                         <a href="#" target="_blank" id="updateThemes">Update themes</a>
-                    </main>`;
+                         <a href="#" id="updateThemes">Update themes</a>
+                         </main>`;
 
                document.body.insertAdjacentHTML('beforeend', html);
+
+               tabChanger();
+
+               const div = document.createElement('div');
+
+               const labelElement = document.createElement('label');
+               labelElement.classList.add('dimmed');
+               labelElement.textContent = 'Repository fetching...';
+
+               const updateBtn = document.createElement('button');
+               updateBtn.className = 'btn';
+               updateBtn.style.marginTop = '12px';
+               updateBtn.textContent = 'Load local version';
+               updateBtn.addEventListener('click', () => {
+                    config.useLocalJsonRepo = true;
+                    updateBtn.remove();
+                    page();
+               });
+
+               const mainElement = document.getElementById('tab');
+               div.append(labelElement);
+               div.append(updateBtn);
+               mainElement.append(div);
 
                data = config.useLocalJsonRepo ? await loadLocalRepos() : await loadRepos();
 
                if (!data || !data["Author's"].length) {
-                    const labelElement = document.createElement('label');
-                    labelElement.classList.add('dimmed');
                     labelElement.textContent = 'Repository are not available';
-
-                    const updateBtn = document.createElement('button');
-                    updateBtn.className = 'btn';
-                    updateBtn.style.marginTop = '12px';
                     updateBtn.textContent = 'Load local version';
                     updateBtn.addEventListener('click', () => {
                          config.useLocalJsonRepo = true;
                          page();
                     });
-
-                    const mainElement = document.getElementById('tab');
-                    mainElement.append(labelElement);
-                    mainElement.append(updateBtn);
                     return;
-               }
-
-               const tabElements = document.querySelectorAll('tab div');
-               tabElements.forEach((tabElement) => {
-                    tabElement.addEventListener('click', () => {
-                         tabElements.forEach((el) => el.classList.remove('selected'));
-
-                         tabElement.classList.add('selected');
-
-                         activeTab = tabElement.getAttribute('tabName');
-
-                         page();
-                    });
-               });
+               } else div.remove();
 
                document.getElementById('updateThemes').onclick = async (e) => {
                     e.preventDefault();
@@ -168,6 +224,8 @@ const page = async () => {
                     document.getElementById('tab').style.display = '';
                     document.getElementById('updateThemes').style.display = '';
                };
+
+               checkUpdates();
           }
 
           document.querySelector('container').innerHTML = '';

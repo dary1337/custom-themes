@@ -1,4 +1,5 @@
 {
      "useLocalFiles": false,
-     "useLocalJsonRepo": false
+     "useLocalJsonRepo": false,
+     "checkForUpdate": true
 }
