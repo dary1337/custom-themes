@@ -1,0 +1,55 @@
+body,
+.dark .dark\:bg-gray-800,
+.dark .dark\:bg-gray-900,
+.dark .btn-neutral {
+     background-color: black;
+}
+
+.dark .dark\:bg-gray-700,
+.bg-token-surface-tertiary,
+.dark .dark\:bg-gray-800\/90 {
+     background-color: #070707;
+}
+
+.bg-token-surface-primary {
+     background-color: #0b0b0b;
+}
+
+.dark .dark\:text-gray-300 {
+     background-color: #090909;
+}
+
+.dark .dark\:from-gray-700 {
+     --tw-gradient-from: rgb(20, 20, 20);
+     --tw-gradient-to: black;
+}
+
+.dark .dark\:radix-state-active\:bg-token-surface-tertiary[data-state='active'],
+.dark .dark\:hover\:bg-\[\#494A54\]:hover,
+button[type='button'][role='switch'][aria-checked='false'] {
+     background-color: var(--surface-primary);
+}
+
+.bg-token-surface-secondary {
+     background-color: var(--gray-900);
+}
+.to-transparent {
+     --tw-gradient-to: transparent var(--gray-900);
+}
+
+.rounded-lg,
+.rounded-xl,
+.btn {
+     border-radius: 20px;
+}
+
+.rounded-2xl {
+     border-radius: 30px;
+}
+
+div.flex.flex-1.text-base.mx-auto {
+     max-width: 63rem;
+}
+.xl\:max-w-3xl {
+     max-width: 58rem;
+}

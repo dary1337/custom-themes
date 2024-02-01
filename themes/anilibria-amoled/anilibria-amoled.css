@@ -1,0 +1,47 @@
+body, .content, .contentmenu,.side,.torrent-block {
+	background-color: #000000;
+}
+
+.news-block, .release-subseditors,.modal-content, .table-hover *:hover {
+	background-color: #070707;
+	color:rgb(226 226 226);
+}
+
+.release-season {
+	
+	color:#337ab7;
+}
+
+.advert-header {
+	display:none;
+}
+
+.download-torrent {
+
+	border-radius: 8px;
+}
+
+#smallSearchInput {
+	border-color: gray;
+    background-color: #070707;
+}
+
+.tab-switcher,.download-torrent, .torrent_block {
+	background-image: none;
+	background-color:#151515;
+}
+
+.torrent_block:hover{
+	background-color:#d83541;	
+}
+
+#vk_comments {
+	overflow: hidden;
+	border-radius: 10px;
+	opacity: 0.1;
+	transition: opacity 0.5s ease;
+}
+
+#vk_comments:hover {
+	opacity:1;
+}

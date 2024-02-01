@@ -1,0 +1,32 @@
+ytd-watch-flexy[full-bleed-player] #secondary.ytd-watch-flexy {
+     margin-top: 44px;
+}
+
+ytd-comment-thread-renderer {
+     border-radius: 14px;
+     padding: 10px;
+     display: block;
+     margin-bottom: var(--ytd-comment-thread-margin-bottom, 16px);
+}
+
+ytd-comment-thread-renderer:hover {
+     background-color: var(--yt-spec-additive-background);
+}
+
+ytd-compact-video-renderer {
+     border-radius: 10px;
+     padding: 2px;
+}
+
+ytd-compact-video-renderer:hover {
+     background-color: var(--yt-spec-additive-background);
+}
+
+html[dark],
+[dark] {
+     --yt-spec-base-background: #000000;
+}
+
+tp-yt-app-drawer.ytd-app[persistent] {
+     height: 134vh;
+}

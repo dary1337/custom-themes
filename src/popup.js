@@ -1,56 +1,87 @@
-// document.addEventListener('DOMContentLoaded', function () {
-//      var switchInput = document.getElementById('chatgpt-amoled');
-
-//      switchInput.addEventListener('change', function () {
-//           chrome.runtime.sendMessage({
-//                action: 'switchStateChanged',
-//                checked: switchInput.checked,
-//                id: id,
-//           });
-//      });
-// });
 document.addEventListener('DOMContentLoaded', async () => {
      try {
-          const response = await fetch(
-               'https://raw.githubusercontent.com/dary1337/custom-themes/main/data.json'
-          );
+          const data = {
+               "Author's": [
+                    {
+                         name: 'Smaller Scrollbar',
+                         link: '*',
+                         linkText: 'All sites',
+                         cssLink: 'https://raw.githubusercontent.com/dary1337/chatgpt-material-ui/master/main.css',
+                    },
+                    {
+                         name: 'Chat-GPT Amoled',
+                         link: 'https://chat.openai.com',
+                         cssLink: 'https://raw.githubusercontent.com/dary1337/chatgpt-material-ui/master/main.css',
+                    },
+                    {
+                         name: 'Material GPT',
+                         link: 'https://chat.openai.com',
+                         cssLink: 'https://raw.githubusercontent.com/dary1337/chatgpt-material-ui/master/main.css',
+                    },
+                    {
+                         name: 'Youtube Amoled',
+                         link: 'https://www.youtube.com',
+                         cssLink: 'https://raw.githubusercontent.com/dary1337/chatgpt-material-ui/master/main.css',
+                    },
+                    {
+                         name: 'Anilibria Amoled',
+                         link: 'https://anilibria.tv',
+                         cssLink: 'https://raw.githubusercontent.com/dary1337/chatgpt-material-ui/master/main.css',
+                    },
+               ],
+               Community: [],
+          };
 
-          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-          const data = await response.json();
-
-          for (const theme of data["Author's"]) {
-               const label = document.createElement('label');
-               label.setAttribute('for', theme.name);
-
-               const switchInput = document.createElement('input');
-               switchInput.setAttribute('type', 'checkbox');
-               switchInput.setAttribute('id', theme.name);
-
-               const slider = document.createElement('span');
-               slider.className = 'slider';
-
-               const switchLabel = document.createTextNode(theme.name);
-
-               label.appendChild(switchInput);
-               label.appendChild(slider);
-               label.appendChild(switchLabel);
-
-               const switchInputContainer = document.createElement('div');
-               switchInputContainer.className = 'switch-input';
-
-               switchInputContainer.appendChild(label);
-
-               document.querySelector('container').appendChild(switchInputContainer);
-
-               switchInput.addEventListener('change', () => {
-                    chrome.runtime.sendMessage({
-                         action: 'switchStateChanged',
-                         checked: switchInput.checked,
-                         name: theme.name,
-                    });
+          const storedSettings = await new Promise((resolve) => {
+               chrome.storage.local.get('userSettings', (result) => {
+                    resolve(result.userSettings || {});
                });
-          }
+          });
+
+          const activeTab = "Author's";
+
+          data[activeTab].forEach((theme) => {
+               const switchContainerHtml = `
+                 <div class="switch-container">
+                     <div style="display:flex; flex-direction:column;">
+                         <label>${theme.name}</label>
+                         ${
+                              theme.linkText
+                                   ? `<label class="dimmed">${theme.linkText}</label>`
+                                   : `<a href="${theme.link}" target="_blank">${theme.link.replace(
+                                          /^https?:\/\//,
+                                          ''
+                                     )}</a>`
+                         }
+
+                     </div>
+                     <label class="switch-input">
+                         <input type="checkbox" id="${theme.name}" ${
+                    storedSettings[theme.name]?.checked ? 'checked' : ''
+               } />
+                         <span class="slider"></span>
+                     </label>
+                 </div>
+             `;
+
+               document
+                    .querySelector('container')
+                    .insertAdjacentHTML('beforeend', switchContainerHtml);
+
+               const switchInput = document.getElementById(theme.name);
+               switchInput.addEventListener('change', () => {
+                    storedSettings[theme.name] = { link: theme.link, checked: switchInput.checked };
+                    const userSettings = {
+                         ...storedSettings,
+                         [theme.name]: {
+                              link: theme.link,
+                              checked: switchInput.checked,
+                              cssLink: theme.cssLink,
+                         },
+                    };
+                    chrome.storage.local.set({ userSettings });
+               });
+          });
      } catch (error) {
           console.error('Error fetching or parsing data:', error);
      }

@@ -1,0 +1,106 @@
+.dark {
+     --surface-primary: rgb(38, 44, 60);
+     --surface-secondary: rgb(28, 32, 42);
+     --surface-tertiary: rgb(19, 22, 30);
+}
+
+body {
+     background: rgb(19, 22, 30);
+     border-radius: 20px;
+}
+nav,
+div.sticky,
+h3.font-medium.text-ellipsis.overflow-hidden {
+     background-color: rgb(19, 22, 30);
+}
+main {
+     border-top-left-radius: 24px;
+     border-bottom-left-radius: 24px;
+
+     background-color: rgb(28, 32, 42);
+}
+
+div.relative.flex.w-full.flex-col:not(.overflow-hidden) {
+     border-radius: 20px;
+     padding: 10px;
+     background-color: rgb(38, 44, 60);
+}
+
+div.flex.flex-col.pt-2 {
+     border-radius: 20px;
+     padding: 0;
+     background-color: rgb(38, 44, 60);
+}
+
+.dark .dark\:bg-gray-800,
+.dark .dark\:bg-gray-900,
+.dark .btn-neutral {
+     background-color: rgb(28, 32, 42);
+}
+
+.dark .dark\:bg-gray-700,
+.bg-token-surface-tertiary,
+.dark .dark\:bg-gray-800\/90 {
+     background-color: rgb(38, 44, 60);
+}
+
+.bg-token-surface-primary {
+     background-color: rgb(28, 32, 42);
+}
+
+.dark .dark\:text-gray-300 {
+     background-color: rgb(28, 32, 42);
+}
+
+.dark .dark\:from-gray-700 {
+     --tw-gradient-from: rgb(38, 44, 60);
+     --tw-gradient-to: rgb(28, 32, 42);
+}
+
+.dark .dark\:radix-state-active\:bg-token-surface-tertiary[data-state='active'],
+.dark .dark\:hover\:bg-\[\#494A54\]:hover,
+button[type='button'][role='switch'][aria-checked='false'] {
+     background-color: var(--surface-primary);
+}
+
+.bg-token-surface-secondary {
+     background-color: rgb(38, 44, 60);
+}
+.to-transparent {
+     --tw-gradient-to: transparent var(--gray-900);
+}
+
+div.relative.p-1.rounded-sm.h-9,
+.btn-primary,
+.radix-state-checked\:bg-green-600[data-state='checked'] {
+     background-color: rgb(137, 162, 231);
+}
+
+.btn-danger {
+     color: rgb(28, 32, 42);
+     background-color: rgb(235, 107, 107);
+}
+
+.rounded-lg,
+.rounded-xl,
+.btn,
+button,
+div.mb-4.flex.items-start.justify-start,
+div.flex.w-full.gap-2.items-center.justify-center,
+.btn-primary,
+.btn-disabled,
+div.flex.grow.justify-center.bg-white {
+     border-radius: 20px;
+}
+
+.rounded-2xl {
+     border-radius: 30px;
+}
+
+div.flex.flex-1.text-base.mx-auto {
+     max-width: 63rem;
+}
+
+.xl\:max-w-3xl {
+     max-width: 58rem;
+}
