@@ -50,6 +50,6 @@
 
 # Config
 
--    `useLocalFiles` - if false, main.css will be taken from the folder with the extension
--    `useLocalJsonRepo` - if false, repos.json will be taken from the folder with the extension (_not recommended_)
+-    `useLocalFiles` - if true, main.css will be taken from the folder with the extension
+-    `useLocalJsonRepo` - if true, repos.json will be taken from the folder with the extension (_not recommended_)
 -    `checkForUpdate` - if true, you can see an "Update extension" button when update is available

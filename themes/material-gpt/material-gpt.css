@@ -22,7 +22,7 @@ main {
 
 div.relative.flex.w-full.flex-col:not(.overflow-hidden) {
      border-radius: 20px;
-     padding: 10px;
+     padding: 10px 20px 10px 20px;
      background-color: rgb(38, 44, 60);
 }
 
@@ -89,7 +89,9 @@ div.mb-4.flex.items-start.justify-start,
 div.flex.w-full.gap-2.items-center.justify-center,
 .btn-primary,
 .btn-disabled,
-div.flex.grow.justify-center.bg-white {
+div.flex.grow.justify-center.bg-white,
+pre,
+div[role='menuitem'] {
      border-radius: 20px;
 }
 
