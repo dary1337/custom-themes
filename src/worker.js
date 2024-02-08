@@ -36,7 +36,7 @@ chrome.webNavigation.onCommitted.addListener((details) => {
           const url = details.url;
 
           if (url) {
-               loadStylesInTab(tabId, hostname);
+               loadStylesInTab(tabId, url);
                console.log('Loaded:', url, tabId);
           }
      }
