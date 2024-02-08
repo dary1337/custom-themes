@@ -4,7 +4,7 @@ async function getUserSettings() {
      );
 }
 
-function loadStylesInTab(tabId, currentUrl) {
+function loadStylesInTab(tabId, url) {
      getUserSettings().then((userSettings) => {
           if (Object.keys(userSettings).length === 0) return;
 
@@ -12,13 +12,14 @@ function loadStylesInTab(tabId, currentUrl) {
                const settings = userSettings[theme];
 
                if (
-                    (currentUrl.includes(settings.link.toLowerCase()) || settings.link === '*') &&
+                    settings.link &&
+                    (url.includes(settings.link.toLowerCase()) || settings.link === '*') &&
                     settings.checked
                ) {
                     chrome.scripting.insertCSS({
                          target: {
                               tabId: tabId,
-                              allFrames: true,
+                              // allFrames: true,
                          },
                          css: settings.compiledCss,
                     });
@@ -27,8 +28,16 @@ function loadStylesInTab(tabId, currentUrl) {
      });
 }
 
-chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-     if (changeInfo.status !== 'complete' || !tab || !tab.url) return;
-     const currentUrl = tab.url.toLowerCase();
-     loadStylesInTab(tabId, currentUrl);
+chrome.webNavigation.onCommitted.addListener((details) => {
+     if (
+          ['reload', 'link', 'typed', 'generated', 'auto_bookmark'].includes(details.transitionType)
+     ) {
+          const tabId = details.tabId;
+          const url = details.url;
+
+          if (url) {
+               loadStylesInTab(tabId, hostname);
+               console.log('Loaded:', url, tabId);
+          }
+     }
 });

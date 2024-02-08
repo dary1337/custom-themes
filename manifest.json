@@ -1,9 +1,9 @@
 {
      "manifest_version": 3,
      "name": "Custom Themes",
-     "version": "1.0.1",
+     "version": "1.1.0",
      "description": "Extension for applying custom themes by yuri",
-     "permissions": ["activeTab", "scripting", "storage", "tabs"],
+     "permissions": ["scripting", "storage", "tabs", "webNavigation"],
      "host_permissions": ["https://*/*"],
      "action": {
           "default_popup": "index.html"

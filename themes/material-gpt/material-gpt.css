@@ -2,9 +2,11 @@
      --surface-primary: rgb(38, 44, 60);
      --surface-secondary: rgb(28, 32, 42);
      --surface-tertiary: rgb(19, 22, 30);
-     --sidebar-surface-secondary: var(--surface-secondary);
+
      --main-surface-secondary: var(--surface-secondary);
      --main-surface-tertiary: var(--surface-secondary);
+     --sidebar-surface-secondary: var(--surface-secondary);
+     --popover-surface-primary: var(--surface-tertiary);
 }
 
 body {
@@ -44,7 +46,6 @@ button[type='button'][role='switch'][aria-checked='false'],
 .dark .dark\:bg-gray-800,
 .dark .dark\:bg-gray-900,
 .dark .dark\:text-gray-300,
-.dark .btn-neutral,
 div.sticky.bg-token-main-surface-primary,
 .bg-token-surface-primary,
 .bg-token-main-surface-tertiary {
@@ -56,7 +57,8 @@ div.sticky,
 h3.font-medium.text-ellipsis.overflow-hidden,
 div.absolute.bottom-full.left-0.z-20,
 .bg-token-main-surface-primary,
-div[role='dialog'] {
+div[role='dialog'],
+.dark .btn-neutral {
      background-color: var(--surface-tertiary);
 }
 
@@ -65,8 +67,24 @@ div[role='dialog'] {
      --tw-gradient-to: var(--surface-secondary);
 }
 
+.group:hover .group-hover\:from-token-sidebar-surface-secondary,
+.from-token-sidebar-surface-secondary {
+     --tw-gradient-from: var(--sidebar-surface-secondary) var(--tw-gradient-from-position);
+     --tw-gradient-to: hsla(0, 0%, 100%, 0) var(--tw-gradient-to-position);
+     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.bg-token-sidebar-surface-secondary .pr-2 {
+     background: var(--surface-secondary);
+     border-radius: 20px;
+}
+
+pre div.bg-gray-950 {
+     background-color: black;
+}
+
 .to-transparent {
-     --tw-gradient-to: transparent var(--gray-900);
+     --tw-gradient-to: transparent transparent;
 }
 
 div.relative.p-1.rounded-sm.h-9,
@@ -91,7 +109,9 @@ div.flex.w-full.gap-2.items-center.justify-center,
 div.flex.grow.justify-center.bg-white,
 pre,
 div[role='menuitem'],
-.border-orange-500 {
+.border-orange-500,
+textarea,
+a[as='button'] {
      border-radius: 20px;
 }
 
