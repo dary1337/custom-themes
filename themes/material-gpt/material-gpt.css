@@ -2,6 +2,8 @@
      --surface-primary: rgb(38, 44, 60);
      --surface-secondary: rgb(28, 32, 42);
      --surface-tertiary: rgb(19, 22, 30);
+     --sidebar-surface-secondary: var(--surface-secondary);
+     --main-surface-secondary: var(--surface-secondary);
 }
 
 body {
@@ -43,7 +45,8 @@ button[type='button'][role='switch'][aria-checked='false'],
 .dark .dark\:text-gray-300,
 .dark .btn-neutral,
 div.sticky.bg-token-main-surface-primary,
-.bg-token-surface-primary {
+.bg-token-surface-primary,
+.bg-token-main-surface-tertiary {
      background-color: var(--surface-secondary);
 }
 

@@ -39,7 +39,8 @@ div.flex.flex-col.pt-2 {
 .dark .dark\:bg-gray-800,
 .dark .dark\:bg-gray-900,
 .dark .btn-neutral,
-div.sticky.bg-token-main-surface-primary {
+div.sticky.bg-token-main-surface-primary,
+pre div.bg-gray-950 {
      background-color: var(--surface-secondary);
 }
 
