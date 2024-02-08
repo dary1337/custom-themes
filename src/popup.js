@@ -419,6 +419,9 @@ function openAbout() {
                     <label>
                          :3
                     </label>
+                    <label>
+                         Used libs: AceEditor
+                    </label>
                </div>
           </main>
      `;
