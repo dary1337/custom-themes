@@ -5,6 +5,7 @@
 
      --main-surface-secondary: var(--surface-secondary);
      --main-surface-tertiary: var(--surface-secondary);
+     --sidebar-surface-primary: var(--surface-tertiary);
      --sidebar-surface-secondary: var(--surface-secondary);
      --popover-surface-primary: var(--surface-tertiary);
 }
