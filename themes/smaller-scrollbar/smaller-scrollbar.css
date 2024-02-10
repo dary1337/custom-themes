@@ -2,15 +2,24 @@ body::-webkit-scrollbar-track {
      background-color: black;
 }
 
-*::-webkit-scrollbar {
-     width: 5px;
-}
 *::-webkit-scrollbar-track {
      background-color: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
      background-color: #cfc9c5;
-     border: 1px solid #1a1a1a;
      border-radius: 1px;
+}
+
+*::-webkit-scrollbar,
+*::-webkit-scrollbar:vertical {
+     width: 5px;
+}
+*::-webkit-scrollbar:horizontal {
+     height: 5px;
+}
+*::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-button {
+     height: 0;
+     width: 0;
 }
