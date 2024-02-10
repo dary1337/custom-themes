@@ -1,13 +1,13 @@
-'use strict';
-
-const isFullPage = window.innerWidth >= 290;
-
 /**
  @todo
      search
      screenshots in theme info
      suggest theme
+     add prettier
 */
+'use strict';
+
+const isFullPage = window.innerWidth >= 290;
 
 let //
      userSettings = {},
@@ -50,13 +50,19 @@ async function loadStyles(link) {
      const response = await fetch(link);
      const result = await response.text();
 
-     if (href !== window.location.href) throw 'exit by href';
+     if (href !== window.location.href) throw '[loadStyles]: throw by href';
 
      return result;
 }
 
-async function loadRepos() {
+async function loadRepos(useLocal = false) {
      try {
+          if (useLocal) {
+               const response = await fetch(chrome.runtime.getURL('repos.json'));
+
+               return await response.json();
+          }
+
           const response = await fetch(
                'https://raw.githubusercontent.com/dary1337/custom-themes/master/repos.json',
                {
@@ -65,17 +71,8 @@ async function loadRepos() {
           );
 
           return await response.json();
-     } catch {
-          return {};
-     }
-}
-
-async function loadLocalRepos() {
-     try {
-          const response = await fetch(chrome.runtime.getURL('repos.json'));
-
-          return await response.json();
-     } catch {
+     } catch (error) {
+          console.log('failed load repos.json', error);
           return {};
      }
 }
@@ -107,6 +104,15 @@ const elements = {
                <label class="dimmed">Select a theme on the left or create a new one</label>
                <button class="createTheme">${svg.add}Create theme</button>
           </div>`,
+     changelog: `
+          <h2>Update 1.1.1</h2>
+
+          <label>
+               - Fixed css "compiling" method
+          </label>
+          <label>
+               - Fixed update theme button
+          </label>`,
 };
 
 function getLoader(text) {
@@ -119,30 +125,31 @@ function getLoader(text) {
      );
 }
 
-function checkUpdates(openUpdatePage = false) {
+function checkUpdates() {
      if (!extensionSettings.checkForUpdate) return;
-
-     const versionUrl =
-          'https://raw.githubusercontent.com/dary1337/custom-themes/master/version.txt';
 
      function getCurrentVersion() {
           return chrome.runtime.getManifest().version;
      }
 
+     const versionUrl =
+          'https://raw.githubusercontent.com/dary1337/custom-themes/master/version.txt';
+
      fetch(versionUrl)
           .then((response) => response.text())
           .then((version) => {
                if (version !== getCurrentVersion() && !version.includes('NOT FOUND')) {
-                    if (openUpdatePage) openLink('https://github.com/dary1337/custom-themes');
-                    //
-                    else {
-                         const main = document.createElement('main');
-                         const updateBtn = document.createElement('button');
-                         updateBtn.innerHTML = `${svg.update}Update extension`;
-                         updateBtn.addEventListener('click', () => checkUpdates(true));
-                         main.append(updateBtn);
-                         extensionPopup.prepend(main);
-                    }
+                    extensionPopup.insertAdjacentHTML(
+                         'afterbegin',
+                         `<main>
+                              <a href="https://github.com/dary1337/custom-themes" target="_blank">
+                                   <button>
+                                        ${svg.update}
+                                        Update extension
+                                   </button>
+                              </a>
+                         </main>`
+                    );
                }
           });
 }
@@ -213,7 +220,10 @@ async function updateTheme(theme, checked, customCSS = undefined) {
                ? customCSS || userSettings[theme.id].sourceCSS
                : (sourceCSS = await loadStyles(theme.cssLink))
           )
-               .replace(/;|!important\s*!important|\s+/g, (match) => {
+               // comment replacement
+               .replace(/\/\*[\s\S]*?\*\//g, '')
+               // minification and !important addition
+               .replace(/;(?!\s*!important)|!important\b|\s+/g, (match) => {
                     if (match === ';') return ' !important;';
                     if (match === '!important !important') return '!important';
                     return ' ';
@@ -408,7 +418,8 @@ function openAbout() {
                <h1>About</h1>
                <div id="about-labels">
                     <label>
-                         Custom Themes is a free, passion-driven extension. The main idea is to share My "creations" with people, as well as give this opportunity to others.
+                         Custom Themes is a free, passion-driven extension. 
+                         The main idea is to share My "creations" with people, as well as give this opportunity to others.
                     </label>
                     <label>
                          I will be glad to any criticism and suggestions on 
@@ -422,6 +433,8 @@ function openAbout() {
                     <label>
                          Used libs: AceEditor
                     </label>
+
+                    ${elements.changelog}
                </div>
           </main>
      `;
@@ -450,12 +463,9 @@ function resetExtension() {
 
 const page = async (check_href = true, newTab = undefined) => {
      try {
-          if (!repos && pageLoaded)
-               repos = extensionSettings.useLocalJsonRepo
-                    ? await loadLocalRepos()
-                    : await loadRepos();
+          if (!repos && pageLoaded) repos = await loadRepos(extensionSettings.useLocalJsonRepo);
 
-          // console.log('page', userSettings);
+          console.log('page', userSettings);
 
           const path = window.location.href
                .split('/')
@@ -469,24 +479,31 @@ const page = async (check_href = true, newTab = undefined) => {
 
           if (!pageLoaded) {
                pageLoaded = true;
-               const html = `
+
+               document.body.insertAdjacentHTML(
+                    'beforeend',
+                    `
                     <div id="extensionPopup">
                          <main id="tab" class="noSelect">
                               <h1>Custom Themes</h1>
                               <tab>
-                                   <div tabName="Author's" ${
-                                        activeTab === "Author's" && 'class="selected"'
-                                   }>Author's</div>
-                                   <div tabName="Community" ${
-                                        activeTab === 'Community' && 'class="selected"'
-                                   }>Community</div>
+                                   <div tabName="Author's" 
+                                        ${activeTab === "Author's" && 'class="selected"'}>
+                                        Author's
+                                   </div>
+                                   <div tabName="Community"
+                                        ${activeTab === 'Community' && 'class="selected"'}>
+                                        Community
+                                   </div>
                                    ${
-                                        Object.entries(userSettings).map(
+                                        Object.entries(userSettings).filter(
                                              ([key, value]) => value.local
                                         ).length !== 0 || isFullPage
-                                             ? `<div tabName="Local" ${
-                                                    activeTab === 'Local' && 'class="selected"'
-                                               }>Local</div>`
+                                             ? `
+                                             <div tabName="Local" 
+                                                  ${activeTab === 'Local' && 'class="selected"'}>
+                                                  Local
+                                             </div>`
                                              : ''
                                    }
                               </tab>
@@ -495,8 +512,12 @@ const page = async (check_href = true, newTab = undefined) => {
                          <main id="footer" class="noSelect">
                               <a href="https://github.com/dary1337/custom-themes" target="_blank">Github</a>
                               <div style="display:flex">
-                                   <div id="updateThemes" style="display:none">${svg.update}</div>
-                                   <div id="settingsButton" >${svg.settings}</div>
+                                   <div id="updateThemes" style="display:none">
+                                        ${svg.update}
+                                   </div>
+                                   <div id="settingsButton">
+                                        ${svg.settings}
+                                   </div>
                                    <a id="openFullWindow" href="#" target="_blank">
                                         ${svg.openInNew}
                                    </a>
@@ -504,13 +525,17 @@ const page = async (check_href = true, newTab = undefined) => {
                               </div>
                          </main>
                     </div>
-                    <div id="extensionFull">
-                         <main id="bigTab">
-                              ${elements.emptyBigTab}
-                         </main>
-                    </div>`;
-
-               document.body.insertAdjacentHTML('beforeend', html);
+                    ${
+                         isFullPage
+                              ? `<div id="extensionFull">
+                                   <main id="bigTab">
+                                        ${elements.emptyBigTab}
+                                   </main>
+                              </div>`
+                              : ''
+                    }
+                    `
+               );
 
                tabSwitchEvent();
 
@@ -529,9 +554,7 @@ const page = async (check_href = true, newTab = undefined) => {
                if (!extensionSettings.useLocalJsonRepo) loading_div.append(updateBtn);
                tab.append(loading_div);
 
-               repos = extensionSettings.useLocalJsonRepo
-                    ? await loadLocalRepos()
-                    : await loadRepos();
+               repos = await loadRepos(extensionSettings.useLocalJsonRepo);
 
                if (!repos || !repos["Author's"].length) {
                     document.querySelector('.loader-icon').remove();
@@ -566,20 +589,27 @@ const page = async (check_href = true, newTab = undefined) => {
                                 .map(([key, value]) => value)
                          : repos[activeTab];
 
-               themes.forEach((theme) => {
-                    const switchContainer = document.createElement('div');
-                    switchContainer.className = 'switch-container';
-                    if (activeSwitch === theme.id) switchContainer.classList.add('selected');
+               themes.forEach(
+                    (
+                         /** from repos */
+                         theme
+                    ) => {
+                         const switchContainer = document.createElement('div');
+                         switchContainer.className = 'switch-container';
+                         if (activeSwitch === theme.id) switchContainer.classList.add('selected');
 
-                    switchContainer.insertAdjacentHTML(
-                         'beforeend',
-                         `<div class="switch-label">
+                         switchContainer.insertAdjacentHTML(
+                              'beforeend',
+                              `<div class="switch-label">
                               <div style="display:flex">
-                                   <label class="label-name">${theme.name}
+                                   <label class="label-name">
+                                        ${theme.name}
                                    </label>
                                    <div class="edited-info">${
                                         userSettings[theme.id]?.edited
-                                             ? `<a href="index.html#${activeTab}-${theme.id}-edit" target="_blank">${svg.edit}</a>`
+                                             ? `<a href="index.html#${activeTab}-${theme.id}-edit" target="_blank">
+                                                  ${svg.edit}
+                                                  </a>`
                                              : ''
                                    }</div>
                               </div>
@@ -612,210 +642,237 @@ const page = async (check_href = true, newTab = undefined) => {
                               />
                               <span class="slider"></span>
                          </label>`
-                    );
-                    document.querySelector('container').append(switchContainer);
+                         );
+                         document.querySelector('container').append(switchContainer);
 
-                    if (isFullPage) {
-                         let editor;
+                         if (isFullPage) {
+                              let editor;
 
-                         const openTheme = (append_href = true) => {
-                              document
-                                   .querySelectorAll('.switch-container.selected')
-                                   .forEach((x) => x.classList.remove('selected'));
-                              switchContainer.classList.add('selected');
+                              const openTheme = (append_href = true) => {
+                                   document
+                                        .querySelectorAll('.switch-container.selected')
+                                        .forEach((x) => x.classList.remove('selected'));
+                                   switchContainer.classList.add('selected');
 
-                              if (append_href) pushUrl(`index.html#${activeTab}-${theme.id}`);
+                                   if (append_href) pushUrl(`index.html#${activeTab}-${theme.id}`);
 
-                              activeSwitch = theme.id;
+                                   activeSwitch = theme.id;
 
-                              bigTab.innerHTML = `
-                              <div id="theme-window">
-                                   <div id="theme-title" class="noSelect">
-                                        <div id="backFromThemeEditing" style="display:none">${
-                                             svg.back
-                                        }</div>
-                                        <h1 id="theme-h1">
-                                             ${theme.name}
-                                        </h1>
-                                        ${
-                                             theme.local
-                                                  ? `<div id="theme-edit-name" style="display:none">
-                                                       ${svg.title}
-                                                       <input
-                                                            id="theme-edit-input"
-                                                            type="text"     
-                                                            placeholder="Untitled"
-                                                            value="${theme.name}"
-                                                       />
-                                                  </div>`
-                                                  : ''
-                                        }
-                                   </div>
-                                   <div id="theme-container">
-                                        <div id="theme-info">
-                                             <div id="theme-description">
-                                                  <label>Website: </label>
-                                                  <a ${
-                                                       theme.link === '*' || !theme.link
-                                                            ? ''
-                                                            : `href="${theme.link}" target="_blank"`
-                                                  }>
-                                                       ${theme.link || 'None'}
-                                                  </a>${
-                                                       theme.authorLink
-                                                            ? `<label>Author: </label>
-                                        <a href="${theme.authorLink}" target="_blank">${theme.author}</a>`
-                                                            : ''
-                                                  }
-                                                  ${
-                                                       theme.repoLink
-                                                            ? `<label>Source: </label>
-                                                  <a href="${theme.repoLink}" target="_blank">Github</a>`
-                                                            : ''
-                                                  }
-                                                  <label>Version: </label><a>${
-                                                       userSettings[theme.id]?.edited || theme.local
-                                                            ? 'Local'
-                                                            : userSettings[theme.id]?.version ||
-                                                              theme.version
-                                                  }</a>
-                                                  
+                                   bigTab.innerHTML = `
+                                   <div id="theme-window">
+                                        <div id="theme-title" class="noSelect">
+                                             <div id="backFromThemeEditing" style="display:none">
+                                                  ${svg.back}
                                              </div>
-                                             <div id="theme-info-panel">
-                                                  <button id="editTheme">
-                                                       ${svg.edit}
-                                                       Edit
-                                                  </button>
-                                                  ${
-                                                       userSettings[theme.id] &&
-                                                       theme.version !==
-                                                            userSettings[theme.id].version &&
-                                                       !userSettings[theme.id].edited
-                                                            ? `<button>${svg.update}Update</button>`
-                                                            : ''
-                                                  }
-                                                  ${
-                                                       theme.local
-                                                            ? `
-                                                            <button id="export-theme">
-                                                                 ${svg.export}
-                                                                 Export
-                                                            </button>`
-                                                            : ''
-                                                  }
-                                                  ${
-                                                       repos["Author's"].findIndex(
-                                                            (x) => x.id === theme.id
-                                                       ) !== -1
-                                                            ? `
-                                                                 <a href="https://github.com/dary1337/custom-themes/issues/new" 
-                                                                      style="text-decoration: none">
-                                                                      <button>
-                                                                           ${svg.openInNew}
-                                                                           Layout Problem?
-                                                                      </button>
-                                                                 </a>`
-                                                            : ''
-                                                  }
+                                             <h1 id="theme-h1">
+                                                  ${theme.name}
+                                             </h1>
+                                             ${
+                                                  theme.local
+                                                       ? `
+                                                            <div id="theme-edit-name" style="display:none">
+                                                                 ${svg.title}
+                                                                 <input
+                                                                      id="theme-edit-input"
+                                                                      type="text"     
+                                                                      placeholder="Untitled"
+                                                                      value="${theme.name}"
+                                                                 />
+                                                            </div>`
+                                                       : ''
+                                             }
+                                        </div>
+                                        <div id="theme-container">
+                                             <div id="theme-info">
+                                                  <div id="theme-description">
+                                                       <label>Website:</label>
+                                                       <a 
+                                                            ${
+                                                                 theme.link === '*' || !theme.link
+                                                                      ? ''
+                                                                      : `href="${theme.link}" target="_blank"`
+                                                            }
+                                                       >
+                                                            ${theme.link || 'None'}
+                                                       </a>
+                                                       ${
+                                                            theme.authorLink
+                                                                 ? `
+                                                                      <label>Author: </label>
+                                                                      <a href="${theme.authorLink}" target="_blank">
+                                                                           ${theme.author}
+                                                                      </a>`
+                                                                 : ''
+                                                       }
+                                                       ${
+                                                            theme.repoLink
+                                                                 ? `
+                                                                      <label>Source:</label>
+                                                                      <a href="${theme.repoLink}" target="_blank">Github</a>`
+                                                                 : ''
+                                                       }
+                                                       <label>Version: </label>
+                                                       <a>
+                                                            ${
+                                                                 userSettings[theme.id]?.edited ||
+                                                                 theme.local
+                                                                      ? 'Local'
+                                                                      : userSettings[theme.id]
+                                                                             ?.version ||
+                                                                        theme.version
+                                                            }
+                                                       </a>
+                                                  </div>
+                                                  <div id="theme-info-panel">
+                                                       <button id="editTheme">
+                                                            ${svg.edit}
+                                                            Edit
+                                                       </button>
+                                                       ${
+                                                            userSettings[theme.id] &&
+                                                            theme.version !==
+                                                                 userSettings[theme.id].version &&
+                                                            !userSettings[theme.id].edited
+                                                                 ? `
+                                                                      <button id="theme-update-button">
+                                                                           ${svg.update}
+                                                                           Update
+                                                                      </button>`
+                                                                 : ''
+                                                       }
+                                                       ${
+                                                            theme.local
+                                                                 ? `
+                                                                 <button id="export-theme">
+                                                                      ${svg.export}
+                                                                      Export
+                                                                 </button>`
+                                                                 : ''
+                                                       }
+                                                       ${
+                                                            !userSettings[theme.id]?.edited &&
+                                                            repos["Author's"].findIndex(
+                                                                 (x) => x.id === theme.id
+                                                            ) !== -1
+                                                                 ? `
+                                                                      <a 
+                                                                           href="https://github.com/dary1337/custom-themes/issues/new" 
+                                                                      >
+                                                                           <button>
+                                                                                ${svg.openInNew}
+                                                                                Layout Problem?
+                                                                           </button>
+                                                                      </a>`
+                                                                 : ''
+                                                       }
+                                                  </div>
                                              </div>
                                         </div>
+                                   </div>`;
 
+                                   if (theme.local) {
+                                        const deleteThemeBtn = document.createElement('button');
+                                        deleteThemeBtn.className = 'danger';
+                                        deleteThemeBtn.innerHTML = `${svg.trash}Delete`;
+                                        deleteThemeBtn.onclick = () => deleteTheme(theme);
 
-                                   </div>
-                              </div>`;
+                                        document
+                                             .getElementById('theme-info-panel')
+                                             .append(deleteThemeBtn);
 
-                              if (theme.local) {
-                                   const deleteThemeBtn = document.createElement('button');
-                                   deleteThemeBtn.className = 'danger';
-                                   deleteThemeBtn.innerHTML = `${svg.trash}Delete`;
-                                   deleteThemeBtn.onclick = () => deleteTheme(theme);
+                                        document.getElementById('export-theme').onclick = () =>
+                                             exportTheme(theme.id);
+                                   }
 
-                                   document
-                                        .getElementById('theme-info-panel')
-                                        .append(deleteThemeBtn);
+                                   const updateBtn = document.getElementById('theme-update-button');
+                                   if (updateBtn)
+                                        updateBtn.onclick = async () => {
+                                             await updateTheme(theme, theme.checked);
+                                             await page();
+                                        };
 
-                                   document.getElementById('export-theme').onclick = () =>
-                                        exportTheme(theme.id);
-                              }
+                                   editTheme.onclick = openEditor;
+                                   backFromThemeEditing.onclick = () => closeEditor();
+                              };
 
-                              editTheme.onclick = openEditor;
-                              backFromThemeEditing.onclick = () => closeEditor();
-                         };
-
-                         async function saveCode() {
-                              if (!theme.local && !userSettings[theme.id]?.edited) {
-                                   document.getElementById('theme-panel').insertAdjacentHTML(
-                                        'beforeend',
-                                        `<button id="restore-theme" class="danger">
+                              async function saveCode() {
+                                   if (!theme.local && !userSettings[theme.id]?.edited) {
+                                        document.getElementById('theme-panel').insertAdjacentHTML(
+                                             'beforeend',
+                                             `<button id="restore-theme" class="danger">
                                              ${svg.trash}
                                              Restore cloud version
                                         </button>`
+                                        );
+                                        document.getElementById('restore-theme').onclick =
+                                             restoreTheme;
+                                   }
+
+                                   if (theme.local) {
+                                        let link = document.getElementById('theme-link').value;
+
+                                        if (link && !link.includes('https://') && link !== '*')
+                                             link = 'https://' + link;
+
+                                        theme.link = link;
+
+                                        theme.name =
+                                             document.getElementById('theme-edit-input').value;
+                                   }
+
+                                   await updateTheme(
+                                        theme,
+                                        theme.local
+                                             ? theme.checked
+                                             : userSettings[theme.id]?.checked,
+                                        editor.getValue() || ' '
                                    );
-                                   document.getElementById('restore-theme').onclick = restoreTheme;
+
+                                   document.getElementById('save-theme').classList.remove('filled');
+                                   await page(false);
                               }
 
-                              if (theme.local) {
-                                   let link = document.getElementById('theme-link').value;
+                              async function restoreTheme() {
+                                   userSettings[theme.id].edited = false;
+                                   document.getElementById('restore-theme').remove();
 
-                                   if (link && !link.includes('https://') && link !== '*')
-                                        link = 'https://' + link;
+                                   const loading_div = document.createElement('div');
 
-                                   theme.link = link;
+                                   loading_div.insertAdjacentHTML(
+                                        'afterbegin',
+                                        getLoader('Restoring theme...')
+                                   );
+                                   document.getElementById('theme-container').prepend(loading_div);
 
-                                   theme.name = document.getElementById('theme-edit-input').value;
+                                   const sourceCSS = await updateTheme(
+                                        theme,
+                                        userSettings[theme.id].checked,
+                                        false
+                                   );
+
+                                   editor.session.setValue(sourceCSS, -1);
+
+                                   await page(false);
+
+                                   loading_div.remove();
                               }
 
-                              await updateTheme(
-                                   theme,
-                                   theme.local ? theme.checked : userSettings[theme.id]?.checked,
-                                   editor.getValue() || ' '
-                              );
+                              const openEditor = async (append_href = true) => {
+                                   if (append_href) pushUrl(window.location.href + '-edit');
 
-                              document.getElementById('save-theme').classList.remove('filled');
-                              await page(false);
-                         }
+                                   let remoteCss;
 
-                         async function restoreTheme() {
-                              userSettings[theme.id].edited = false;
-                              document.getElementById('restore-theme').remove();
+                                   document.getElementById('theme-container').innerHTML =
+                                        getLoader('Downloading code...');
 
-                              const loading_div = document.createElement('div');
+                                   if (theme.local || theme.edited) remoteCss = theme.sourceCSS;
+                                   else {
+                                        remoteCss = userSettings[theme.id]?.edited
+                                             ? userSettings[theme.id].sourceCSS
+                                             : await loadStyles(theme.cssLink);
+                                   }
 
-                              loading_div.insertAdjacentHTML(
-                                   'afterbegin',
-                                   getLoader('Restoring theme...')
-                              );
-                              document.getElementById('theme-container').prepend(loading_div);
-
-                              const sourceCSS = await updateTheme(
-                                   theme,
-                                   userSettings[theme.id].checked,
-                                   false
-                              );
-
-                              editor.session.setValue(sourceCSS, -1);
-
-                              await page(false);
-
-                              loading_div.remove();
-                         }
-
-                         const openEditor = async (append_href = true) => {
-                              if (append_href) pushUrl(window.location.href + '-edit');
-
-                              let remoteCss;
-
-                              document.getElementById('theme-container').innerHTML =
-                                   getLoader('Downloading code...');
-
-                              if (theme.local || theme.edited) remoteCss = theme.sourceCSS;
-                              else {
-                                   remoteCss = userSettings[theme.id]?.edited
-                                        ? userSettings[theme.id].sourceCSS
-                                        : await loadStyles(theme.cssLink);
-                              }
-
-                              document.getElementById('theme-container').innerHTML = `
+                                   document.getElementById('theme-container').innerHTML = `
                                    ${
                                         theme.local
                                              ? `<div id="theme-website">
@@ -830,7 +887,9 @@ const page = async (check_href = true, newTab = undefined) => {
                                              : ''
                                    }
                                    <div id="theme-code"></div>
-                                   <label id="theme-ps" class="dimmed">* @import url('https://coolstyles.css') not supported</label>
+                                   <label id="theme-ps" class="dimmed">
+                                        * @import url('https://coolstyles.css') not supported
+                                   </label>
                                    <div id="theme-panel">
                                         <button id="save-theme">
                                              ${svg.save}
@@ -842,7 +901,8 @@ const page = async (check_href = true, newTab = undefined) => {
                                         </button>
                                         ${
                                              !theme.local && userSettings[theme.id]?.edited
-                                                  ? `<button id="restore-theme" class="danger">
+                                                  ? `
+                                                  <button id="restore-theme" class="danger">
                                                        ${svg.trash}
                                                        Restore cloud version
                                                   </button>`
@@ -850,109 +910,113 @@ const page = async (check_href = true, newTab = undefined) => {
                                         }
                                    </div>`;
 
-                              display(['backFromThemeEditing', 'theme-edit-name'], '');
-                              if (theme.local) display(['theme-h1'], 'none');
+                                   display(['backFromThemeEditing', 'theme-edit-name'], '');
+                                   if (theme.local) display(['theme-h1'], 'none');
 
-                              editor = ace.edit('theme-code', {
-                                   theme: 'ace/theme/tomorrow_night',
-                                   mode: 'ace/mode/css',
-                                   value: remoteCss,
-                                   tabSize: 5,
-                                   enableBasicAutocompletion: true,
-                                   enableSnippets: true,
-                                   enableLiveAutocompletion: true,
-                              });
-                              ace.require('ace/ext/language_tools');
+                                   editor = ace.edit('theme-code', {
+                                        theme: 'ace/theme/tomorrow_night',
+                                        mode: 'ace/mode/css',
+                                        value: remoteCss,
+                                        tabSize: 5,
+                                        enableBasicAutocompletion: true,
+                                        enableSnippets: true,
+                                        enableLiveAutocompletion: true,
+                                   });
+                                   ace.require('ace/ext/language_tools');
 
-                              editor.session.setUseWrapMode(true);
+                                   editor.session.setUseWrapMode(true);
 
-                              editor.commands.addCommand({
-                                   name: 'save',
-                                   bindKey: { win: 'Ctrl-S', mac: 'Cmd-S' },
-                                   exec: saveCode,
-                              });
-
-                              const saveTheme = document.getElementById('save-theme');
-                              const themeLink = document.getElementById('theme-link');
-                              const themeName = document.getElementById('theme-edit-input');
-
-                              const somethingChanged = () =>
-                                   remoteCss !== editor.getValue() ||
-                                   (themeLink && themeLink.value !== theme.link) ||
-                                   (themeName && themeName.value !== theme.name)
-                                        ? saveTheme.classList.add('filled')
-                                        : saveTheme.classList.remove('filled');
-
-                              editor.session.on('change', somethingChanged);
-
-                              if (theme.local) {
-                                   themeLink.addEventListener('input', somethingChanged);
-                                   themeName.addEventListener('input', somethingChanged);
-
-                                   const keyDownHandler = (e) => {
-                                        if (e.ctrlKey && e.key === 's') {
-                                             e.preventDefault();
-                                             saveCode();
-                                        }
-                                   };
-
-                                   document
-                                        .getElementById('theme-website')
-                                        .addEventListener('keydown', keyDownHandler);
-
-                                   document
-                                        .getElementById('theme-edit-input')
-                                        .addEventListener('keydown', keyDownHandler);
-                              }
-
-                              document.getElementById('copy-code').onclick = () =>
-                                   navigator.clipboard.writeText(editor.getValue()).then(() => {
-                                        alert('Copied!');
+                                   editor.commands.addCommand({
+                                        name: 'save',
+                                        bindKey: { win: 'Ctrl-S', mac: 'Cmd-S' },
+                                        exec: saveCode,
                                    });
 
-                              saveTheme.onclick = saveCode;
+                                   const saveTheme = document.getElementById('save-theme');
+                                   const themeLink = document.getElementById('theme-link');
+                                   const themeName = document.getElementById('theme-edit-input');
+
+                                   const somethingChanged = () =>
+                                        remoteCss !== editor.getValue() ||
+                                        (themeLink && themeLink.value !== theme.link) ||
+                                        (themeName && themeName.value !== theme.name)
+                                             ? saveTheme.classList.add('filled')
+                                             : saveTheme.classList.remove('filled');
+
+                                   editor.session.on('change', somethingChanged);
+
+                                   if (theme.local) {
+                                        themeLink.addEventListener('input', somethingChanged);
+                                        themeName.addEventListener('input', somethingChanged);
+
+                                        const keyDownHandler = (e) => {
+                                             if (e.ctrlKey && e.key === 's') {
+                                                  e.preventDefault();
+                                                  saveCode();
+                                             }
+                                        };
+
+                                        document
+                                             .getElementById('theme-website')
+                                             .addEventListener('keydown', keyDownHandler);
+
+                                        document
+                                             .getElementById('theme-edit-input')
+                                             .addEventListener('keydown', keyDownHandler);
+                                   }
+
+                                   document.getElementById('copy-code').onclick = () =>
+                                        navigator.clipboard
+                                             .writeText(editor.getValue())
+                                             .then(() => {
+                                                  alert('Copied!');
+                                             });
+
+                                   saveTheme.onclick = saveCode;
+                                   try {
+                                        document.getElementById('restore-theme').onclick =
+                                             restoreTheme;
+                                   } catch {}
+                              };
+
+                              const closeEditor = () => {
+                                   display(
+                                        ['backFromThemeEditing', 'theme-h1', 'theme-edit-name'],
+                                        'none'
+                                   );
+                                   display(['theme-h1'], '');
+                                   openTheme();
+                                   window.location.href = window.location.href.replace('-edit', '');
+                              };
+
+                              document.querySelector(`[slider-id="${theme.id}"]`).onclick = (e) =>
+                                   e.stopPropagation();
+
+                              switchContainer.onclick = openTheme;
+
+                              if (check_href && href.includes(theme.id)) {
+                                   openTheme(false);
+                                   if (href.includes('-edit')) openEditor(false);
+                              }
+                         }
+
+                         const switchInput = document.getElementById(theme.id);
+
+                         switchInput.onchange = async () => {
                               try {
-                                   document.getElementById('restore-theme').onclick = restoreTheme;
-                              } catch {}
+                                   await updateTheme(
+                                        theme,
+                                        switchInput.checked,
+                                        userSettings[theme.id]?.sourceCSS || false
+                                   );
+                              } catch (error) {
+                                   switchInput.checked = false;
+                                   console.error(error);
+                                   alert('Something went wrong :(');
+                              }
                          };
-
-                         const closeEditor = () => {
-                              display(
-                                   ['backFromThemeEditing', 'theme-h1', 'theme-edit-name'],
-                                   'none'
-                              );
-                              display(['theme-h1'], '');
-                              openTheme();
-                              pushUrl(window.location.href.replace('-edit', ''));
-                         };
-
-                         document.querySelector(`[slider-id="${theme.id}"]`).onclick = (e) =>
-                              e.stopPropagation();
-
-                         switchContainer.onclick = openTheme;
-
-                         if (check_href && href.includes(theme.id)) {
-                              openTheme(false);
-                              if (href.includes('-edit')) openEditor(false);
-                         }
                     }
-
-                    const switchInput = document.getElementById(theme.id);
-
-                    switchInput.onchange = async () => {
-                         try {
-                              await updateTheme(
-                                   theme,
-                                   switchInput.checked,
-                                   userSettings[theme.id]?.sourceCSS || false
-                              );
-                         } catch (error) {
-                              switchInput.checked = false;
-                              console.error(error);
-                              alert('Something went wrong :(');
-                         }
-                    };
-               });
+               );
                if (activeTab === 'Local' && isFullPage) {
                     document.querySelector('container').insertAdjacentHTML(
                          'afterbegin',

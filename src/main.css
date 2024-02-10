@@ -308,6 +308,12 @@ tab div.selected {
 
 /* Elements */
 
+a {
+     &:has(button) {
+          text-decoration: none;
+     }
+}
+
 svg {
      fill: var(--gray);
      border-radius: 100%;
