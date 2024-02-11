@@ -107,12 +107,15 @@ const elements = {
      changelog: `
           <h2>Update 1.1.1</h2>
 
-          <label>
-               - Fixed css "compiling" method
-          </label>
-          <label>
-               - Fixed update theme button
-          </label>`,
+          ${[
+               //
+               'Fixed css "compiling" method',
+               'Fixed update theme button',
+               'Added code formatter',
+          ]
+               .map((x) => `<label>- ${x}</label>`)
+               .join('')}
+          `,
 };
 
 function getLoader(text) {
@@ -431,7 +434,7 @@ function openAbout() {
                          :3
                     </label>
                     <label>
-                         Used libs: AceEditor
+                         Used libs: AceEditor, Beautify
                     </label>
 
                     ${elements.changelog}
@@ -631,7 +634,8 @@ const page = async (check_href = true, newTab = undefined) => {
                               ${
                                    userSettings[theme.id] &&
                                    theme.version !== userSettings[theme.id].version &&
-                                   !userSettings[theme.id].edited
+                                   !userSettings[theme.id].edited &&
+                                   userSettings[theme.id].checked
                                         ? `<label class="dimmed">Update available</label>`
                                         : ''
                               }
@@ -827,6 +831,15 @@ const page = async (check_href = true, newTab = undefined) => {
                                              : userSettings[theme.id]?.checked,
                                         editor.getValue() || ' '
                                    );
+                                   const line = editor.selection.getCursor().row;
+
+                                   editor.setValue(
+                                        css_beautify(editor.getValue(), {
+                                             indent_size: 5,
+                                             preserve_newlines: false,
+                                        })
+                                   );
+                                   editor.gotoLine(line + 1);
 
                                    document.getElementById('save-theme').classList.remove('filled');
                                    await page(false);
@@ -919,7 +932,6 @@ const page = async (check_href = true, newTab = undefined) => {
                                         value: remoteCss,
                                         tabSize: 5,
                                         enableBasicAutocompletion: true,
-                                        enableSnippets: true,
                                         enableLiveAutocompletion: true,
                                    });
                                    ace.require('ace/ext/language_tools');

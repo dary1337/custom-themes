@@ -30,7 +30,9 @@ function loadStylesInTab(tabId, url) {
 
 chrome.webNavigation.onCommitted.addListener((details) => {
      if (
-          ['reload', 'link', 'typed', 'generated', 'auto_bookmark'].includes(details.transitionType)
+          ['reload', 'link', 'typed', 'generated', 'auto_bookmark', 'form_submit'].includes(
+               details.transitionType
+          )
      ) {
           const tabId = details.tabId;
           const url = details.url;

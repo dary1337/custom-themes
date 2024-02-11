@@ -2,7 +2,6 @@
      --surface-primary: rgb(38, 44, 60);
      --surface-secondary: rgb(28, 32, 42);
      --surface-tertiary: rgb(19, 22, 30);
-
      --main-surface-secondary: var(--surface-secondary);
      --main-surface-tertiary: var(--surface-secondary);
      --sidebar-surface-primary: var(--surface-tertiary);
@@ -18,7 +17,6 @@ body {
 main {
      border-top-left-radius: 24px;
      border-bottom-left-radius: 24px;
-
      background-color: var(--surface-secondary);
 }
 
@@ -118,6 +116,11 @@ a[as='button'] {
 
 .rounded-2xl {
      border-radius: 30px;
+}
+
+div.scrollbar-trigger.relative.h-full.w-full {
+     border-radius: 20px;
+     overflow: hidden;
 }
 
 div.flex.flex-1.text-base.mx-auto {
