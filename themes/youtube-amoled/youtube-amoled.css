@@ -2,6 +2,7 @@
      scrollbar-color: #cfc9c5 transparent;
      scrollbar-width: thin;
 }
+
 html,
 body,
 ytd-app {
@@ -40,6 +41,13 @@ ytd-compact-video-renderer:hover {
 html[dark],
 [dark] {
      --yt-spec-base-background: #000000;
+}
+
+ytd-watch-flexy[flexy][is-two-columns_][is-four-three-to-sixteen-nine-video_]:not(
+          [full-bleed-player][full-bleed-no-max-width-columns]
+     ):not([fixed-panels])
+     #primary.ytd-watch-flexy {
+     max-width: 100%;
 }
 
 tp-yt-app-drawer.ytd-app[persistent] {
