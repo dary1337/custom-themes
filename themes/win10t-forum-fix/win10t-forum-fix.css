@@ -29,6 +29,7 @@ div#forum-51 {
      box-shadow: 0 6px 6px -6px #2ebbab, 0 -6px 6px -6px #2ebbab, 6px 0 6px -6px #2ebbab,
           -6px 0 6px -6px #2ebbab;
 }
+
 .wp-night-mode-on div#forum-51 {
      box-shadow: 0 0 6px #2ebbab, 0 0 26px #00c0ff8a !important;
 }
@@ -37,6 +38,7 @@ div#forum-51 {
 .notice-panel {
      border-radius: 5px;
 }
+
 /* Скругленные края для тем (dark mode) */
 .wp-night-mode-on #af-wrapper div {
      border-radius: 5px;
@@ -45,4 +47,9 @@ div#forum-51 {
 /* Больше пространства кнопке смены темы */
 .wpnm-button.style-5 {
      margin-top: 10px;
+}
+
+/* Сокрытие скроллбара в модальных окнах, если мало элементов */
+.modal-content {
+     overflow-y: auto;
 }
