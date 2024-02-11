@@ -38,7 +38,8 @@ button[type='button'][role='switch'][aria-checked='false'],
 .bg-token-surface-secondary,
 .dark .dark\:bg-gray-700,
 .bg-token-surface-tertiary,
-.dark .dark\:bg-gray-800\/90 {
+.dark .dark\:bg-gray-800\/90,
+.dark .dark\:hover\:bg-gray-800:hover {
      background-color: var(--surface-primary);
 }
 
@@ -110,7 +111,8 @@ pre,
 div[role='menuitem'],
 .border-orange-500,
 textarea,
-a[as='button'] {
+a[as='button'],
+div.rounded-md.bg-token-main-surface-secondary.text-token-text-secondary.text-sm {
      border-radius: 20px;
 }
 
