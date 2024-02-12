@@ -112,7 +112,8 @@ div[role='menuitem'],
 .border-orange-500,
 textarea,
 a[as='button'],
-div.rounded-md.bg-token-main-surface-secondary.text-token-text-secondary.text-sm {
+div.rounded-md.bg-token-main-surface-secondary.text-token-text-secondary.text-sm,
+div.sticky.top-0.mb-1\.5.flex.items-center.justify-between.z-10.h-14.p-2.font-semibold.bg-token-main-surface-primary {
      border-radius: 20px;
 }
 
