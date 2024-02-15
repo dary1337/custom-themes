@@ -2,16 +2,26 @@
      box-sizing: border-box;
 }
 
-*::-webkit-scrollbar {
-     width: 2px;
-}
 *::-webkit-scrollbar-track {
      background-color: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
-     background-color: var(--gray);
+     background-color: #cfc9c5;
      border-radius: 2px;
+}
+*::-webkit-scrollbar,
+*::-webkit-scrollbar:vertical {
+     width: 2px;
+}
+*::-webkit-scrollbar:horizontal {
+     height: 2px;
+}
+
+*::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-button {
+     height: 0;
+     width: 0;
 }
 
 .material-you-colors {
@@ -61,6 +71,11 @@ body > div {
      display: none;
 }
 
+/* full page > 1500px  */
+@media screen and (min-width: 1500px) {
+}
+
+/* full page too small */
 @media screen and (max-width: 740px) {
      body {
           overflow-y: auto;
@@ -82,6 +97,7 @@ body > div {
      }
 }
 
+/* full page */
 @media screen and (min-width: 290px) {
      #extensionPopup {
           max-width: 20%;
@@ -110,12 +126,11 @@ body > div {
           margin: 10px;
      }
      #bigTab {
-          padding: 0;
           height: 94%;
      }
      #theme-window {
           overflow: auto;
-          padding: 10px;
+          padding: 0 10px 0 10px;
           width: 100%;
           height: 100%;
           animation-name: slideDownMargin;
@@ -134,12 +149,16 @@ body > div {
           background-color: var(--surface);
           z-index: 5;
           width: 100%;
-          padding-bottom: 10px;
+     }
+     #theme-h1 {
+          padding: 0 0 10px 0;
      }
 
      #theme-window #theme-edit-name {
           display: flex;
           align-items: center;
+          margin-top: 10px;
+          margin-bottom: 10px;
      }
      #theme-window #theme-edit-name svg {
           position: absolute;
@@ -158,10 +177,31 @@ body > div {
           width: 100%;
           height: calc(100% - 60px);
      }
-     #theme-info-panel {
+
+     #theme-screenshots {
+          height: 200px;
+          width: 100%;
+          overflow-x: auto;
+          overflow-y: hidden;
+          padding-bottom: 20px;
           display: flex;
      }
+
+     #theme-screenshots img {
+          background-color: var(--onSurface);
+          border-radius: 10px;
+          height: 100%;
+          min-width: 80px;
+          margin-right: 10px;
+          height: 100%;
+     }
+
+     #theme-info-panel {
+          display: flex;
+          flex-wrap: wrap;
+     }
      #theme-info-panel button {
+          margin-top: 10px;
           margin-right: 10px;
      }
 
@@ -448,18 +488,16 @@ main {
 
 container {
      display: flex;
-     align-items: center;
      flex-direction: column;
-     max-height: 270px;
+     max-height: 300px;
      overflow-y: auto;
-     padding-left: 2px;
-     padding-right: 2px;
+     padding: 0;
 }
 
 h1 {
      margin: 0;
-     margin-bottom: 10px;
      padding: 0;
+     padding-bottom: 10px;
      text-align: center;
 }
 
@@ -483,6 +521,21 @@ a,
 }
 #settings-bottom button {
      margin-bottom: 6px;
+}
+
+#aboutPage {
+     padding: 0 10px 10px 10px;
+     overflow-y: auto;
+     height: max-content;
+     max-height: 84%;
+}
+
+#aboutPage h1 {
+     position: sticky;
+     top: 0;
+     padding-top: 10px;
+     padding-bottom: 10px;
+     background-color: var(--surface);
 }
 
 #about-labels {
@@ -521,34 +574,33 @@ a,
 .switch-container {
      display: flex;
      align-items: center;
+     justify-content: space-between;
      width: 100%;
      padding: 6px 0 6px 0;
      flex-direction: row;
-     justify-content: space-between;
 }
 
 .switch-input {
      position: relative;
-     display: inline-block;
+     display: flex;
+     align-items: center;
      cursor: pointer;
-     min-width: 41px;
-     height: 24px;
+     width: 40px;
+     height: 100%;
+     transition: 0.4s;
 }
 
 .switch-input input {
-     opacity: 0;
-     width: 0;
-     height: 0;
+     display: none;
 }
 
 .switch-input .slider {
-     position: absolute;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
+     display: flex;
+     align-items: center;
+     width: 100%;
+     height: 22px;
      background-color: var(--inActive);
-     border-radius: 14px;
+     border-radius: 20px;
      transition: 0.4s;
 }
 
@@ -557,18 +609,17 @@ a,
 }
 
 .switch-input input:checked + .slider::before {
-     transform: translateX(16px);
+     transform: translateX(19px);
 }
 
 .switch-input .slider::before {
-     position: absolute;
+     display: flex;
      content: '';
-     height: 20px;
-     width: 20px;
-     left: 2px;
-     bottom: 2px;
+     height: 19px;
+     width: 19px;
      background-color: var(--secondary);
-     border-radius: 50%;
+     border-radius: 100%;
+     transform: translateX(2px);
      transition: 0.4s;
 }
 

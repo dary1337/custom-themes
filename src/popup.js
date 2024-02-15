@@ -1,9 +1,7 @@
 /**
  @todo
+     go to chrome store
      search
-     screenshots in theme info
-     suggest theme
-     add prettier
 */
 'use strict';
 
@@ -14,7 +12,9 @@ let //
      extensionSettings = {
           useLocalJsonRepo: undefined,
           checkForUpdate: undefined,
+          showScreenshots: undefined,
      },
+     lang = 'en',
      //
      activeSwitch,
      pageLoaded = false,
@@ -37,8 +37,11 @@ async function setValues() {
           )
      );
 
-     if (extensionSettings.useLocalJsonRepo === undefined) setSetting('useLocalJsonRepo', false);
-     if (extensionSettings.checkForUpdate === undefined) setSetting('checkForUpdate', true);
+     dict[lang].settings.forEach((x) => {
+          if (extensionSettings[x.id] === undefined) setSetting(x.id, x.default);
+     });
+
+     if (navigator.language.toLocaleLowerCase().startsWith('ru')) lang = 'ru';
 
      await page();
 }
@@ -63,19 +66,24 @@ async function loadRepos(useLocal = false) {
                return await response.json();
           }
 
-          const response = await fetch(
-               'https://raw.githubusercontent.com/dary1337/custom-themes/master/repos.json',
-               {
-                    cache: 'no-cache',
-               }
-          );
+          const response = await fetch(links.reposJson, {
+               cache: 'no-cache',
+          });
 
           return await response.json();
      } catch (error) {
-          console.log('failed load repos.json', error);
+          console.error('Failed load repos.json', error);
           return {};
      }
 }
+
+const links = {
+     repo: 'https://github.com/dary1337/custom-themes',
+     newIssue: 'https://github.com/dary1337/custom-themes/issues/new',
+     telegram: 'https://t.me/dary1337',
+     reposJson: 'https://raw.githubusercontent.com/dary1337/custom-themes/master/repos.json',
+     versionLink: 'https://raw.githubusercontent.com/dary1337/custom-themes/master/version.txt',
+};
 
 const svg = {
      update: '<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"/></svg>',
@@ -98,23 +106,204 @@ const svg = {
      flag: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M200-120v-680h360l16 80h224v400H520l-16-80H280v280h-80Zm300-440Zm86 160h134v-240H510l-16-80H280v240h290l16 80Z"/></svg>',
 };
 
+const dict = {
+     ru: {
+          tabs: {
+               fromAuthor: 'Авторские',
+               community: 'Сообщества',
+               local: 'Локальные',
+          },
+          buttons: {
+               edit: 'Изменить',
+               export: 'Экспорт',
+               update: 'Обновить',
+               updateExtension: 'Обновить расширение',
+               suggestGithub: 'Предложить через GitHub',
+               suggestTelegram: 'Предложить через Telegram',
+               badLayout: 'Проблема с отображением?',
+               restoreFromCloud: 'Восстановить версию из облака',
+               saveLocally: 'Сохранить локально',
+               delete: 'Удалить',
+               //
+               createTheme: 'Создать тему',
+               importTheme: 'Импортировать',
+               //
+               importThemes: 'Импортировать темы',
+               exportThemes: 'Экспортировать локальные темы',
+               resetExtension: 'Сбросить расширение',
+          },
+          about: `
+               <label>
+                    Custom Themes - это бесплатное, созданное на энтузиазме расширение.
+                    Основная идея - поделится моими "творениями" с людьми, а также дать эту возможность другим.
+               </label>
+               <label>
+                    Буду рад любой критике и предложениям в
+                         <a href="${links.newIssue}" target="_blank">GitHub</a>
+                         или
+                         <a href="${links.telegram}" target="_blank">Telegram</a>.
+               </label>`,
+          settings: [
+               {
+                    id: 'useLocalJsonRepo',
+                    name: 'Использовать локальный файл тем',
+                    description: 'Отключить обновление доступных тем',
+                    default: false,
+               },
+               {
+                    id: 'checkForUpdate',
+                    name: 'Проверять обновления',
+                    description: 'Уведомляет только о важных обновлениях',
+                    default: true,
+               },
+               {
+                    id: 'showScreenshots',
+                    name: 'Показывать скриншоты в информации о теме',
+                    default: true,
+               },
+          ],
+          loader: {
+               loadingCode: 'Загрузка кода...',
+               loadingRepo: 'Получение репозитория...',
+               updatingThemes: 'Обновление тем...',
+               restoringTheme: 'Восстановление темы...',
+          },
+          strings: {
+               untitled: 'Без названия',
+               allSites: 'Все сайты',
+               updateVer: 'Обновление',
+               usedLibs: 'Использованные библиотеки',
+               none: 'Нет',
+               local: 'Локальная',
+               copiedPreset: 'Шаблон скопирован, вставьте его в сообщение',
+          },
+          titles: {
+               settings: 'Настройки',
+               about: 'О расширении',
+          },
+          labels: {
+               website: 'Веб-сайт',
+               author: 'Автор',
+               source: 'Источник',
+               version: 'Версия',
+               selectTheme: 'Выберите тему слева или создайте новую',
+               noScreenshots: '*Возможно, есть скриншоты в репозитории, посмотрите в источнике',
+               importNotSupported: '* @import url("https://coolstyles.css") не поддерживается',
+               linkPlaceholder: 'https://example.com или *',
+          },
+          changelog: [
+               'Добавлена кнопка предложения темы',
+               'Добавлены скриншоты в информацию о теме',
+               'Добавлен русский язык',
+          ],
+     },
+     en: {
+          tabs: {
+               fromAuthor: "Author's",
+               community: 'Community',
+               local: 'Local',
+          },
+          buttons: {
+               edit: 'Edit',
+               export: 'Export',
+               update: 'Update',
+               updateExtension: 'Update extension',
+               suggestGithub: 'Suggest via GitHub',
+               suggestTelegram: 'Suggest via Telegram',
+               badLayout: 'Layout problem?',
+               restoreFromCloud: 'Restore cloud version',
+               saveLocally: 'Save locally',
+               delete: 'Delete',
+               //
+               createTheme: 'Create theme',
+               importTheme: 'Import theme',
+               // settings
+               importThemes: 'Import themes',
+               exportThemes: 'Export locally themes',
+               resetExtension: 'Reset extension',
+          },
+          about: `
+               <label>
+                    Custom Themes is a free, passion-driven extension. 
+                    The main idea is to share My "creations" with people, as well as give this opportunity to others.
+               </label>
+               <label>
+                    I will be glad to any criticism and suggestions on 
+                         <a href="${links.newIssue}" target="_blank">GitHub</a>
+                         or 
+                         <a href="${links.telegram}" target="_blank">Telegram</a>.
+               </label>`,
+          settings: [
+               {
+                    id: 'useLocalJsonRepo',
+                    name: 'Use local themes file',
+                    description: 'Disable updating of available themes',
+                    default: false,
+               },
+               {
+                    id: 'checkForUpdate',
+                    name: 'Check for updates',
+                    description: 'Notifies only about important updates',
+                    default: true,
+               },
+               {
+                    id: 'showScreenshots',
+                    name: 'Show screenshots in theme info',
+                    default: true,
+               },
+          ],
+          loader: {
+               loadingCode: 'Code loading...',
+               loadingRepo: 'Repository fetching...',
+               updatingThemes: 'Updating themes...',
+               restoringTheme: 'Restoring theme...',
+          },
+          strings: {
+               untitled: 'Untitled',
+               allSites: 'All sites',
+               updateVer: 'Update',
+               usedLibs: 'Used libs',
+               none: 'None',
+               local: 'Local',
+               copiedPreset: 'Preset copied, paste it into the message',
+          },
+          titles: {
+               settings: 'Settings',
+               about: 'About',
+          },
+          labels: {
+               website: 'Website',
+               author: 'Author',
+               source: 'Source',
+               version: 'Version',
+               selectTheme: 'Select a theme on the left or create a new one',
+               noScreenshots:
+                    '*Perhaps there are screenshots in the repository, look at the source',
+               importNotSupported: `* @import url("https://coolstyles.css") not supported`,
+               linkPlaceholder: 'https://example.com or *',
+          },
+          changelog: [
+               //
+               'Added theme suggest button',
+               'Added screenshots in theme info',
+               'Added russian language',
+          ],
+     },
+};
+
 const elements = {
      emptyBigTab: `
           <div id="empty-tab" class="noSelect">
-               <label class="dimmed">Select a theme on the left or create a new one</label>
-               <button class="createTheme">${svg.add}Create theme</button>
+               <label class="dimmed">${dict[lang].labels.selectTheme}</label>
+               <button class="createTheme">
+                    ${svg.add}
+                    ${dict[lang].buttons.createTheme}
+               </button>
           </div>`,
      changelog: `
-          <h2>Update 1.1.1</h2>
+          <h2>${dict[lang].strings.updateVer} ${getCurrentVersion()}</h2>
 
-          ${[
-               //
-               'Fixed css "compiling" method',
-               'Fixed update theme button',
-               'Added code formatter',
-          ]
-               .map((x) => `<label>- ${x}</label>`)
-               .join('')}
+          ${dict[lang].changelog.map((x) => `<label>- ${x}</label>`).join('')}
           `,
 };
 
@@ -128,27 +317,24 @@ function getLoader(text) {
      );
 }
 
+function getCurrentVersion() {
+     return chrome.runtime.getManifest().version;
+}
+
 function checkUpdates() {
      if (!extensionSettings.checkForUpdate) return;
 
-     function getCurrentVersion() {
-          return chrome.runtime.getManifest().version;
-     }
-
-     const versionUrl =
-          'https://raw.githubusercontent.com/dary1337/custom-themes/master/version.txt';
-
-     fetch(versionUrl)
+     fetch(links.versionLink)
           .then((response) => response.text())
           .then((version) => {
                if (version !== getCurrentVersion() && !version.includes('NOT FOUND')) {
                     extensionPopup.insertAdjacentHTML(
                          'afterbegin',
                          `<main>
-                              <a href="https://github.com/dary1337/custom-themes" target="_blank">
+                              <a href="${links.repo}" target="_blank">
                                    <button>
                                         ${svg.update}
-                                        Update extension
+                                        ${dict[lang].buttons.updateExtension}
                                    </button>
                               </a>
                          </main>`
@@ -190,7 +376,7 @@ function createTheme() {
 
      const updateValue = {
           id: id,
-          name: 'Untitled',
+          name: dict[lang].strings.untitled,
           link: '',
           checked: true,
           compiledCss: '',
@@ -219,7 +405,7 @@ async function updateTheme(theme, checked, customCSS = undefined) {
           id: theme.id,
           link: theme.link,
           checked: checked,
-          compiledCss: (customCSS || userSettings[theme.id]?.edited
+          compiledCss: (customCSS || userSettings[theme.id]?.edited || userSettings[theme.id]?.local
                ? customCSS || userSettings[theme.id].sourceCSS
                : (sourceCSS = await loadStyles(theme.cssLink))
           )
@@ -233,7 +419,7 @@ async function updateTheme(theme, checked, customCSS = undefined) {
                })
                .trim(),
           edited: theme.edited || !!customCSS,
-          sourceCSS: customCSS,
+          sourceCSS: customCSS || '',
           local: theme.local || false,
           name: theme.name,
      };
@@ -252,7 +438,7 @@ async function updateThemes() {
      const mainHTML = `
                          <main id="updating-theme" style="display:flex;align-items:center;">
                               <div class="loader-icon"></div>
-                              <label style="margin-left:6px">Updating themes...</label>
+                              <label style="margin-left:6px; font-size:16px;">${dict[lang].loader.updatingThemes}</label>
                          </main>
                     `;
      extensionPopup.insertAdjacentHTML('afterbegin', mainHTML);
@@ -341,24 +527,13 @@ function openSettings() {
      const mainHTML = `
           <main id="settingsPage" class="noSelect">
                <div id="backFromSettings">${svg.back}</div>
-               <h1>Settings</h1>
+               <h1>${dict[lang].titles.settings}</h1>
                <container></container>
           </main>
      `;
      extensionPopup.insertAdjacentHTML('afterbegin', mainHTML);
 
-     const settings = [
-          {
-               id: 'useLocalJsonRepo',
-               name: 'Use local themes file',
-               description: 'Disable updating of available themes',
-          },
-          {
-               id: 'checkForUpdate',
-               name: 'Check for updates',
-               description: 'Check extension updates',
-          },
-     ];
+     const settings = dict[lang].settings;
 
      settings.forEach((setting) => {
           document.querySelector('container').insertAdjacentHTML(
@@ -366,7 +541,7 @@ function openSettings() {
                `<div class="switch-container">
                     <div class="switch-label">
                          <label>${setting.name}</label>
-                         <label class="dimmed">${setting.description}</label>
+                         <label class="dimmed">${setting.description || ''}</label>
                     </div>
                     <label class="switch-input">
                          <input type="checkbox" id="${setting.id}" 
@@ -391,9 +566,18 @@ function openSettings() {
           'beforeend',
           `
                <div id="settings-bottom">
-                    <button id="import-themes">${svg.import}Import themes</button>
-                    <button id="export-themes">${svg.export}Export local themes</button>
-                    <button id="resetExtensionButton" class="danger">${svg.trash}Reset extension</button>
+                    <button id="import-themes">
+                         ${svg.import}
+                         ${dict[lang].buttons.importThemes}
+                    </button>
+                    <button id="export-themes">
+                         ${svg.export}
+                         ${dict[lang].buttons.exportThemes}
+                    </button>
+                    <button id="resetExtensionButton" class="danger">
+                         ${svg.trash}
+                         ${dict[lang].buttons.resetExtension}
+                    </button>
                </div>
           `
      );
@@ -417,24 +601,22 @@ function openAbout() {
 
      const mainHTML = `
           <main id="aboutPage" class="noSelect">
-               <div id="backFromSettings">${svg.back}</div>
-               <h1>About</h1>
+               <h1>
+                    <div id="backFromSettings">${svg.back}</div>
+                    ${dict[lang].titles.about}
+               </h1>
                <div id="about-labels">
-                    <label>
-                         Custom Themes is a free, passion-driven extension. 
-                         The main idea is to share My "creations" with people, as well as give this opportunity to others.
-                    </label>
-                    <label>
-                         I will be glad to any criticism and suggestions on 
-                              <a href="https://github.com/dary1337/custom-themes/issues/new" target="_blank">GitHub</a>
-                               or 
-                              <a href="https://t.me/idle1337" target="_blank">Telegram</a>.
-                    </label>
+                    ${dict[lang].about}
                     <label>
                          :3
                     </label>
+
+                    <h2>${dict[lang].strings.usedLibs}:</h2>
                     <label>
-                         Used libs: AceEditor, Beautify
+                         - Ace Editor
+                    </label>
+                    <label>
+                         - Beautify
                     </label>
 
                     ${elements.changelog}
@@ -451,17 +633,21 @@ function openAbout() {
      };
 }
 
+function resetExtension() {
+     if (confirm('Are you sure want to reset all data?')) {
+          chrome.storage.local.set({ extensionSettings: {}, userSettings: {} });
+          window.location.reload();
+     }
+}
+
 function openLink(link) {
      chrome.tabs.create({
           url: link,
      });
 }
 
-function resetExtension() {
-     if (confirm('Are you sure want to reset all data?')) {
-          chrome.storage.local.set({ extensionSettings: {}, userSettings: {} });
-          window.location.reload();
-     }
+function copyToClipboard(text, then = () => {}) {
+     navigator.clipboard.writeText(text).then(then);
 }
 
 const page = async (check_href = true, newTab = undefined) => {
@@ -492,11 +678,11 @@ const page = async (check_href = true, newTab = undefined) => {
                               <tab>
                                    <div tabName="Author's" 
                                         ${activeTab === "Author's" && 'class="selected"'}>
-                                        Author's
+                                        ${dict[lang].tabs.fromAuthor}
                                    </div>
                                    <div tabName="Community"
                                         ${activeTab === 'Community' && 'class="selected"'}>
-                                        Community
+                                        ${dict[lang].tabs.community}
                                    </div>
                                    ${
                                         Object.entries(userSettings).filter(
@@ -505,7 +691,7 @@ const page = async (check_href = true, newTab = undefined) => {
                                              ? `
                                              <div tabName="Local" 
                                                   ${activeTab === 'Local' && 'class="selected"'}>
-                                                  Local
+                                                  ${dict[lang].tabs.local}
                                              </div>`
                                              : ''
                                    }
@@ -513,7 +699,7 @@ const page = async (check_href = true, newTab = undefined) => {
                               <container></container>
                          </main>
                          <main id="footer" class="noSelect">
-                              <a href="https://github.com/dary1337/custom-themes" target="_blank">Github</a>
+                              <a href="${links.repo}" target="_blank">Github</a>
                               <div style="display:flex">
                                    <div id="updateThemes" style="display:none">
                                         ${svg.update}
@@ -530,11 +716,13 @@ const page = async (check_href = true, newTab = undefined) => {
                     </div>
                     ${
                          isFullPage
-                              ? `<div id="extensionFull">
+                              ? `
+                              <div id="extensionFull">
                                    <main id="bigTab">
                                         ${elements.emptyBigTab}
                                    </main>
-                              </div>`
+                              </div>
+                              `
                               : ''
                     }
                     `
@@ -553,7 +741,10 @@ const page = async (check_href = true, newTab = undefined) => {
                     page();
                });
 
-               loading_div.insertAdjacentHTML('beforeend', getLoader('Repository fetching...'));
+               loading_div.insertAdjacentHTML(
+                    'beforeend',
+                    getLoader(dict[lang].loader.loadingRepo)
+               );
                if (!extensionSettings.useLocalJsonRepo) loading_div.append(updateBtn);
                tab.append(loading_div);
 
@@ -585,6 +776,8 @@ const page = async (check_href = true, newTab = undefined) => {
           document.querySelector(`[tabname="${activeTab}"]`).classList.add('selected');
 
           try {
+               // todo: if something deleted from repos
+
                const themes =
                     activeTab === 'Local'
                          ? Object.entries(userSettings)
@@ -594,7 +787,7 @@ const page = async (check_href = true, newTab = undefined) => {
 
                themes.forEach(
                     (
-                         /** from repos */
+                         /** from repos or userSettings (if local) */
                          theme
                     ) => {
                          const switchContainer = document.createElement('div');
@@ -618,7 +811,7 @@ const page = async (check_href = true, newTab = undefined) => {
                               </div>
                               ${
                                    theme.link === '*'
-                                        ? `<label class="dimmed">All Sites</label>`
+                                        ? `<label class="dimmed">${dict[lang].strings.allSites}</label>`
                                         : `<a  href="${
                                                theme.link
                                           }" target="_blank">${theme.link.replace(
@@ -687,9 +880,27 @@ const page = async (check_href = true, newTab = undefined) => {
                                              }
                                         </div>
                                         <div id="theme-container">
+                                             ${
+                                                  extensionSettings.showScreenshots && !theme.local
+                                                       ? theme.screenshots?.length
+                                                            ? `
+                                                                 <div id="theme-screenshots">
+                                                                      ${theme.screenshots
+                                                                           .map(
+                                                                                (screen) =>
+                                                                                     `<img src="${screen}"></img>`
+                                                                           )
+                                                                           .join('')}
+                                                                 </div>
+                                                            `
+                                                            : `<label class="dimmed" style="font-size:15px;">
+                                                                 ${dict[lang].labels.noScreenshots}
+                                                            </label>`
+                                                       : ''
+                                             }
                                              <div id="theme-info">
                                                   <div id="theme-description">
-                                                       <label>Website:</label>
+                                                       <label>${dict[lang].labels.website}:</label>
                                                        <a 
                                                             ${
                                                                  theme.link === '*' || !theme.link
@@ -697,12 +908,12 @@ const page = async (check_href = true, newTab = undefined) => {
                                                                       : `href="${theme.link}" target="_blank"`
                                                             }
                                                        >
-                                                            ${theme.link || 'None'}
+                                                            ${theme.link || dict[lang].strings.none}
                                                        </a>
                                                        ${
                                                             theme.authorLink
                                                                  ? `
-                                                                      <label>Author: </label>
+                                                                      <label>${dict[lang].labels.author}: </label>
                                                                       <a href="${theme.authorLink}" target="_blank">
                                                                            ${theme.author}
                                                                       </a>`
@@ -711,16 +922,16 @@ const page = async (check_href = true, newTab = undefined) => {
                                                        ${
                                                             theme.repoLink
                                                                  ? `
-                                                                      <label>Source:</label>
+                                                                      <label>${dict[lang].labels.source}:</label>
                                                                       <a href="${theme.repoLink}" target="_blank">Github</a>`
                                                                  : ''
                                                        }
-                                                       <label>Version: </label>
+                                                       <label>${dict[lang].labels.version}: </label>
                                                        <a>
                                                             ${
                                                                  userSettings[theme.id]?.edited ||
                                                                  theme.local
-                                                                      ? 'Local'
+                                                                      ? dict[lang].strings.local
                                                                       : userSettings[theme.id]
                                                                              ?.version ||
                                                                         theme.version
@@ -730,7 +941,7 @@ const page = async (check_href = true, newTab = undefined) => {
                                                   <div id="theme-info-panel">
                                                        <button id="editTheme">
                                                             ${svg.edit}
-                                                            Edit
+                                                            ${dict[lang].buttons.edit}
                                                        </button>
                                                        ${
                                                             userSettings[theme.id] &&
@@ -740,17 +951,34 @@ const page = async (check_href = true, newTab = undefined) => {
                                                                  ? `
                                                                       <button id="theme-update-button">
                                                                            ${svg.update}
-                                                                           Update
+                                                                           ${dict[lang].buttons.update}
                                                                       </button>`
                                                                  : ''
                                                        }
                                                        ${
                                                             theme.local
                                                                  ? `
-                                                                 <button id="export-theme">
-                                                                      ${svg.export}
-                                                                      Export
-                                                                 </button>`
+                                                                      <button id="export-theme">
+                                                                           ${svg.export}
+                                                                           ${dict[lang].buttons.export}
+                                                                      </button>
+                                                                      <a 
+                                                                           id="suggest-theme-github"
+                                                                           href="${links.newIssue}" target="_blank">
+                                                                           <button>
+                                                                                ${svg.openInNew}
+                                                                                ${dict[lang].buttons.suggestGithub}
+                                                                           </button>
+                                                                      </a>
+                                                                      <a 
+                                                                           id="suggest-theme-telegram"
+                                                                           href="${links.telegram}" target="_blank">
+                                                                           <button>
+                                                                                ${svg.openInNew}
+                                                                                ${dict[lang].buttons.suggestTelegram}
+                                                                           </button>
+                                                                      </a>
+                                                                 `
                                                                  : ''
                                                        }
                                                        ${
@@ -760,11 +988,12 @@ const page = async (check_href = true, newTab = undefined) => {
                                                             ) !== -1
                                                                  ? `
                                                                       <a 
-                                                                           href="https://github.com/dary1337/custom-themes/issues/new" 
+                                                                           href="${links.newIssue}"
+                                                                           target="_blank" 
                                                                       >
                                                                            <button>
                                                                                 ${svg.openInNew}
-                                                                                Layout Problem?
+                                                                                ${dict[lang].buttons.badLayout}
                                                                            </button>
                                                                       </a>`
                                                                  : ''
@@ -777,7 +1006,7 @@ const page = async (check_href = true, newTab = undefined) => {
                                    if (theme.local) {
                                         const deleteThemeBtn = document.createElement('button');
                                         deleteThemeBtn.className = 'danger';
-                                        deleteThemeBtn.innerHTML = `${svg.trash}Delete`;
+                                        deleteThemeBtn.innerHTML = `${svg.trash}${dict[lang].buttons.delete}`;
                                         deleteThemeBtn.onclick = () => deleteTheme(theme);
 
                                         document
@@ -786,12 +1015,40 @@ const page = async (check_href = true, newTab = undefined) => {
 
                                         document.getElementById('export-theme').onclick = () =>
                                              exportTheme(theme.id);
+
+                                        for (const site of ['github', 'telegram'])
+                                             document.getElementById(
+                                                  'suggest-theme-' + site
+                                             ).onclick = (e) => {
+                                                  e.preventDefault();
+                                                  copyToClipboard(
+                                                       `Hi, I would like to suggest a theme\nTitle: ${
+                                                            userSettings[theme.id].name
+                                                       }\nWebsite: ${
+                                                            userSettings[theme.id].link
+                                                       }\n\`\`\`css\n${
+                                                            userSettings[theme.id].sourceCSS
+                                                       }\`\`\``,
+                                                       () => {
+                                                            alert(dict.en.strings.copiedPreset);
+
+                                                            openLink(
+                                                                 site === 'github'
+                                                                      ? links.newIssue
+                                                                      : links.telegram
+                                                            );
+                                                       }
+                                                  );
+                                             };
                                    }
 
                                    const updateBtn = document.getElementById('theme-update-button');
                                    if (updateBtn)
                                         updateBtn.onclick = async () => {
-                                             await updateTheme(theme, theme.checked);
+                                             await updateTheme(
+                                                  theme,
+                                                  userSettings[theme.id]?.checked
+                                             );
                                              await page();
                                         };
 
@@ -804,9 +1061,9 @@ const page = async (check_href = true, newTab = undefined) => {
                                         document.getElementById('theme-panel').insertAdjacentHTML(
                                              'beforeend',
                                              `<button id="restore-theme" class="danger">
-                                             ${svg.trash}
-                                             Restore cloud version
-                                        </button>`
+                                                  ${svg.trash}
+                                                  ${dict[lang].buttons.restoreFromCloud}
+                                             </button>`
                                         );
                                         document.getElementById('restore-theme').onclick =
                                              restoreTheme;
@@ -853,7 +1110,7 @@ const page = async (check_href = true, newTab = undefined) => {
 
                                    loading_div.insertAdjacentHTML(
                                         'afterbegin',
-                                        getLoader('Restoring theme...')
+                                        getLoader(dict[lang].loader.restoringTheme)
                                    );
                                    document.getElementById('theme-container').prepend(loading_div);
 
@@ -875,8 +1132,9 @@ const page = async (check_href = true, newTab = undefined) => {
 
                                    let remoteCss;
 
-                                   document.getElementById('theme-container').innerHTML =
-                                        getLoader('Downloading code...');
+                                   document.getElementById('theme-container').innerHTML = getLoader(
+                                        dict[lang].loader.loadingCode
+                                   );
 
                                    if (theme.local || theme.edited) remoteCss = theme.sourceCSS;
                                    else {
@@ -893,7 +1151,9 @@ const page = async (check_href = true, newTab = undefined) => {
                                                   <input
                                                        id="theme-link"
                                                        type="text"
-                                                       placeholder="https://example.com or *"
+                                                       placeholder="${
+                                                            dict[lang].labels.linkPlaceholder
+                                                       }"
                                                        value="${userSettings[theme.id]?.link}"
                                                   />
                                              </div>`
@@ -901,23 +1161,19 @@ const page = async (check_href = true, newTab = undefined) => {
                                    }
                                    <div id="theme-code"></div>
                                    <label id="theme-ps" class="dimmed">
-                                        * @import url('https://coolstyles.css') not supported
+                                        ${dict[lang].labels.importNotSupported}
                                    </label>
                                    <div id="theme-panel">
                                         <button id="save-theme">
                                              ${svg.save}
-                                             Save locally
-                                        </button>
-                                        <button id="copy-code" style="display:none">
-                                             ${svg.copy}
-                                             Copy code
+                                             ${dict[lang].buttons.saveLocally}
                                         </button>
                                         ${
                                              !theme.local && userSettings[theme.id]?.edited
                                                   ? `
                                                   <button id="restore-theme" class="danger">
                                                        ${svg.trash}
-                                                       Restore cloud version
+                                                       ${dict[lang].buttons.restoreFromCloud}
                                                   </button>`
                                                   : ''
                                         }
@@ -977,13 +1233,6 @@ const page = async (check_href = true, newTab = undefined) => {
                                              .addEventListener('keydown', keyDownHandler);
                                    }
 
-                                   document.getElementById('copy-code').onclick = () =>
-                                        navigator.clipboard
-                                             .writeText(editor.getValue())
-                                             .then(() => {
-                                                  alert('Copied!');
-                                             });
-
                                    saveTheme.onclick = saveCode;
                                    try {
                                         document.getElementById('restore-theme').onclick =
@@ -1036,11 +1285,11 @@ const page = async (check_href = true, newTab = undefined) => {
                          <div id="top-local-panel">
                               <button class="createTheme" >
                                    ${svg.add}
-                                   Create theme
+                                   ${dict[lang].buttons.createTheme}
                               </button>
                               <button id="import-theme" class="importTheme">
                                    ${svg.import}
-                                   Import theme
+                                   ${dict[lang].buttons.importTheme}
                               </button>
                          </div>
                          `
