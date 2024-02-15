@@ -2,16 +2,18 @@
      --surface-primary: rgb(38, 44, 60);
      --surface-secondary: rgb(28, 32, 42);
      --surface-tertiary: rgb(19, 22, 30);
+
      --main-surface-secondary: var(--surface-secondary);
      --main-surface-tertiary: var(--surface-secondary);
+
      --sidebar-surface-primary: var(--surface-tertiary);
      --sidebar-surface-secondary: var(--surface-secondary);
+     --sidebar-surface-tertiary: var(--surface-primary);
      --popover-surface-primary: var(--surface-tertiary);
 }
 
 body {
      background: var(--surface-tertiary);
-     border-radius: 20px;
 }
 
 main {
@@ -21,20 +23,17 @@ main {
 }
 
 div.relative.flex.w-full.flex-col:not(.overflow-hidden) {
-     border-radius: 20px;
      padding: 10px;
      background-color: var(--surface-primary);
 }
 
 div.flex.flex-col.pt-2 {
-     border-radius: 20px;
      padding: 0;
      background-color: var(--surface-primary);
 }
 
 .dark .dark\:radix-state-active\:bg-token-surface-tertiary[data-state='active'],
 .dark .dark\:hover\:bg-\[\#494A54\]:hover,
-button[type='button'][role='switch'][aria-checked='false'],
 .bg-token-surface-secondary,
 .dark .dark\:bg-gray-700,
 .bg-token-surface-tertiary,
@@ -48,7 +47,11 @@ button[type='button'][role='switch'][aria-checked='false'],
 .dark .dark\:text-gray-300,
 div.sticky.bg-token-main-surface-primary,
 .bg-token-surface-primary,
-.bg-token-main-surface-tertiary {
+.bg-token-main-surface-tertiary,
+.hover\:bg-token-main-surface-secondary:hover,
+.radix-state-active\:bg-token-main-surface-tertiary[data-state='active'],
+button[type='button'][role='switch'][aria-checked='false'],
+.bg-token-main-surface-secondary {
      background-color: var(--surface-secondary);
 }
 
@@ -76,7 +79,6 @@ div[role='dialog'],
 
 .bg-token-sidebar-surface-secondary .pr-2 {
      background: var(--surface-secondary);
-     border-radius: 20px;
 }
 
 pre div.bg-gray-950 {
@@ -98,6 +100,12 @@ div.relative.p-1.rounded-sm.h-9,
      background-color: rgb(235, 107, 107);
 }
 
+body,
+div[role='dialog'] div.overflow-y-auto,
+.bg-token-sidebar-surface-secondary .pr-2,
+div.flex.flex-col.pt-2,
+div.relative.flex.w-full.flex-col:not(.overflow-hidden),
+div.scrollbar-trigger.relative.h-full.w-full,
 .rounded-lg,
 .rounded-xl,
 .btn,
@@ -122,7 +130,6 @@ div.sticky.top-0.mb-1\.5.flex.items-center.justify-between.z-10.h-14.p-2.font-se
 }
 
 div.scrollbar-trigger.relative.h-full.w-full {
-     border-radius: 20px;
      overflow: hidden;
 }
 
