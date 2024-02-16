@@ -2,15 +2,26 @@
      --surface-primary: #090909;
      --surface-secondary: black;
      --surface-tertiary: black;
-
      --sidebar-surface-secondary: var(--surface-primary);
      --main-surface-secondary: var(--surface-primary);
      --main-surface-tertiary: var(--surface-primary);
 }
 
-body {
-     background: var(--surface-tertiary);
+main {
+     border-top-left-radius: 24px;
+     border-bottom-left-radius: 24px;
 }
+
+.dark .dark\:bg-gray-800,
+.dark .dark\:bg-gray-900,
+.dark .btn-neutral,
+div.sticky.bg-token-main-surface-primary,
+pre div.bg-gray-950,
+main {
+     background-color: var(--surface-secondary);
+}
+
+body,
 nav,
 div.sticky,
 h3.font-medium.text-ellipsis.overflow-hidden,
@@ -19,43 +30,23 @@ div.absolute.bottom-full.left-0.z-20,
 div[role='dialog'] {
      background-color: var(--surface-tertiary);
 }
-main {
-     border-top-left-radius: 24px;
-     border-bottom-left-radius: 24px;
-
-     background-color: var(--surface-secondary);
-}
-
-div.relative.flex.w-full.flex-col:not(.overflow-hidden) {
-     padding: 10px;
-     background-color: var(--surface-primary);
-}
-
-div.flex.flex-col.pt-2 {
-     padding: 0;
-     background-color: var(--surface-primary);
-}
-
-.dark .dark\:bg-gray-800,
-.dark .dark\:bg-gray-900,
-.dark .btn-neutral,
-div.sticky.bg-token-main-surface-primary,
-pre div.bg-gray-950 {
-     background-color: var(--surface-secondary);
-}
 
 .dark .dark\:bg-gray-700,
 .bg-token-surface-tertiary,
 .dark .dark\:bg-gray-800\/90,
-.hover\:bg-token-sidebar-surface-secondary:hover {
+.hover\:bg-token-sidebar-surface-secondary:hover,
+div.relative.flex.w-full.flex-col:not(.overflow-hidden),
+div.flex.flex-col.pt-2,
+.dark .dark\:radix-state-active\:bg-token-surface-tertiary[data-state='active'],
+.dark .dark\:hover\:bg-\[\#494A54\]:hover,
+button[type='button'][role='switch'][aria-checked='false'],
+.bg-token-surface-secondary {
      background-color: var(--surface-primary);
 }
 
-.bg-token-surface-primary {
-     background-color: var(--surface-secondary);
-}
-
-.dark .dark\:text-gray-300 {
+.bg-token-surface-primary,
+.dark .dark\:text-gray-300,
+div.flex-shrink-0.overflow-x-hidden.bg-token-sidebar-surface-primary {
      background-color: var(--surface-secondary);
 }
 
@@ -71,15 +62,14 @@ pre div.bg-gray-950 {
      --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.dark .dark\:radix-state-active\:bg-token-surface-tertiary[data-state='active'],
-.dark .dark\:hover\:bg-\[\#494A54\]:hover,
-button[type='button'][role='switch'][aria-checked='false'] {
-     background-color: var(--surface-primary);
+div.relative.flex.w-full.flex-col:not(.overflow-hidden) {
+     padding: 10px;
 }
 
-.bg-token-surface-secondary {
-     background-color: var(--surface-primary);
+div.flex.flex-col.pt-2 {
+     padding: 0;
 }
+
 .to-transparent {
      --tw-gradient-to: transparent var(--gray-900);
 }
@@ -131,4 +121,12 @@ div.flex.flex-1.text-base.mx-auto {
 
 .prose :where(ol):not(:where([class~='not-prose'] *)) {
      padding-left: 2em;
+}
+
+div.relative.flex.w-full.flex-col:not(.overflow-hidden) {
+     padding: 10px;
+}
+
+div.flex.flex-col.pt-2 {
+     padding: 0;
 }
