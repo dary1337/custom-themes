@@ -9,10 +9,13 @@ body,
 .news-block,
 .release-subseditors,
 .modal-content,
+.sponsor_url a,
 .table-hover *:hover {
      background-color: #070707;
      color: rgb(226 226 226);
 }
+
+.sponsor_container,
 .release-franchise-container {
      background: #070707 !important;
      border: none;
