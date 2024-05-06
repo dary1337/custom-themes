@@ -66,8 +66,14 @@ div.relative.flex.w-full.flex-col:not(.overflow-hidden) {
      padding: 10px;
 }
 
-div.flex.flex-col.pt-2 {
+div.flex.flex-col.pt-2  {
+     margin: 10px;
+     background-color: var(--surface-secondary);
+}
+
+nav div.flex.flex-col.pt-2 {
      padding: 0;
+     background-color: var(--surface-primary);
 }
 
 .to-transparent {

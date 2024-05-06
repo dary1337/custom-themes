@@ -2,10 +2,8 @@
      --surface-primary: rgb(38, 44, 60);
      --surface-secondary: rgb(28, 32, 42);
      --surface-tertiary: rgb(19, 22, 30);
-
      --main-surface-secondary: var(--surface-secondary);
      --main-surface-tertiary: var(--surface-secondary);
-
      --sidebar-surface-primary: var(--surface-tertiary);
      --sidebar-surface-secondary: var(--surface-secondary);
      --sidebar-surface-tertiary: var(--surface-primary);
@@ -27,7 +25,12 @@ div.relative.flex.w-full.flex-col:not(.overflow-hidden) {
      background-color: var(--surface-primary);
 }
 
-div.flex.flex-col.pt-2 {
+div.flex.flex-col.pt-2:not(.absolute.bottom-full.left-0.right-0)>.flex.flex-col.pt-2 {
+     padding: initial;
+     background-color: initial;
+}
+
+nav div.flex.flex-col.pt-2 {
      padding: 0;
      background-color: var(--surface-primary);
 }

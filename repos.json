@@ -18,35 +18,35 @@
                "name": "Chat-GPT Amoled",
                "author": "yuri",
                "authorLink": "https://github.com/dary1337",
-               "link": "https://chat.openai.com",
+               "link": "https://chatgpt.com",
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/chatgpt-amoled",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/chatgpt-amoled/chatgpt-amoled.css",
                "screenshots": [
                     "https://cdn.discordapp.com/attachments/754302458129547344/1202136201902182430/image.png?ex=65cc5b95&is=65b9e695&hm=4b7f4af5e780870a970bd1a312ade20add33d2a7cdf277ff53dd5ea757e0103e&",
                     "https://cdn.discordapp.com/attachments/754302458129547344/1202136438389608549/image.png?ex=65cc5bcd&is=65b9e6cd&hm=55d209f2a84aa38bb8ec4664e9f9cf25cec4e7dc17087d9ed9cf1be1628b183f&"
                ],
-               "version": "1.0.5"
+               "version": "1.0.6"
           },
           {
                "id": 1706780477,
                "name": "Material GPT",
                "author": "yuri",
                "authorLink": "https://github.com/dary1337",
-               "link": "https://chat.openai.com",
+               "link": "https://chatgpt.com",
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/material-gpt",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/material-gpt/material-gpt.css",
                "screenshots": [
                     "https://cdn.discordapp.com/attachments/754302458129547344/1202167509953040414/image.png?ex=65cc78bd&is=65ba03bd&hm=0e89d16c16b17c9f92f899bc3d4364e9969b929668442278943edfb037118317&",
                     "https://cdn.discordapp.com/attachments/754302458129547344/1202171100478308382/image.png?ex=65cc7c15&is=65ba0715&hm=ea69b6c51ce65629f1bdbf7bd0a46ef4e6a19089b72790238fc0aaec65c800b7&"
                ],
-               "version": "1.0.9"
+               "version": "1.0.10"
           },
           {
                "id": 1706780481,
                "name": "YouTube Amoled",
                "author": "yuri",
                "authorLink": "https://github.com/dary1337",
-               "link": "https://www.youtube.com",
+               "link": "https://youtube.com",
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/youtube-amoled",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/youtube-amoled/youtube-amoled.css",
                "screenshots": [
