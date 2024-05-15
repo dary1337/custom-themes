@@ -5,6 +5,8 @@
 */
 'use strict';
 
+const isChromeStoreBuild = false;
+
 const isFullPage = window.innerWidth >= 290;
 
 let //
@@ -244,12 +246,12 @@ const dict = {
                     id: 'checkForUpdate',
                     name: 'Check for updates',
                     description: 'Notifies only about important updates',
-                    default: true,
+                    default: !isChromeStoreBuild,
                },
                {
                     id: 'showScreenshots',
                     name: 'Show screenshots in theme info',
-                    default: true,
+                    default: false,
                },
           ],
           loader: {
@@ -322,7 +324,7 @@ function getCurrentVersion() {
 }
 
 function checkUpdates() {
-     if (!extensionSettings.checkForUpdate) return;
+     if (!extensionSettings.checkForUpdate || isChromeStoreBuild) return;
 
      fetch(links.versionLink)
           .then((response) => response.text())
