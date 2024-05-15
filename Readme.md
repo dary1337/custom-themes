@@ -1,4 +1,6 @@
-# [Download](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
+# [Chrome Store](https://chromewebstore.google.com/detail/custom-themes/bepolblndbcmpffmmoedkdlpdkfenikn?hl=en)
+# [GitHub Version](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
+
 
 # Custom Themes - something that pleases the eye
 
