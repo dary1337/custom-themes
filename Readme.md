@@ -1,4 +1,4 @@
-# [Chrome Store](https://chromewebstore.google.com/detail/custom-themes/bepolblndbcmpffmmoedkdlpdkfenikn?hl=en)
+# [Chrome Store](https://chromewebstore.google.com/detail/custom-themes/bepolblndbcmpffmmoedkdlpdkfenikn?hl=en) - recommended
 # [GitHub Version](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
 
 
