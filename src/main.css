@@ -100,7 +100,8 @@ body > div {
 /* full page */
 @media screen and (min-width: 290px) {
      #extensionPopup {
-          max-width: 20%;
+          max-width: 315px;
+          width: 20%;
           min-width: 282px;
           height: 100%;
           margin-top: 10px;
@@ -609,14 +610,14 @@ a,
 }
 
 .switch-input input:checked + .slider::before {
-     transform: translateX(19px);
+     transform: translateX(20px);
 }
 
 .switch-input .slider::before {
      display: flex;
      content: '';
-     height: 19px;
-     width: 19px;
+     height: 18px;
+     width: 18px;
      background-color: var(--secondary);
      border-radius: 100%;
      transform: translateX(2px);

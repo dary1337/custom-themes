@@ -1,6 +1,5 @@
 /**
  @todo
-     go to chrome store
      search
 */
 'use strict';

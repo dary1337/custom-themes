@@ -8,9 +8,7 @@
                "link": "*",
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/smaller-scrollbar",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/smaller-scrollbar/smaller-scrollbar.css",
-               "screenshots": [
-                    "https://cdn.discordapp.com/attachments/754302458129547344/1202567569203142656/image.png?ex=65cded53&is=65bb7853&hm=e876ebc846afd90f8744d6bb528e09ebc104355fbbd1f6d4c4599e36d4dd6606&"
-               ],
+               "screenshots": [],
                "version": "1.0.2"
           },
           {
@@ -21,10 +19,7 @@
                "link": "https://chatgpt.com",
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/chatgpt-amoled",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/chatgpt-amoled/chatgpt-amoled.css",
-               "screenshots": [
-                    "https://cdn.discordapp.com/attachments/754302458129547344/1202136201902182430/image.png?ex=65cc5b95&is=65b9e695&hm=4b7f4af5e780870a970bd1a312ade20add33d2a7cdf277ff53dd5ea757e0103e&",
-                    "https://cdn.discordapp.com/attachments/754302458129547344/1202136438389608549/image.png?ex=65cc5bcd&is=65b9e6cd&hm=55d209f2a84aa38bb8ec4664e9f9cf25cec4e7dc17087d9ed9cf1be1628b183f&"
-               ],
+               "screenshots": [],
                "version": "1.0.6"
           },
           {
@@ -36,8 +31,6 @@
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/material-gpt",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/material-gpt/material-gpt.css",
                "screenshots": [
-                    "https://cdn.discordapp.com/attachments/754302458129547344/1202167509953040414/image.png?ex=65cc78bd&is=65ba03bd&hm=0e89d16c16b17c9f92f899bc3d4364e9969b929668442278943edfb037118317&",
-                    "https://cdn.discordapp.com/attachments/754302458129547344/1202171100478308382/image.png?ex=65cc7c15&is=65ba0715&hm=ea69b6c51ce65629f1bdbf7bd0a46ef4e6a19089b72790238fc0aaec65c800b7&"
                ],
                "version": "1.0.10"
           },
@@ -49,10 +42,7 @@
                "link": "https://youtube.com",
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/youtube-amoled",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/youtube-amoled/youtube-amoled.css",
-               "screenshots": [
-                    "https://cdn.discordapp.com/attachments/754302458129547344/1202200010071232543/image.png?ex=65cc9702&is=65ba2202&hm=2ce15775063cc30fe439871b6a8f03478542296a47aaee2002de618853982c25&",
-                    "https://cdn.discordapp.com/attachments/754302458129547344/1202200245090656296/image.png?ex=65cc973a&is=65ba223a&hm=5afbb892edca3fcdd2e95c6e94dd2874b44551663298c5206bd3cff671aec58c&"
-               ],
+               "screenshots": [],
                "version": "1.0.2"
           },
           {
