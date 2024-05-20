@@ -39,6 +39,8 @@ async function setValues() {
      );
 
      dict[lang].settings.forEach((x) => {
+          if (x.id === undefined) return;
+
           if (extensionSettings[x.id] === undefined) setSetting(x.id, x.default);
      });
 
@@ -151,16 +153,18 @@ const dict = {
                     description: 'Отключить обновление доступных тем',
                     default: false,
                },
-               {
-                    id: 'checkForUpdate',
-                    name: 'Проверять обновления',
-                    description: 'Уведомляет только о важных обновлениях',
-                    default: true,
-               },
+               isChromeStoreBuild
+                    ? {}
+                    : {
+                           id: 'checkForUpdate',
+                           name: 'Проверять обновления',
+                           description: 'Уведомляет только о важных обновлениях',
+                           default: !isChromeStoreBuild,
+                      },
                {
                     id: 'showScreenshots',
                     name: 'Показывать скриншоты в информации о теме',
-                    default: true,
+                    default: false,
                },
           ],
           loader: {
@@ -241,12 +245,14 @@ const dict = {
                     description: 'Disable updating of available themes',
                     default: false,
                },
-               {
-                    id: 'checkForUpdate',
-                    name: 'Check for updates',
-                    description: 'Notifies only about important updates',
-                    default: !isChromeStoreBuild,
-               },
+               isChromeStoreBuild
+                    ? {}
+                    : {
+                           id: 'checkForUpdate',
+                           name: 'Check for updates',
+                           description: 'Notifies only about important updates',
+                           default: !isChromeStoreBuild,
+                      },
                {
                     id: 'showScreenshots',
                     name: 'Show screenshots in theme info',
@@ -537,6 +543,8 @@ function openSettings() {
      const settings = dict[lang].settings;
 
      settings.forEach((setting) => {
+          if (setting.id === undefined) return;
+
           document.querySelector('container').insertAdjacentHTML(
                'beforeend',
                `<div class="switch-container">
