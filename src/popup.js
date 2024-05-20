@@ -196,11 +196,7 @@ const dict = {
                importNotSupported: '* @import url("https://coolstyles.css") не поддерживается',
                linkPlaceholder: 'https://example.com или *',
           },
-          changelog: [
-               'Добавлена кнопка предложения темы',
-               'Добавлены скриншоты в информацию о теме',
-               'Добавлен русский язык',
-          ],
+          changelog: ['Релиз в магазине расширений Chrome'],
      },
      en: {
           tabs: {
@@ -291,9 +287,7 @@ const dict = {
           },
           changelog: [
                //
-               'Added theme suggest button',
-               'Added screenshots in theme info',
-               'Added russian language',
+               'Release in the Chrome Extension Store',
           ],
      },
 };
