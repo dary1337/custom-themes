@@ -8,7 +8,9 @@
                "link": "*",
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/smaller-scrollbar",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/smaller-scrollbar/smaller-scrollbar.css",
-               "screenshots": [],
+               "screenshots": [
+                    "https://github.com/dary1337/custom-themes/blob/master/themes/smaller-scrollbar/screenshots/1.png"
+               ],
                "version": "1.0.2"
           },
           {
@@ -19,7 +21,10 @@
                "link": "https://chatgpt.com",
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/chatgpt-amoled",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/chatgpt-amoled/chatgpt-amoled.css",
-               "screenshots": [],
+               "screenshots": [
+                    "https://github.com/dary1337/custom-themes/blob/master/themes/chatgpt-amoled/screenshots/1.png",
+                    "https://github.com/dary1337/custom-themes/blob/master/themes/chatgpt-amoled/screenshots/2.png"
+               ],
                "version": "1.0.7"
           },
           {
@@ -30,7 +35,10 @@
                "link": "https://chatgpt.com",
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/material-gpt",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/material-gpt/material-gpt.css",
-               "screenshots": [],
+               "screenshots": [
+                    "https://github.com/dary1337/custom-themes/blob/master/themes/material-gpt/screenshots/1.png",
+                    "https://github.com/dary1337/custom-themes/blob/master/themes/material-gpt/screenshots/2.png"
+               ],
                "version": "1.0.11"
           },
           {
@@ -41,7 +49,10 @@
                "link": "https://youtube.com",
                "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/youtube-amoled",
                "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/youtube-amoled/youtube-amoled.css",
-               "screenshots": [],
+               "screenshots": [
+                    "https://github.com/dary1337/custom-themes/blob/master/themes/youtube-amoled/screenshots/1.png",
+                    "https://github.com/dary1337/custom-themes/blob/master/themes/youtube-amoled/screenshots/2.png"
+               ],
                "version": "1.0.3"
           },
           {
