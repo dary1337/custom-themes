@@ -462,6 +462,13 @@ main {
 .edited-info {
      width: 14px;
      height: 14px;
+
+     &:hover {
+          svg {
+               background-color: transparent;
+               fill: var(--primary);
+          }
+     }
 }
 .edited-info svg {
      width: 100%;

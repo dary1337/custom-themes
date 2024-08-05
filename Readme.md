@@ -1,6 +1,6 @@
 # [Chrome Store](https://chromewebstore.google.com/detail/custom-themes/bepolblndbcmpffmmoedkdlpdkfenikn?hl=en) - recommended
-# [GitHub Version](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
 
+# [GitHub Version](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
 
 # Custom Themes - something that pleases the eye
 
@@ -37,7 +37,7 @@
 -    Themes from the community
 -    Create and share your themes
 
-# How to install ?
+# How to install `GitHub` version ?
 
 -    Download [zip](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
 -    Unpack
@@ -48,7 +48,7 @@
 -    Enable extension in incognito (if needed)
 -    Done
 
-# How to update ?
+# How to update `GitHub` version ?
 
 -    If an update is available, you will see "Update extension" button
 -    Download [zip](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)

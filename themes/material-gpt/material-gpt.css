@@ -1,8 +1,13 @@
-.dark,.dark .popover {
+* {
+     scrollbar-color: #cfc9c5 transparent;
+     scrollbar-width: thin;
+}
+
+.dark {
      --surface-primary: rgb(38, 44, 60);
      --surface-secondary: rgb(28, 32, 42);
      --surface-tertiary: rgb(19, 22, 30);
-     
+
      --main-surface-secondary: var(--surface-secondary);
      --main-surface-tertiary: var(--surface-secondary);
      --sidebar-surface-primary: var(--surface-tertiary);
@@ -26,7 +31,7 @@ div.relative.flex.w-full.flex-col:not(.overflow-hidden) {
      background-color: var(--surface-primary);
 }
 
-div.flex.flex-col.pt-2:not(.absolute.bottom-full.left-0.right-0)>.flex.flex-col.pt-2 {
+div.flex.flex-col.pt-2:not(.absolute.bottom-full.left-0.right-0) > .flex.flex-col.pt-2 {
      padding: initial;
      background-color: initial;
 }
@@ -63,11 +68,24 @@ button[type='button'][role='switch'][aria-checked='false'] {
 nav,
 div.sticky,
 h3.font-medium.text-ellipsis.overflow-hidden,
-div.absolute.bottom-full.left-0.z-20,
+/* div.absolute.bottom-full.left-0.z-20, */
 .bg-token-main-surface-primary,
 div[role='dialog'],
 .dark .btn-neutral {
      background-color: var(--surface-tertiary);
+}
+.dark .btn-secondary {
+     background-color: var(--surface-secondary);
+
+     &:hover {
+          background-color: var(--surface-primary);
+     }
+}
+
+.dark div[role='menuitem'] {
+     &:hover {
+          background-color: var(--surface-primary);
+     }
 }
 
 .dark .dark\:from-gray-700 {
@@ -126,7 +144,8 @@ div[role='menuitem'],
 textarea,
 a[as='button'],
 div.rounded-md.bg-token-main-surface-secondary.text-token-text-secondary.text-sm,
-div.sticky.top-0.mb-1\.5.flex.items-center.justify-between.z-10.h-14.p-2.font-semibold.bg-token-main-surface-primary {
+div.sticky.top-0.mb-1\.5.flex.items-center.justify-between.z-10.h-14.p-2.font-semibold.bg-token-main-surface-primary,
+div[data-radix-popper-content-wrapper] * {
      border-radius: 20px;
 }
 

@@ -1,6 +1,9 @@
 /**
  @todo
      search
+     auto update themes in background
+     rewrite to vue3 + ts
+     add support for @import in css
 */
 'use strict';
 
@@ -196,7 +199,10 @@ const dict = {
                importNotSupported: '* @import url("https://coolstyles.css") не поддерживается',
                linkPlaceholder: 'https://example.com или *',
           },
-          changelog: ['Релиз в магазине расширений Chrome'],
+          changelog: [
+               //
+               'Добавлена иконка расширения',
+          ],
      },
      en: {
           tabs: {
@@ -287,7 +293,7 @@ const dict = {
           },
           changelog: [
                //
-               'Release in the Chrome Extension Store',
+               'Added extension icon',
           ],
      },
 };

@@ -14,6 +14,13 @@ html[dark],
      --yt-spec-menu-background: #181818;
 }
 
+/* disable ambient mode */
+#cinematics {
+     canvas {
+          display: none;
+     }
+}
+
 ytd-watch-flexy[full-bleed-player] #secondary.ytd-watch-flexy {
      margin-top: 44px;
 }

@@ -1,3 +1,8 @@
+* {
+     scrollbar-color: #6e6e6e transparent;
+     scrollbar-width: thin;
+}
+
 .dark {
      --surface-primary: #090909;
      --surface-secondary: black;

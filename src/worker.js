@@ -48,8 +48,13 @@ chrome.webNavigation.onCommitted.addListener(async (details) => {
           const url = details.url;
 
           if (url) {
-               const loaded = await loadStylesInTab(tabId, url);
-               console.log(`Loaded ${loaded} styles:`, url, tabId);
+               try {
+                    const loaded = await loadStylesInTab(tabId, url);
+                    console.log(`Loaded ${loaded} styles:`, url, tabId);
+               } catch (e) {
+                    console.log('Failed to load styles in tab:', url, tabId);
+                    console.log('catch', e);
+               }
           }
      }
 });
