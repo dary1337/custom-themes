@@ -27,7 +27,8 @@ html[dark],
     }
 }
 
-ytd-masthead[frosted-glass='with-chipbar'] #background.ytd-masthead {
+ytd-masthead[frosted-glass='with-chipbar'] #background.ytd-masthead,
+ytd-masthead[frosted-glass='without-chipbar'] #background.ytd-masthead {
     background: rgba(0, 0, 0, 0.8);
 }
 
