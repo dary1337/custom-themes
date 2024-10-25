@@ -56,6 +56,17 @@
             "version": "1.0.5"
         },
         {
+            "id": 1729829684,
+            "name": "YouTube Music",
+            "author": "yuri",
+            "authorLink": "https://github.com/dary1337",
+            "link": "https://music.youtube.com",
+            "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/youtube-music",
+            "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/youtube-music/youtube-music.css",
+            "screenshots": [],
+            "version": "1.0.0"
+        },
+        {
             "id": 1706780485,
             "name": "Anilibria Amoled",
             "author": "yuri",

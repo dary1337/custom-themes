@@ -1,0 +1,17 @@
+ytmusic-player-bar {
+    justify-content: center;
+    transform: translate(50%, 0);
+    background-color: rgb(0, 0, 0, 0.95);
+    border-radius: 20px;
+    width: 50vw;
+    bottom: 10px;
+    overflow: hidden;
+}
+
+#player-bar-background {
+    display: none;
+}
+
+ytmusic-app-layout:not([is-mweb-modernization-enabled]) > [slot='player-page'] {
+    height: calc(100vh - var(--ytmusic-nav-bar-height));
+}
