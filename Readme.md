@@ -4,19 +4,20 @@
 
 # Custom Themes - something that pleases the eye
 
--    Author's
+-   Author's
 
-     -    [Smaller Scrollbar](https://github.com/dary1337/custom-themes/tree/master/themes/smaller-scrollbar)
-     -    [Chat-GPT Amoled](https://github.com/dary1337/custom-themes/tree/master/themes/smaller-scrollbar)
-     -    [Material GPT](https://github.com/dary1337/custom-themes/tree/master/themes/material-gpt)
-     -    [YouTube Amoled](https://github.com/dary1337/custom-themes/tree/master/themes/youtube-amoled)
-     -    [Anilibria Amoled](https://github.com/dary1337/anilibria-amoled)
-     -    [Win10T Forum Fix](https://github.com/dary1337/custom-themes/tree/master/themes/win10t-forum-fix)
+    -   [Smaller Scrollbar](https://github.com/dary1337/custom-themes/tree/master/themes/smaller-scrollbar)
+    -   [Chat-GPT Amoled](https://github.com/dary1337/custom-themes/tree/master/themes/smaller-scrollbar)
+    -   [Material GPT](https://github.com/dary1337/custom-themes/tree/master/themes/material-gpt)
+    -   [YouTube Amoled](https://github.com/dary1337/custom-themes/tree/master/themes/youtube-amoled)
+    -   [YouTube Music](https://github.com/dary1337/custom-themes/tree/master/themes/youtube-music)
+    -   [Anilibria Amoled](https://github.com/dary1337/anilibria-amoled)
+    -   [Win10T Forum Fix](https://github.com/dary1337/custom-themes/tree/master/themes/win10t-forum-fix)
 
--    Community
-     -    [Material Discord](https://github.com/CapnKitten/Material-Discord)
-     -    [AMOLED-Cord](https://github.com/LuckFire/amoled-cord)
-     -    Write to me to suggest a theme
+-   Community
+    -   [Material Discord](https://github.com/CapnKitten/Material-Discord)
+    -   [AMOLED-Cord](https://github.com/LuckFire/amoled-cord)
+    -   Write to me to suggest a theme
 
 # Screenshots:
 
@@ -32,25 +33,25 @@
 
 # Possibilities:
 
--    Quickly change themes
--    Ease of use
--    Themes from the community
--    Create and share your themes
+-   Quickly change themes
+-   Ease of use
+-   Themes from the community
+-   Create and share your themes
 
 # How to install `GitHub` version ?
 
--    Download [zip](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
--    Unpack
--    Go to `chrome://extensions/` tab
--    Enable developer mode
--    Click "Load unpacked"
--    Choose unpacked folder
--    Enable extension in incognito (if needed)
--    Done
+-   Download [zip](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
+-   Unpack
+-   Go to `chrome://extensions/` tab
+-   Enable developer mode
+-   Click "Load unpacked"
+-   Choose unpacked folder
+-   Enable extension in incognito (if needed)
+-   Done
 
 # How to update `GitHub` version ?
 
--    If an update is available, you will see "Update extension" button
--    Download [zip](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
--    Unpack and replace files in your extension folder
--    Reload the extension
+-   If an update is available, you will see "Update extension" button
+-   Download [zip](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
+-   Unpack and replace files in your extension folder
+-   Reload the extension
