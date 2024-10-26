@@ -1,18 +1,19 @@
 {
-     "manifest_version": 3,
-     "name": "Custom Themes",
-     "version": "1.1.4",
-     "description": "__MSG_Description__",
-     "default_locale": "en",
-     "permissions": ["scripting", "storage", "webNavigation"],
-     "host_permissions": ["https://*/*"],
-     "action": {
-          "default_popup": "index.html"
-     },
-     "background": {
-          "service_worker": "src/worker.js"
-     },
-     "icons": {
-          "32": "icon32.png"
-     }
+    "manifest_version": 3,
+    "name": "Custom Themes",
+    "version": "1.1.5",
+    "description": "__MSG_Description__",
+    "default_locale": "en",
+    "permissions": ["scripting", "storage", "webNavigation"],
+    "host_permissions": ["https://*/*"],
+    "action": {
+        "default_popup": "index.html"
+    },
+    "background": {
+        "service_worker": "src/worker.js"
+    },
+    "icons": {
+        "16": "icon16.png",
+        "32": "icon32.png"
+    }
 }

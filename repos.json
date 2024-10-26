@@ -100,7 +100,13 @@
             "link": "https://discord.com",
             "repoLink": "https://github.com/CapnKitten/Material-Discord",
             "cssLink": "https://capnkitten.github.io/BetterDiscord/Themes/Material-Discord/css/source.css",
-            "screenshots": [],
+            "screenshots": [
+                "https://github.com/user-attachments/assets/11b835a5-01ee-45fc-9bb5-827950d0e8a5",
+                "https://github.com/user-attachments/assets/90fbb99b-49cc-45c1-866f-d94f33ad32dd",
+                "https://github.com/user-attachments/assets/34f16046-8f61-49da-b0ee-f34c68896931",
+                "https://github.com/user-attachments/assets/6fb817ef-4bdb-4d44-9d8b-770b08a51721",
+                "https://github.com/user-attachments/assets/7243e737-9aab-4a94-9cac-41ab20515008"
+            ],
             "version": "Unknown"
         },
         {
@@ -122,7 +128,7 @@
             "link": "https://discord.com",
             "repoLink": "https://github.com/LuckFire/amoled-cord",
             "cssLink": "https://luckfire.github.io/amoled-cord/src/amoled-cord.css",
-            "screenshots": [],
+            "screenshots": ["https://discord-extensions.github.io/assets/banners/amoled-cord.png"],
             "version": "Unknown"
         }
     ]
