@@ -580,7 +580,7 @@ main {
     align-items: center;
     justify-content: center;
     flex-wrap: nowrap;
-    /* margin-bottom: 10px; */
+    margin-bottom: 10px;
     width: 100%;
     position: sticky;
     top: 0;
@@ -681,7 +681,7 @@ a,
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 6px 0 6px 0;
+    padding: 6px;
     flex-direction: row;
 }
 
@@ -714,14 +714,14 @@ a,
 }
 
 .switch-input input:checked + .slider::before {
-    transform: translateX(19px);
+    transform: translateX(20px);
 }
 
 .switch-input .slider::before {
     display: flex;
     content: '';
-    height: 19px;
-    width: 19px;
+    height: 18px;
+    width: 18px;
     background-color: var(--secondary);
     border-radius: 100%;
     transform: translateX(2px);
