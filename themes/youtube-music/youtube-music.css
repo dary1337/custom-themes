@@ -1,17 +1,40 @@
 ytmusic-player-bar {
     justify-content: center;
-    transform: translate(50%, 0);
+    transform: translate3d(20vw, 0, 0);
     background-color: rgb(0, 0, 0, 0.95);
     border-radius: 20px;
-    width: 50vw;
+    width: 60vw;
     bottom: 10px;
     overflow: hidden;
+    transition: width 0.3s ease, transform 0.3s ease, bottom 0.2s ease;
+}
+
+ytmusic-app-layout[player-page-open] ytmusic-player-bar {
+    bottom: 0;
+    overflow: unset;
+    width: 100%;
+    transform: translate3d(0, 0, 0);
+    border-radius: 0;
+}
+
+@media screen and (max-width: 1449px) {
+    ytmusic-player-bar {
+        width: 75vw;
+        transform: translate3d(calc(25vw / 2), 0, 0);
+    }
+}
+
+@media screen and (max-width: 1149px) {
+    ytmusic-player-bar {
+        width: calc(100% - 20px);
+        transform: translate3d(10px, 0, 0);
+    }
+}
+
+ytmusic-player-expanding-menu {
+    background-color: black;
 }
 
 #player-bar-background {
     display: none;
-}
-
-ytmusic-app-layout:not([is-mweb-modernization-enabled]) > [slot='player-page'] {
-    height: calc(100vh - var(--ytmusic-nav-bar-height));
 }
