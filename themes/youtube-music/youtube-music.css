@@ -35,6 +35,11 @@ ytmusic-player-expanding-menu {
     background-color: black;
 }
 
+ytmusic-player[is-mweb-player-bar-modernization-enabled][player-ui-state='PLAYER_BAR_ONLY'] {
+    bottom: 16px;
+    left: 24px;
+}
+
 #player-bar-background {
     display: none;
 }
