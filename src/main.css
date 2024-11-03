@@ -591,6 +591,10 @@ main {
     margin-right: 6px;
 }
 
+#settingsPage container {
+    max-height: 340px;
+}
+
 container {
     display: flex;
     flex-direction: column;
