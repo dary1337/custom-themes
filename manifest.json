@@ -1,16 +1,17 @@
 {
     "manifest_version": 3,
     "name": "Custom Themes",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "description": "__MSG_Description__",
     "default_locale": "en",
-    "permissions": ["scripting", "storage", "webNavigation"],
+    "permissions": ["scripting", "storage", "webNavigation", "alarms"],
     "host_permissions": ["https://*/*"],
     "action": {
         "default_popup": "index.html"
     },
     "background": {
-        "service_worker": "src/worker.js"
+        "service_worker": "src/worker.js",
+        "type": "module"
     },
     "icons": {
         "16": "icon16.png",
