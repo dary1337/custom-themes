@@ -9,6 +9,7 @@ import { dictionary } from './dict.js';
 import {
     getExtensionSettings,
     getUserSettings,
+    loadRepos,
     loadStyles,
     setExtensionSetting,
     updateTheme,
@@ -60,25 +61,6 @@ async function setValues() {
     if (navigator.language.toLocaleLowerCase().startsWith('ru')) dict = dictionary.ru;
 
     await page();
-}
-
-async function loadRepos(useLocal = false) {
-    try {
-        if (useLocal) {
-            const response = await fetch(chrome.runtime.getURL('repos.json'));
-
-            return await response.json();
-        }
-
-        const response = await fetch(links.reposJson, {
-            cache: 'no-cache',
-        });
-
-        return await response.json();
-    } catch (error) {
-        console.error('Failed load repos.json', error);
-        return {};
-    }
 }
 
 function getLoader(text) {

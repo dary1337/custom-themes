@@ -1,3 +1,22 @@
+export async function loadRepos(useLocal = false) {
+    try {
+        if (useLocal) {
+            const response = await fetch(chrome.runtime.getURL('repos.json'));
+
+            return await response.json();
+        }
+
+        const response = await fetch(links.reposJson, {
+            cache: 'no-cache',
+        });
+
+        return await response.json();
+    } catch (error) {
+        console.error('Failed load repos.json', error);
+        return {};
+    }
+}
+
 export async function updateTheme(userSettings, theme, checked, customCSS = undefined) {
     if (!checked && !theme.edited && customCSS === undefined) {
         delete userSettings[theme.id];
@@ -48,13 +67,13 @@ export async function updateThemes(userSettings, repos) {
 }
 
 export async function loadStyles(link) {
-    const href = window.location.href;
+    const href = typeof window !== 'undefined' ? window.location.href : undefined;
 
     try {
         const response = await fetch(link);
         const result = await response.text();
 
-        if (href !== window.location.href) throw '[loadStyles]: throw by href';
+        if (href && href !== window.location.href) throw '[loadStyles]: throw by href';
 
         return result;
     } catch (e) {

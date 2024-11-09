@@ -1,6 +1,7 @@
 import {
     getExtensionSettings,
     getUserSettings,
+    loadRepos,
     setExtensionSetting,
     updateThemes,
 } from './shared.js';
@@ -62,27 +63,34 @@ chrome.webNavigation.onCommitted.addListener(async (details) => {
 
 async function checkForBackgroundUpdates() {
     const extensionSettings = await getExtensionSettings();
+    const ALARM_NAME = 'UPDATE_THEMES';
 
-    const backgroundUpdate = async () => {
+    const backgroundUpdate = async (alarmInfo) => {
+        if (alarmInfo.name !== ALARM_NAME) return;
+
         setExtensionSetting('lastThemesUpdate', new Date().getTime());
 
         const userSettings = await getUserSettings();
-        updateThemes(userSettings);
-        console.log('themes updated in the background');
+        await updateThemes(userSettings, await loadRepos(extensionSettings.useLocalJsonRepo));
+        console.log(new Date().getTime(), 'Themes updated in the background');
     };
 
     if (extensionSettings['backgroundUpdate']) {
-        const ALARM_NAME = 'UPDATE_THEMES';
+        console.log('ALARM_NAME:', ALARM_NAME);
 
         async function createAlarm() {
             const alarm = await chrome.alarms.get(ALARM_NAME);
+            console.log('createAlarm ~ alarm:', alarm);
+
             if (typeof alarm === 'undefined') {
-                console.log('created alarm');
+                console.log('creating alarm');
                 chrome.alarms.create(ALARM_NAME, {
                     delayInMinutes: 1,
                     periodInMinutes: 1440,
                 });
-                backgroundUpdate();
+                await backgroundUpdate({
+                    name: ALARM_NAME,
+                });
             }
         }
 
