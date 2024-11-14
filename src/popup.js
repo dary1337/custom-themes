@@ -4,7 +4,7 @@
 */
 'use strict';
 
-import { isChromeStoreBuild, isFullPage, links, svg } from './conts.js';
+import { isChromeStoreBuild, links, svg } from './conts.js';
 import { dictionary } from './dict.js';
 import {
     getExtensionSettings,
@@ -15,6 +15,8 @@ import {
     updateTheme,
     updateThemes,
 } from './shared.js';
+
+const isFullPage = window.innerWidth >= 290;
 
 let //
     userSettings = {},

@@ -1,7 +1,5 @@
 export const isChromeStoreBuild = chrome.runtime.id === 'bepolblndbcmpffmmoedkdlpdkfenikn';
 
-export const isFullPage = window.innerWidth >= 290;
-
 export const links = {
     repo: 'https://github.com/dary1337/custom-themes',
     newIssue: 'https://github.com/dary1337/custom-themes/issues/new',
