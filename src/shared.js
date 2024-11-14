@@ -1,19 +1,33 @@
+import { links } from './conts.js';
+
 export async function loadRepos(useLocal = false) {
     try {
         if (useLocal) {
-            const response = await fetch(chrome.runtime.getURL('repos.json'));
+            try {
+                const response = await fetch(chrome.runtime.getURL('repos.json'));
 
-            return await response.json();
+                return await response.json();
+            } catch {
+                const repos = await getReposFromStorage();
+
+                if (repos == undefined) throw 'Failed load repos.json from storage and local';
+
+                return repos;
+            }
         }
 
         const response = await fetch(links.reposJson, {
             cache: 'no-cache',
         });
 
-        return await response.json();
+        const repos = await response.json();
+
+        saveReposToStorage(repos);
+
+        return repos;
     } catch (error) {
         console.error('Failed load repos.json', error);
-        return {};
+        return undefined;
     }
 }
 
@@ -159,4 +173,20 @@ export async function getExtensionSettings() {
     console.log('extensionSettings', extensionSettings);
 
     return extensionSettings;
+}
+
+export function saveReposToStorage(repos) {
+    if (!repos || !repos["Author's"] || !repos['Community']) return;
+
+    chrome.storage.local.set({ repos });
+}
+
+export async function getReposFromStorage() {
+    const repos = await new Promise((resolve) =>
+        chrome.storage.local.get('repos', (result) => resolve(result.repos || {}))
+    );
+
+    console.log('reposFromStorage', repos);
+
+    return repos;
 }
