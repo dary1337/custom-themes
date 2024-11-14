@@ -520,14 +520,13 @@ const page = async (check_href = true, newTab = undefined) => {
 
             repos = await loadRepos(extensionSettings.useLocalJsonRepo);
 
-            if (!repos || !repos["Author's"].length) {
+            if (!repos || !repos["Author's"] || !repos["Author's"].length) {
                 document.querySelector('.loader-icon').remove();
-                fetching.textContent = 'Repository are not available';
                 updateBtn.addEventListener('click', () => {
                     extensionSettings.useLocalJsonRepo = true;
                     page();
                 });
-                return;
+                // return;
             }
             //
             else loading_div.remove();
@@ -578,6 +577,9 @@ const page = async (check_href = true, newTab = undefined) => {
             checkUpdates();
         }
 
+        if (!repos || !repos["Author's"] || !repos["Author's"].length)
+            fetching.textContent = activeTab === 'Local' ? '' : 'Repository are not available';
+
         document.querySelector('container').innerHTML = '';
 
         document.querySelectorAll('tab div').forEach((el) => el.classList.remove('selected'));
@@ -604,13 +606,16 @@ const page = async (check_href = true, newTab = undefined) => {
                 console.log(themes);
             }
             //
-            else
+            else {
+                if (!repos && activeTab !== 'Local') return;
+
                 themes =
                     activeTab === 'Local'
                         ? Object.entries(userSettings)
                               .filter(([key, value]) => value.local === true)
                               .map(([key, value]) => value)
                         : repos[activeTab];
+            }
 
             themes.forEach(
                 (
@@ -667,7 +672,7 @@ const page = async (check_href = true, newTab = undefined) => {
                                            : ''
                                    }
                               </div>
-                              <label slider-id="${theme.id}" class="switch-input input-container">
+                              <label slider-id="${theme.id}" class="switch-input">
                                    <input
                                         type="checkbox" 
                                         id="${theme.id}"

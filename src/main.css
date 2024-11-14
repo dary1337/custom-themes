@@ -238,7 +238,6 @@ body > div {
     }
 
     #theme-website input {
-        padding-left: 30px;
         width: 100%;
     }
 
@@ -354,13 +353,18 @@ body > div {
     align-items: center;
     justify-content: flex-end;
     /* justify-content: center; */
+    gap: 6px;
     width: 100%;
     margin-bottom: 10px;
 }
 
 #theme-search {
     width: 90%;
-    margin-right: 6px;
+    border-radius: 20px;
+}
+
+#theme-search:has(input[type='text']:focus) {
+    border-color: var(--primary);
 }
 
 #theme-search-input {
@@ -375,10 +379,6 @@ body > div {
 /* #tabs .input-container svg {
      fill: var(--primary);
 } */
-
-#tabs input:focus {
-    border-color: var(--primary);
-}
 
 #tabs button svg {
     /* fill: var(--text-primary); */
@@ -454,31 +454,29 @@ svg:hover {
 
 input {
     color: var(--text-secondary);
-    border: 1px solid var(--onSurface);
-    border-radius: 10px;
-    background-color: var(--dimmedSurface);
-    padding: 8px;
+    border: none;
     outline: none;
     font-size: 16px;
-}
-
-input[type='text']:focus {
-    border: 1px solid var(--gray);
+    background-color: transparent;
 }
 
 .input-container {
     position: relative;
     display: flex;
     align-items: center;
+    background-color: var(--dimmedSurface);
+    border: 2px solid var(--onSurface);
+    border-radius: 10px;
+    padding: 0 4px 0 4px;
+    transition: border-color 0.15s;
+}
+
+.input-container:has(input[type='text']:focus) {
+    border: 2px solid var(--gray);
 }
 
 .input-container svg {
-    position: absolute;
     pointer-events: none;
-}
-
-.input-container input {
-    padding-left: 30px;
 }
 
 button {
