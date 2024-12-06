@@ -7,6 +7,8 @@
      --surface-primary: #090909;
      --surface-secondary: black;
      --surface-tertiary: black;
+     
+     --message-surface:#0f0f0f;
      --sidebar-surface-primary: var( --surface-secondary)
      --sidebar-surface-secondary: var(--surface-primary);
      --main-surface-secondary: var(--surface-primary);
