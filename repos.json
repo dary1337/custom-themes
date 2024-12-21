@@ -64,10 +64,9 @@
             "repoLink": "https://github.com/dary1337/custom-themes/tree/master/themes/youtube-music",
             "cssLink": "https://raw.githubusercontent.com/dary1337/custom-themes/master/themes/youtube-music/youtube-music.css",
             "screenshots": [
-                "https://github.com/dary1337/custom-themes/blob/master/themes/youtube-music/screenshots/1.png?raw=true",
-                "https://github.com/dary1337/custom-themes/blob/master/themes/youtube-music/screenshots/2.png?raw=true"
+                "https://github.com/dary1337/custom-themes/blob/master/themes/youtube-music/screenshots/1.png?raw=true"
             ],
-            "version": "1.0.2"
+            "version": "1.0.1"
         },
         {
             "id": 1706780485,
@@ -130,6 +129,42 @@
             "repoLink": "https://github.com/LuckFire/amoled-cord",
             "cssLink": "https://luckfire.github.io/amoled-cord/src/amoled-cord.css",
             "screenshots": ["https://discord-extensions.github.io/assets/banners/amoled-cord.png"],
+            "version": "Unknown"
+        },
+        {
+            "id": 1734796691,
+            "name": "jAba Discord Theme",
+            "author": "jAba65",
+            "authorLink": "https://github.com/jAba65",
+            "link": "https://discord.com",
+            "repoLink": "https://github.com/jAba65/jAba-Discord-Theme",
+            "cssLink": "https://github.com/jAba65/jAba-Discord-Theme/releases/download/v1.0/jAba.theme.css",
+            "screenshots": [
+                "https://github.com/jAba65/jAba-Discord-Theme/assets/103503396/589052d7-0cd4-4110-81e8-697c6e5cb931",
+                "https://github.com/jAba65/jAba-Discord-Theme/assets/103503396/da122216-eea2-418e-b017-c7fc2602735d"
+            ],
+            "version": "Unknown"
+        },
+        {
+            "id": 1734796862,
+            "name": "ReCord",
+            "author": "Eject37",
+            "authorLink": "https://github.com/Eject37",
+            "link": "https://discord.com",
+            "repoLink": "https://github.com/Eject37/ReCord",
+            "cssLink": "https://eject37.github.io/DiscordTheme/ReCord.css",
+            "screenshots": ["https://i.imgur.com/mFMszUZ.png"],
+            "version": "Unknown"
+        },
+        {
+            "id": 1734799065,
+            "name": "ProDiscord",
+            "author": "ProChopa",
+            "authorLink": "https://github.com/ProChopa",
+            "link": "https://discord.com",
+            "repoLink": "https://github.com/ProChopa/ProDiscord",
+            "cssLink": "https://prochopa.github.io/ProDiscord/ProDiscord.css",
+            "screenshots": ["https://prochopa.github.io/ProDiscord/ProDiscord.png"],
             "version": "Unknown"
         }
     ]
