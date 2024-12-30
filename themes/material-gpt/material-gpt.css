@@ -21,6 +21,13 @@ body {
     background: var(--surface-tertiary);
 }
 
+body:has(.container span.explanation) {
+    background-color: rgb(19, 22, 30);
+    .container {
+         background-color: rgb(19, 22, 30);
+    }
+}
+
 main {
     border-top-left-radius: 24px;
     border-bottom-left-radius: 24px;

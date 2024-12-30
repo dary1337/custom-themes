@@ -15,6 +15,13 @@
      --main-surface-tertiary: var(--surface-primary);
 }
 
+body:has(.container span.explanation) {
+     background-color: black;
+     .container {
+          background-color: black;
+     }
+}
+
 main {
      border-top-left-radius: 24px;
      border-bottom-left-radius: 24px;

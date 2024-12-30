@@ -43,3 +43,11 @@ ytmusic-player[is-mweb-player-bar-modernization-enabled][player-ui-state='PLAYER
 #player-bar-background {
     display: none;
 }
+
+#primaryProgress {
+    transition: transform 1s;
+}
+
+#sliderKnob {
+    transition: left 1s;
+}
