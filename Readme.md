@@ -17,7 +17,9 @@
 -   Community
     -   [Material Discord](https://github.com/CapnKitten/Material-Discord)
     -   [AMOLED-Cord](https://github.com/LuckFire/amoled-cord)
-    -   Write to me to suggest a theme
+    -   [jAba Discord Theme](https://github.com/jAba65/jAba-Discord-Theme)
+    -   [ReCord](https://github.com/Eject37/ReCord)
+    -   [ProDiscord](https://github.com/ProChopa/ProDiscord)
 
 # Screenshots:
 
@@ -37,10 +39,11 @@
 -   Ease of use
 -   Themes from the community
 -   Create and share your themes
+-   Updating themes in background
 
 # How to install `GitHub` version ?
 
--   Download [zip](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
+-   Download [zip](https://github.com/dary1337/custom-themes/releases/latest)
 -   Unpack
 -   Go to `chrome://extensions/` tab
 -   Enable developer mode
@@ -52,6 +55,6 @@
 # How to update `GitHub` version ?
 
 -   If an update is available, you will see "Update extension" button
--   Download [zip](https://github.com/dary1337/custom-themes/archive/refs/heads/master.zip)
+-   Download [zip](https://github.com/dary1337/custom-themes/releases/latest)
 -   Unpack and replace files in your extension folder
 -   Reload the extension
