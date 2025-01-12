@@ -46,12 +46,13 @@ export async function updateTheme(userSettings, theme, checked, customCSS = unde
 		link: theme.link,
 		checked: checked,
 		compiledCss: await compileCss(
-			customCSS || userSettings[theme.id]?.edited || userSettings[theme.id]?.local
-				? customCSS || userSettings[theme.id].sourceCSS
-				: (sourceCSS = await loadStyles(theme.cssLink))
+			(sourceCSS =
+				customCSS || userSettings[theme.id]?.edited || userSettings[theme.id]?.local
+					? customCSS || userSettings[theme.id].sourceCSS
+					: await loadStyles(theme.cssLink))
 		),
 		edited: theme.edited || !!customCSS,
-		sourceCSS: customCSS || sourceCSS || '',
+		sourceCSS: customCSS || '',
 		local: theme.local || false,
 		name: theme.name,
 	};

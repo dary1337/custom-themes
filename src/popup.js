@@ -892,7 +892,11 @@ const page = async (check_href = true, newTab = undefined) => {
 						};
 
 						async function saveCode() {
-							if (!theme.local && !userSettings[theme.id]?.edited) {
+							if (
+								!theme.local &&
+								!userSettings[theme.id]?.edited &&
+								!document.getElementById('restore-theme')
+							) {
 								document.getElementById('theme-panel').insertAdjacentHTML(
 									'beforeend',
 									`<button id="restore-theme" class="danger">
@@ -1078,12 +1082,7 @@ const page = async (check_href = true, newTab = undefined) => {
 
 					switchInput.onchange = async () => {
 						try {
-							await updateTheme(
-								userSettings,
-								theme,
-								switchInput.checked,
-								userSettings[theme.id]?.sourceCSS || false
-							);
+							await updateTheme(userSettings, theme, switchInput.checked);
 						} catch (error) {
 							switchInput.checked = false;
 							console.error(error);
