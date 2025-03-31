@@ -3,7 +3,8 @@
     scrollbar-width: thin;
 }
 
-.dark {
+.dark,
+.dark :not(.light).popover {
     --surface-primary: rgb(38, 44, 60);
     --surface-secondary: rgb(28, 32, 42);
     --surface-tertiary: rgb(19, 22, 30);
@@ -11,6 +12,7 @@
     --message-surface: var(--surface-secondary);
     --main-surface-secondary: var(--surface-secondary);
     --main-surface-tertiary: var(--surface-secondary);
+
     --sidebar-surface-primary: var(--surface-tertiary);
     --sidebar-surface-secondary: var(--surface-secondary);
     --sidebar-surface-tertiary: var(--surface-primary);
@@ -24,7 +26,7 @@ body {
 body:has(.container span.explanation) {
     background-color: rgb(19, 22, 30);
     .container {
-         background-color: rgb(19, 22, 30);
+        background-color: rgb(19, 22, 30);
     }
 }
 
@@ -34,7 +36,7 @@ main {
     background-color: var(--surface-secondary);
 }
 
-div.relative.flex.w-full.flex-col:not(.overflow-hidden) {
+div.relative.flex.w-full.flex-col:not(.flex-auto) {
     padding: 10px;
     background-color: var(--surface-primary);
 }
@@ -57,7 +59,8 @@ nav div.flex.flex-col.pt-2 {
 .bg-token-surface-tertiary,
 .dark\:bg-token-main-surface-secondary,
 .dark .dark\:bg-gray-800\/90,
-.dark .dark\:hover\:bg-gray-800:hover {
+.dark .dark\:hover\:bg-gray-800:hover,
+button[data-testid='model-switcher-dropdown-button']:hover {
     background-color: var(--surface-primary);
 }
 
@@ -82,6 +85,11 @@ div[role='dialog'],
 .dark .btn-neutral {
     background-color: var(--surface-tertiary);
 }
+
+div[role='presentation'] .h-header-height {
+    background-color: var(--surface-secondary);
+}
+
 .dark .btn-secondary {
     background-color: var(--surface-secondary);
 
@@ -122,7 +130,7 @@ pre div.bg-gray-950 {
 
 div.relative.p-1.rounded-sm.h-9,
 .btn-primary,
-.radix-state-checked\:bg-green-600[data-state='checked'] {
+button[role='switch'][data-state='checked'] {
     background-color: rgb(137, 162, 231);
 }
 
