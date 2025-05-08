@@ -55,7 +55,8 @@ div.flex.flex-col.pt-2,
 .dark .dark\:radix-state-active\:bg-token-surface-tertiary[data-state='active'],
 .dark .dark\:hover\:bg-\[\#494A54\]:hover,
 button[type='button'][role='switch'][aria-checked='false'],
-.bg-token-surface-secondary {
+.bg-token-surface-secondary,
+form div:has(textarea[placeholder='Ask anything']) {
      background-color: var(--surface-primary);
 }
 

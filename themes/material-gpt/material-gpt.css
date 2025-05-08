@@ -60,7 +60,8 @@ nav div.flex.flex-col.pt-2 {
 .dark\:bg-token-main-surface-secondary,
 .dark .dark\:bg-gray-800\/90,
 .dark .dark\:hover\:bg-gray-800:hover,
-button[data-testid='model-switcher-dropdown-button']:hover {
+button[data-testid='model-switcher-dropdown-button']:hover,
+form div:has(textarea[placeholder='Ask anything']) {
     background-color: var(--surface-primary);
 }
 
@@ -82,7 +83,8 @@ h3.font-medium.text-ellipsis.overflow-hidden,
 /* div.absolute.bottom-full.left-0.z-20, */
 .bg-token-main-surface-primary,
 div[role='dialog'],
-.dark .btn-neutral {
+.dark .btn-neutral,
+div[data-testid="modal-image-gen-lightbox"] {
     background-color: var(--surface-tertiary);
 }
 
