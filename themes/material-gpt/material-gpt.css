@@ -8,11 +8,14 @@
     --surface-primary: rgb(38, 44, 60);
     --surface-secondary: rgb(28, 32, 42);
     --surface-tertiary: rgb(19, 22, 30);
-
+    --bg-primary: var(--surface-secondary);
+    --bg-secondary: var(--surface-secondary);
+    --bg-tertiary: var(--surface-tertiary);
+    --bg-elevated-secondary: var(--surface-tertiary);
     --message-surface: var(--surface-secondary);
+    --main-surface-primary: var(--surface-primary);
     --main-surface-secondary: var(--surface-secondary);
     --main-surface-tertiary: var(--surface-secondary);
-
     --sidebar-surface-primary: var(--surface-tertiary);
     --sidebar-surface-secondary: var(--surface-secondary);
     --sidebar-surface-tertiary: var(--surface-primary);
@@ -25,6 +28,7 @@ body {
 
 body:has(.container span.explanation) {
     background-color: rgb(19, 22, 30);
+
     .container {
         background-color: rgb(19, 22, 30);
     }
@@ -59,9 +63,9 @@ nav div.flex.flex-col.pt-2 {
 .bg-token-surface-tertiary,
 .dark\:bg-token-main-surface-secondary,
 .dark .dark\:bg-gray-800\/90,
+.dark\:bg-\[\#303030\]:is(.dark *),
 .dark .dark\:hover\:bg-gray-800:hover,
-button[data-testid='model-switcher-dropdown-button']:hover,
-form div:has(textarea[placeholder='Ask anything']) {
+button[data-testid='model-switcher-dropdown-button']:hover {
     background-color: var(--surface-primary);
 }
 
@@ -163,7 +167,8 @@ textarea,
 a[as='button'],
 div.rounded-md.bg-token-main-surface-secondary.text-token-text-secondary.text-sm,
 div.sticky.top-0.mb-1\.5.flex.items-center.justify-between.z-10.h-14.p-2.font-semibold.bg-token-main-surface-primary,
-div[data-radix-popper-content-wrapper] * {
+div[data-radix-popper-content-wrapper] *,
+.__menu-item {
     border-radius: 20px;
 }
 
