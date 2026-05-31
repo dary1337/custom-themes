@@ -68,6 +68,7 @@ export const ru: MessageSchema = {
 	titles: {
 		settings: 'Настройки',
 		about: 'О расширении',
+		openInWindow: 'Открыть в окне',
 	},
 	labels: {
 		website: 'Веб-сайт',

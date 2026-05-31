@@ -32,7 +32,7 @@
 				<button
 					v-if="!full"
 					class="icon-btn"
-					title="Open in window"
+					:title="t('titles.openInWindow')"
 					@click="openFullWindow"
 				>
 					<Icon name="openInNew" />

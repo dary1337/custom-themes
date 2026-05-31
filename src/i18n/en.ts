@@ -65,6 +65,7 @@ export const en = {
 	titles: {
 		settings: 'Settings',
 		about: 'About',
+		openInWindow: 'Open in window',
 	},
 	labels: {
 		website: 'Website',
