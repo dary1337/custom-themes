@@ -29,6 +29,10 @@ export interface ThemesPageState {
 
 const VALID_TABS: ThemeTab[] = ["Author's", 'Community', 'Local'];
 
+function isThemeTab(value: string): value is ThemeTab {
+	return (VALID_TABS as string[]).includes(value);
+}
+
 export function useThemesPage(props: ThemesPageProps): ThemesPageState {
 	const { t } = useI18n();
 	const router = useRouter();
@@ -40,9 +44,7 @@ export function useThemesPage(props: ThemesPageProps): ThemesPageState {
 	const full = isFullPage();
 
 	const activeTab = computed<ThemeTab>(() =>
-		VALID_TABS.includes(props.tab as ThemeTab)
-			? (props.tab as ThemeTab)
-			: "Author's",
+		isThemeTab(props.tab) ? props.tab : "Author's",
 	);
 
 	watch(activeTab, (tab) => ui.setTab(tab), { immediate: true });
