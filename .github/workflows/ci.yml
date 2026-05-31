@@ -1,0 +1,99 @@
+name: ci
+
+on:
+    push:
+        branches: [master, main]
+        paths:
+            - 'src/**'
+            - 'tests/**'
+            - 'assets/**'
+            - 'repos.json'
+            - 'package*.json'
+            - 'tsconfig*.json'
+            - 'vite.config.ts'
+            - 'vitest.config.ts'
+            - 'eslint.config.js'
+            - '.prettierrc.json'
+            - '.github/workflows/ci.yml'
+    pull_request:
+        branches: [master, main]
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    verify:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  persist-credentials: false
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'npm'
+
+            - name: Install
+              run: npm ci
+
+            - name: Typecheck
+              run: npm run typecheck
+
+            - name: Lint
+              run: npm run lint
+
+            - name: Prettier check
+              run: npx prettier --check "src/**/*.{ts,vue,scss}" "tests/**/*.ts" "*.{ts,json,js,md,yaml}"
+
+            - name: Test
+              run: npm test
+
+            - name: Build
+              run: npm run build
+
+            - name: Zip dist contents
+              if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+              working-directory: dist
+              run: zip -r ../custom-themes-latest.zip .
+
+            # Delete-then-recreate keeps the `latest-build` tag pinned to HEAD and refreshes
+            # title/body/assets, which softprops's upsert doesn't do reliably for draft releases.
+            - name: Recreate rolling draft
+              if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+                  COMMIT_SHA: ${{ github.sha }}
+                  RUN_NUMBER: ${{ github.run_number }}
+                  REF_NAME: ${{ github.ref_name }}
+                  REPO: ${{ github.repository }}
+              run: |
+                  set -eu
+                  gh release delete latest-build --yes --cleanup-tag --repo "$REPO" 2>/dev/null || true
+
+                  HEAD_FIRST_LINE="$(printf '%s\n' "$HEAD_COMMIT_MESSAGE" | head -n 1)"
+                  {
+                    printf 'Rolling draft from the latest merge to `%s`.\n\n' "$REF_NAME"
+                    printf '**Commit**: %s\n' "$COMMIT_SHA"
+                    printf '**Run**: #%s\n' "$RUN_NUMBER"
+                    printf '**Message**: %s\n\n' "$HEAD_FIRST_LINE"
+                    printf 'Smoke-test before promoting to a real versioned release.\n'
+                  } > release_notes.md
+
+                  gh release create latest-build custom-themes-latest.zip \
+                    --repo "$REPO" \
+                    --title "Latest build (auto-draft)" \
+                    --target "$COMMIT_SHA" \
+                    --draft \
+                    --prerelease \
+                    --notes-file release_notes.md
