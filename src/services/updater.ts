@@ -81,7 +81,15 @@ export async function updateTheme(
 	const key = String(theme.id);
 	const existing = userSettings[key];
 
-	if (!checked && !theme.edited && customCSS === undefined) {
+	// Toggling a repo theme passes a `RepoTheme` with no edited/local flags, so
+	// the stored entry is the only place that knows it was edited — never drop it.
+	if (
+		!checked &&
+		!theme.edited &&
+		!existing?.edited &&
+		!existing?.local &&
+		customCSS === undefined
+	) {
 		Reflect.deleteProperty(userSettings, key);
 		if (persist) await setUserSettings(userSettings);
 		return undefined;

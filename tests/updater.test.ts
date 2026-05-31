@@ -58,6 +58,26 @@ describe('updateTheme', () => {
 		expect(userSettings['1']).toBeUndefined();
 	});
 
+	it('keeps an edited theme when toggled off via a RepoTheme', async () => {
+		const userSettings: UserSettings = {
+			'1': {
+				id: 1,
+				name: 'X',
+				link: '',
+				checked: true,
+				compiledCss: 'old',
+				sourceCSS: 'c { color: green; }',
+				edited: true,
+				local: false,
+			},
+		};
+		// theme-card toggles with a RepoTheme that carries no edited/local flags.
+		await updateTheme(userSettings, repoTheme(), false);
+		expect(userSettings['1']).toBeDefined();
+		expect(userSettings['1'].checked).toBe(false);
+		expect(userSettings['1'].sourceCSS).toBe('c { color: green; }');
+	});
+
 	it('persists source and marks edited when customCSS is provided', async () => {
 		const userSettings: UserSettings = {};
 		await updateTheme(
