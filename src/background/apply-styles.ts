@@ -17,10 +17,16 @@ export function themeMatchesUrl(
 	const link = theme.link.toLowerCase();
 	if (link === ALL_SITES) return true;
 
+	// Scheme-less links (e.g. legacy "youtube.com") must get a scheme or
+	// `new URL` throws; default to https to mirror how links are saved.
+	const normalized = /^[a-z][a-z0-9+.-]*:\/\//.test(link)
+		? link
+		: `https://${link}`;
+
 	let target: URL;
 	let page: URL;
 	try {
-		target = new URL(link);
+		target = new URL(normalized);
 		page = new URL(url);
 	} catch {
 		return false;

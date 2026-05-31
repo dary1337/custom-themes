@@ -38,6 +38,12 @@ describe('themeMatchesUrl', () => {
 		).toBe(false);
 	});
 
+	it('matches a scheme-less link', () => {
+		expect(
+			themeMatchesUrl({ link: 'youtube.com' }, 'https://youtube.com/x'),
+		).toBe(true);
+	});
+
 	it('does not match a host-suffix lookalike', () => {
 		expect(
 			themeMatchesUrl(
