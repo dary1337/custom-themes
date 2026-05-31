@@ -34,6 +34,12 @@ async function fetchJson(url: string, init?: RequestInit): Promise<unknown> {
 	}
 }
 
+/** Read the cached index, re-validating it so a corrupt/stale shape is a miss. */
+async function loadCachedRepos(): Promise<RepoIndex | undefined> {
+	const cached = await getRepos();
+	return cached ? parseRepoIndex(cached) : undefined;
+}
+
 async function loadBundledRepos(): Promise<RepoIndex | undefined> {
 	try {
 		return parseRepoIndex(
@@ -55,7 +61,7 @@ export async function loadRepos(
 	useLocal = false,
 ): Promise<RepoIndex | undefined> {
 	if (useLocal) {
-		return (await loadBundledRepos()) ?? (await getRepos());
+		return (await loadBundledRepos()) ?? (await loadCachedRepos());
 	}
 
 	try {
@@ -70,5 +76,5 @@ export async function loadRepos(
 		console.warn('[repo] failed to fetch remote repos.json', error);
 	}
 
-	return (await getRepos()) ?? (await loadBundledRepos());
+	return (await loadCachedRepos()) ?? (await loadBundledRepos());
 }
