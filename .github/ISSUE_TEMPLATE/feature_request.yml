@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest a new capability for the extension itself (not a new theme)
+labels: [enhancement]
+body:
+    - type: textarea
+      id: problem
+      attributes:
+          label: What's the problem?
+          description: What can't you do today, and what would the feature unlock?
+      validations:
+          required: true
+
+    - type: textarea
+      id: proposal
+      attributes:
+          label: Proposed solution
+          description: A rough sketch is fine. UI mockup, API shape, anything.
+      validations:
+          required: false
+
+    - type: textarea
+      id: alternatives
+      attributes:
+          label: Alternatives considered
+          description: Existing workarounds, other extensions, why they're not enough.
+      validations:
+          required: false

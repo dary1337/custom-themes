@@ -1,0 +1,45 @@
+name: Suggest a theme
+description: Propose a new theme for the curated list
+labels: [theme-suggestion]
+body:
+    - type: input
+      id: title
+      attributes:
+          label: Theme title
+          placeholder: Twitter Amoled
+      validations:
+          required: true
+
+    - type: input
+      id: site
+      attributes:
+          label: Target website
+          description: Use `*` for global (applies to all sites).
+          placeholder: https://twitter.com
+      validations:
+          required: true
+
+    - type: textarea
+      id: css
+      attributes:
+          label: CSS
+          description: Paste the theme source. You can also use the in-extension "Suggest" button which copies a ready template.
+          render: css
+      validations:
+          required: true
+
+    - type: textarea
+      id: screenshots
+      attributes:
+          label: Screenshots (optional)
+          description: Before/after of the themed site. Drag & drop here.
+      validations:
+          required: false
+
+    - type: checkboxes
+      id: license
+      attributes:
+          label: License
+          options:
+              - label: I agree to publish this CSS under the repository's MIT license.
+                required: true
