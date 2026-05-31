@@ -13,6 +13,10 @@ export const links = {
 		'https://api.github.com/repos/dary1337/custom-themes/releases/latest',
 } as const;
 
+/** GitHub Releases API endpoint for a specific tag (e.g. `v1.2.0`). */
+export const releaseByTagUrl = (tag: string): string =>
+	`https://api.github.com/repos/dary1337/custom-themes/releases/tags/${tag}`;
+
 export const STORAGE_SCHEMA_VERSION = 2;
 
 export const ALARM_UPDATE_THEMES = 'UPDATE_THEMES';

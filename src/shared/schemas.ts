@@ -50,6 +50,7 @@ export const importFileSchema = z.union([
 export const githubReleaseSchema = z.object({
 	tag_name: z.string(),
 	html_url: z.string().url(),
+	body: z.string().nullish(),
 });
 
 export type RepoThemeInput = z.input<typeof repoThemeSchema>;
