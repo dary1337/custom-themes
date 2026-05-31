@@ -15,10 +15,23 @@ function parseRepoIndex(data: unknown): RepoIndex | undefined {
 	return result.data;
 }
 
+const FETCH_TIMEOUT_MS = 8000;
+
 async function fetchJson(url: string, init?: RequestInit): Promise<unknown> {
-	const response = await fetch(url, init);
-	if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
-	return response.json();
+	const controller = new AbortController();
+	const timer = setTimeout(() => {
+		controller.abort();
+	}, FETCH_TIMEOUT_MS);
+	try {
+		const response = await fetch(url, {
+			...init,
+			signal: controller.signal,
+		});
+		if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
+		return await response.json();
+	} finally {
+		clearTimeout(timer);
+	}
 }
 
 async function loadBundledRepos(): Promise<RepoIndex | undefined> {
