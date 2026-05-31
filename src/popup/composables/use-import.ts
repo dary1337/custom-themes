@@ -22,7 +22,10 @@ export function useThemeImport() {
 			reader.addEventListener('load', () => {
 				const text = reader.result;
 				if (typeof text !== 'string') {
-					notify({ type: 'error', text: t('strings.somethingWrong') });
+					notify({
+						type: 'error',
+						text: t('strings.somethingWrong'),
+					});
 					return;
 				}
 				void (async () => {
