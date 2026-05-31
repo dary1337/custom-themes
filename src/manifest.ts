@@ -22,6 +22,5 @@ export default defineManifest({
 	icons: {
 		'16': 'assets/icons/icon16.png',
 		'32': 'assets/icons/icon32.png',
-		'48': 'assets/icons/icon32.png',
 	},
 });
