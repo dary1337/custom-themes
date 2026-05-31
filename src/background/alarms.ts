@@ -46,6 +46,9 @@ export async function setupBackgroundUpdates(): Promise<void> {
 
 export function registerAlarmListener(): void {
 	chrome.alarms.onAlarm.addListener((alarm) => {
-		if (alarm.name === ALARM_UPDATE_THEMES) void runThemeUpdate();
+		if (alarm.name !== ALARM_UPDATE_THEMES) return;
+		runThemeUpdate().catch((error: unknown) => {
+			console.warn('[background] scheduled theme update failed', error);
+		});
 	});
 }
