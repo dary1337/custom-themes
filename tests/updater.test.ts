@@ -92,6 +92,9 @@ describe('updateTheme', () => {
 		expect(userSettings['1'].compiledCss).toContain(
 			'color: green !important',
 		);
+		// Editing must not wipe the stored source when re-saved without customCSS.
+		expect(userSettings['1'].sourceCSS).toBe('c { color: green; }');
+		expect(userSettings['1'].edited).toBe(true);
 	});
 
 	it('does not store when source resolves empty', async () => {

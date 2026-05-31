@@ -89,15 +89,23 @@ export async function updateTheme(
 	const sourceCSS = await resolveSourceCss(existing, theme, customCSS);
 	if (!sourceCSS) return undefined;
 
+	const edited =
+		Boolean(theme.edited) ||
+		existing?.edited === true ||
+		customCSS !== undefined;
+	const local = Boolean(theme.local) || existing?.local === true;
+
 	const updated: UserTheme = {
 		id: theme.id,
 		name: theme.name,
 		link: theme.link,
 		checked,
 		compiledCss: await compileCss(sourceCSS),
-		edited: Boolean(theme.edited) || customCSS !== undefined,
-		sourceCSS: customCSS ?? '',
-		local: Boolean(theme.local),
+		edited,
+		// Persist source only for edited/local themes; clean repo themes re-fetch
+		// on demand, so storing the resolved source would just bloat storage.
+		sourceCSS: edited || local ? sourceCSS : '',
+		local,
 		...(theme.version !== undefined ? { version: theme.version } : {}),
 	};
 
