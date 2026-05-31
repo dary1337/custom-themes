@@ -115,8 +115,12 @@ export function useThemeEditorPage(
 	async function restore(): Promise<void> {
 		if (!repoTheme.value) return;
 		loading.value = true;
-		await themes.restore(repoTheme.value);
-		await loadSource();
+		try {
+			await themes.restore(repoTheme.value);
+		} finally {
+			// Always reload (and reset loading) even if the restore fetch fails.
+			await loadSource();
+		}
 	}
 
 	function back(): void {
