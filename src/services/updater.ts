@@ -76,13 +76,14 @@ export async function updateTheme(
 	theme: UpdatableTheme,
 	checked: boolean,
 	customCSS?: string,
+	persist = true,
 ): Promise<string | undefined> {
 	const key = String(theme.id);
 	const existing = userSettings[key];
 
 	if (!checked && !theme.edited && customCSS === undefined) {
 		Reflect.deleteProperty(userSettings, key);
-		await setUserSettings(userSettings);
+		if (persist) await setUserSettings(userSettings);
 		return undefined;
 	}
 
@@ -110,7 +111,7 @@ export async function updateTheme(
 	};
 
 	userSettings[key] = updated;
-	await setUserSettings(userSettings);
+	if (persist) await setUserSettings(userSettings);
 	return sourceCSS;
 }
 
@@ -124,6 +125,7 @@ export async function updateAllThemes(
 	repos: RepoIndex,
 ): Promise<void> {
 	const tabs: (keyof RepoIndex)[] = ["Author's", 'Community'];
+	let changed = false;
 	for (const tab of tabs) {
 		for (const theme of repos[tab]) {
 			const current = userSettings[String(theme.id)];
@@ -133,10 +135,12 @@ export async function updateAllThemes(
 				!current.local &&
 				!current.edited
 			) {
-				await updateTheme(userSettings, theme, true);
+				await updateTheme(userSettings, theme, true, undefined, false);
+				changed = true;
 			}
 		}
 	}
+	if (changed) await setUserSettings(userSettings);
 }
 
 /** Whether a repo theme's version differs from the stored, clean copy. */
