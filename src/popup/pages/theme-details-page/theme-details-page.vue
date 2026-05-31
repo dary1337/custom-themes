@@ -12,7 +12,6 @@
 
 	const {
 		t,
-		links,
 		confirm,
 		stored,
 		repoTheme,
@@ -29,6 +28,7 @@
 		exportTheme,
 		remove,
 		suggest,
+		reportBadLayout,
 	} = useThemeDetailsPage(props);
 </script>
 
@@ -114,16 +114,12 @@
 				</button>
 			</template>
 
-			<a
+			<button
 				v-if="!stored?.edited && isAuthorTheme"
-				:href="links.newIssue"
-				target="_blank"
-				rel="noopener noreferrer"
+				@click="reportBadLayout"
 			>
-				<button>
-					<Icon name="openInNew" />{{ t('buttons.badLayout') }}
-				</button>
-			</a>
+				<Icon name="openInNew" />{{ t('buttons.badLayout') }}
+			</button>
 		</div>
 
 		<ConfirmDialog ref="confirm" />

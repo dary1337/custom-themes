@@ -34,6 +34,7 @@ export interface ThemeDetailsPageState {
 	exportTheme: () => void;
 	remove: () => Promise<void>;
 	suggest: (channel: 'github' | 'telegram') => Promise<void>;
+	reportBadLayout: () => void;
 }
 
 export function useThemeDetailsPage(
@@ -131,6 +132,10 @@ export function useThemeDetailsPage(
 		);
 	}
 
+	function reportBadLayout(): void {
+		window.open(links.newIssue, '_blank', 'noopener');
+	}
+
 	return {
 		t,
 		links,
@@ -150,5 +155,6 @@ export function useThemeDetailsPage(
 		exportTheme,
 		remove,
 		suggest,
+		reportBadLayout,
 	};
 }
