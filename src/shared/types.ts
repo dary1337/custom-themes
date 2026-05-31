@@ -60,4 +60,6 @@ export interface StorageShape {
 	userSettings: UserSettings;
 	extensionSettings: ExtensionSettings;
 	repos: RepoIndex;
+	/** Parsed changelog lines cached per version to spare the GitHub API. */
+	releaseNotes: Record<string, string[]>;
 }

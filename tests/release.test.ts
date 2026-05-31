@@ -1,8 +1,10 @@
 import { fetchReleaseNotes } from '@/services/release';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { installChromeMock } from './chrome-mock';
 
 beforeEach(() => {
 	vi.restoreAllMocks();
+	installChromeMock();
 });
 
 function releaseResponse(body: string): Response {
@@ -49,5 +51,14 @@ describe('fetchReleaseNotes', () => {
 			vi.fn(async () => new Response('', { status: 404 })),
 		);
 		expect(await fetchReleaseNotes('9.9.9')).toEqual([]);
+	});
+
+	it('caches notes and skips the network on the next call', async () => {
+		const fetchMock = vi.fn(async () => releaseResponse('- Cached'));
+		vi.stubGlobal('fetch', fetchMock);
+
+		expect(await fetchReleaseNotes('1.2.0')).toEqual(['Cached']);
+		expect(await fetchReleaseNotes('1.2.0')).toEqual(['Cached']);
+		expect(fetchMock).toHaveBeenCalledTimes(1);
 	});
 });

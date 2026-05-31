@@ -96,6 +96,18 @@ export async function setRepos(repos: RepoIndex): Promise<void> {
 	await set('repos', repos);
 }
 
+export async function getCachedReleaseNotes(): Promise<
+	Record<string, string[]>
+> {
+	return (await get('releaseNotes')) ?? {};
+}
+
+export async function setCachedReleaseNotes(
+	notes: Record<string, string[]>,
+): Promise<void> {
+	await set('releaseNotes', notes);
+}
+
 /**
  * Normalize a possibly-incomplete legacy UserTheme into the v2 shape.
  * Legacy entries could be missing `edited`, `local`, `sourceCSS`, etc.
