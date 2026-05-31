@@ -167,7 +167,10 @@ export default tseslint.config(
 	// the kebab-case rule
 	{ files: ['**/*.html'], rules: { 'unicorn/filename-case': 'off' } },
 
-	// Tests: looser rules where pragmatism beats purity
+	// Tests: looser rules where pragmatism beats purity. Specs build ad-hoc
+	// fixtures and assert on possibly-undefined lookups (`userSettings['1']`),
+	// and the chrome mock is an untyped `unknown`-cast double — so the
+	// non-null-assertion and `no-unsafe-*` family are noise here, not safety.
 	{
 		files: ['tests/**/*.ts'],
 		rules: {

@@ -44,10 +44,12 @@ function parseImportUrl(params: string): string | null {
 }
 
 function hasNoImportantAncestor(node: ChildNode): boolean {
-	let current = node.parent as Node | undefined;
+	let current: Node | undefined = node.parent;
 	while (current) {
 		if (
 			current.type === 'atrule' &&
+			// `type === 'atrule'` is a runtime tag, not a TS discriminant on the
+			// base `Node`, so the assertion is what unlocks `.name`.
 			NO_IMPORTANT_AT_RULES.has(
 				(current as postcss.AtRule).name.toLowerCase(),
 			)

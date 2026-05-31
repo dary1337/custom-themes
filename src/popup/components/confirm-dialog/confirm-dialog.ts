@@ -20,6 +20,7 @@ export function useConfirmDialog(): ConfirmDialogState {
 
 	function ask(text: string): Promise<boolean> {
 		message.value = text;
+		// Narrowed to HTMLElement so we can restore focus via `.focus()` in answer().
 		lastFocused =
 			(document.activeElement as HTMLElement | null) ?? undefined;
 		visible.value = true;
