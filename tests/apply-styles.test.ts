@@ -38,6 +38,15 @@ describe('themeMatchesUrl', () => {
 		).toBe(false);
 	});
 
+	it('does not match a host-suffix lookalike', () => {
+		expect(
+			themeMatchesUrl(
+				{ link: 'https://youtube.com' },
+				'https://youtube.com.evil.com/watch',
+			),
+		).toBe(false);
+	});
+
 	it('does not match an empty link', () => {
 		expect(themeMatchesUrl({ link: '' }, 'https://youtube.com')).toBe(
 			false,
