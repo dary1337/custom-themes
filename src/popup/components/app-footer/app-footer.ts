@@ -14,6 +14,7 @@ export function useAppFooter() {
 	const updating = ref(false);
 
 	async function updateThemes(): Promise<void> {
+		if (updating.value) return;
 		updating.value = true;
 		try {
 			await themes.updateAll();
