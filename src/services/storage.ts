@@ -17,10 +17,19 @@ const DEFAULT_EXTENSION_SETTINGS: ExtensionSettings = {
 function get<K extends keyof StorageShape>(
 	key: K,
 ): Promise<StorageShape[K] | undefined> {
-	return new Promise((resolve) => {
+	return new Promise((resolve, reject) => {
 		chrome.storage.local.get(
 			key,
 			(result: Record<string, StorageShape[K] | undefined>) => {
+				const error = chrome.runtime.lastError;
+				if (error) {
+					reject(
+						new Error(
+							`chrome.storage.get failed for "${key}": ${error.message}`,
+						),
+					);
+					return;
+				}
 				resolve(result[key]);
 			},
 		);
@@ -31,8 +40,17 @@ function set<K extends keyof StorageShape>(
 	key: K,
 	value: StorageShape[K],
 ): Promise<void> {
-	return new Promise((resolve) => {
+	return new Promise((resolve, reject) => {
 		chrome.storage.local.set({ [key]: value }, () => {
+			const error = chrome.runtime.lastError;
+			if (error) {
+				reject(
+					new Error(
+						`chrome.storage.set failed for "${key}": ${error.message}`,
+					),
+				);
+				return;
+			}
 			resolve();
 		});
 	});
