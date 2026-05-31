@@ -79,16 +79,24 @@ export function useThemesPage(props: ThemesPageProps): ThemesPageState {
 	);
 
 	async function createTheme(): Promise<void> {
-		const theme = await themes.createLocal(t('strings.untitled'));
-		await router.push({
-			name: 'editor',
-			params: { tab: 'Local', id: String(theme.id) },
-		});
+		try {
+			const theme = await themes.createLocal(t('strings.untitled'));
+			await router.push({
+				name: 'editor',
+				params: { tab: 'Local', id: String(theme.id) },
+			});
+		} catch (error) {
+			console.warn('[themes-page] failed to create theme', error);
+		}
 	}
 
 	async function loadLocalRepos(): Promise<void> {
-		await settings.update('useLocalJsonRepo', true);
-		await themes.loadReposIndex();
+		try {
+			await settings.update('useLocalJsonRepo', true);
+			await themes.loadReposIndex();
+		} catch (error) {
+			console.warn('[themes-page] failed to load local repos', error);
+		}
 	}
 
 	return {
