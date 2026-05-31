@@ -2,7 +2,7 @@ import { STORAGE_SCHEMA_VERSION } from '@/shared/constants';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { installChromeMock } from './chrome-mock';
 
-async function freshStorage() {
+async function loadStorage() {
 	return import('@/services/storage');
 }
 
@@ -31,7 +31,7 @@ describe('storage migration', () => {
 			},
 		};
 
-		const storage = await freshStorage();
+		const storage = await loadStorage();
 		await storage.migrateStorage();
 
 		const migrated = await storage.getUserSettings();
@@ -51,7 +51,7 @@ describe('storage migration', () => {
 	});
 
 	it('stamps schema version and is idempotent', async () => {
-		const storage = await freshStorage();
+		const storage = await loadStorage();
 		await storage.migrateStorage();
 
 		const settings = await storage.getExtensionSettings();
@@ -69,7 +69,7 @@ describe('storage migration', () => {
 		};
 		store.userSettings = { x: { id: 'x', name: 'untouched' } };
 
-		const storage = await freshStorage();
+		const storage = await loadStorage();
 		await storage.migrateStorage();
 
 		// userSettings left as-is because migration short-circuits
@@ -78,7 +78,7 @@ describe('storage migration', () => {
 	});
 
 	it('provides default extension settings', async () => {
-		const storage = await freshStorage();
+		const storage = await loadStorage();
 		const settings = await storage.getExtensionSettings();
 		expect(settings).toMatchObject({
 			useLocalJsonRepo: false,
@@ -90,7 +90,7 @@ describe('storage migration', () => {
 
 	it('resetAll clears user settings and re-stamps version', async () => {
 		store.userSettings = { x: { id: 'x', name: 'gone' } };
-		const storage = await freshStorage();
+		const storage = await loadStorage();
 		await storage.resetAll();
 
 		expect(await storage.getUserSettings()).toEqual({});
