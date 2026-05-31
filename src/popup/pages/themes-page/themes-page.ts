@@ -30,6 +30,8 @@ export interface ThemesPageState {
 const VALID_TABS: ThemeTab[] = ["Author's", 'Community', 'Local'];
 
 function isThemeTab(value: string): value is ThemeTab {
+	// ThemeTab is a string-literal union, so widening to string[] is safe and
+	// just lets `.includes` accept an arbitrary string.
 	return (VALID_TABS as string[]).includes(value);
 }
 
