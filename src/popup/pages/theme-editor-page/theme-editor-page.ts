@@ -76,19 +76,24 @@ export function useThemeEditorPage(
 
 	async function loadSource(): Promise<void> {
 		loading.value = true;
-		const s = stored.value;
-		name.value = s?.name ?? '';
-		link.value = s?.link ?? '';
-		let source = '';
-		if (isLocal.value || s?.edited) source = s?.sourceCSS ?? '';
-		else if (repoTheme.value)
-			source = await loadStyles(repoTheme.value.cssLink);
-		loadedSource.value = source;
-		code.value = source;
-		loading.value = false;
+		try {
+			const s = stored.value;
+			name.value = s?.name ?? '';
+			link.value = s?.link ?? '';
+			let source = '';
+			if (isLocal.value || s?.edited) source = s?.sourceCSS ?? '';
+			else if (repoTheme.value)
+				source = await loadStyles(repoTheme.value.cssLink);
+			loadedSource.value = source;
+			code.value = source;
+		} finally {
+			loading.value = false;
+		}
 	}
 
-	onMounted(loadSource);
+	onMounted(() => {
+		void loadSource();
+	});
 
 	async function save(): Promise<void> {
 		if (!target.value || saving.value) return;
