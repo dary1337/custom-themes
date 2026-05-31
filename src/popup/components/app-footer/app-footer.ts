@@ -18,6 +18,8 @@ export function useAppFooter() {
 		updating.value = true;
 		try {
 			await themes.updateAll();
+		} catch (error) {
+			console.warn('[app-footer] theme update failed', error);
 		} finally {
 			updating.value = false;
 		}
