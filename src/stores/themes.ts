@@ -105,7 +105,7 @@ export const useThemesStore = defineStore('themes', () => {
 		await sendMessage({ type: 'APPLY_ACTIVE_TAB' });
 	}
 
-	function createLocal(name: string): UserTheme {
+	async function createLocal(name: string): Promise<UserTheme> {
 		const theme: UserTheme = {
 			id: randomId(),
 			name,
@@ -120,7 +120,7 @@ export const useThemesStore = defineStore('themes', () => {
 			...userSettings.value,
 			[String(theme.id)]: theme,
 		};
-		void setUserSettings(userSettings.value);
+		await setUserSettings(userSettings.value);
 		return theme;
 	}
 

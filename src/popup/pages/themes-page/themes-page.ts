@@ -23,7 +23,7 @@ export interface ThemesPageState {
 	showRepoError: ComputedRef<boolean>;
 	hasDetail: ComputedRef<boolean>;
 	promptImport: () => void;
-	createTheme: () => void;
+	createTheme: () => Promise<void>;
 	loadLocalRepos: () => Promise<void>;
 }
 
@@ -78,9 +78,9 @@ export function useThemesPage(props: ThemesPageProps): ThemesPageState {
 		Boolean(router.currentRoute.value.params.id),
 	);
 
-	function createTheme(): void {
-		const theme = themes.createLocal(t('strings.untitled'));
-		void router.push({
+	async function createTheme(): Promise<void> {
+		const theme = await themes.createLocal(t('strings.untitled'));
+		await router.push({
 			name: 'editor',
 			params: { tab: 'Local', id: String(theme.id) },
 		});
