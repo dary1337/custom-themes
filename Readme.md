@@ -17,7 +17,7 @@
     - [Material Discord](https://github.com/CapnKitten/Material-Discord)
     - [AMOLED-Cord](https://github.com/LuckFire/amoled-cord)
     - [jAba Discord Theme](https://github.com/jAba65/jAba-Discord-Theme)
-    - [ReCord](https://github.com/Eject37/ReCord)
+    - [ReCord](https://github.com/Eject37/eject37.github.io/tree/main/DiscordTheme)
     - [ProDiscord](https://github.com/ProChopa/ProDiscord)
 
 # Screenshots:
