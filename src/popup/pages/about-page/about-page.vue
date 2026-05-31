@@ -39,10 +39,12 @@
 			<h2>{{ t('strings.usedLibs') }}:</h2>
 			<label v-for="lib in usedLibs" :key="lib">- {{ lib }}</label>
 
-			<h2>{{ t('strings.updateVer') }} {{ version }}</h2>
-			<label v-for="(entry, i) in changelog" :key="i"
-				>- {{ entry }}</label
-			>
+			<template v-if="changelog.length">
+				<h2>{{ t('strings.updateVer') }} {{ version }}</h2>
+				<label v-for="(entry, i) in changelog" :key="i"
+					>- {{ entry }}</label
+				>
+			</template>
 		</div>
 	</main>
 </template>

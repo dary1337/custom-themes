@@ -88,12 +88,6 @@ export const en = {
 	},
 	suggestTemplate:
 		'Hi, I would like to suggest a theme\nTitle: {name}\nWebsite: {link}\n```css\n{css}```',
-	changelog: [
-		'Added icon in extensions tab',
-		'Added last time when themes were updated',
-		'Fixed bug when themes were updated incorrectly',
-		'Fixed bug when extension increased its size',
-	],
 };
 
 export type MessageSchema = typeof en;
