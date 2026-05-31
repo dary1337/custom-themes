@@ -1,0 +1,29 @@
+.ace-host {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	overflow: hidden;
+	font-size: 15px;
+}
+
+:deep(.ace_editor),
+:deep(.ace_print-margin) {
+	background-color: var(--onSurface) !important;
+	font-family: 'Fira Code', 'Consolas', 'Source Code Pro', monospace;
+}
+
+:deep(.ace_gutter-cell) {
+	padding-left: 0;
+}
+
+:deep(.ace_tooltip) {
+	background: var(--onSurface);
+	border-radius: 10px;
+	border-color: var(--dimmed);
+	color: var(--text-secondary);
+}
+
+:deep(.ace_editor.ace_autocomplete),
+:deep(.ace_active-line) {
+	border-radius: 10px;
+}

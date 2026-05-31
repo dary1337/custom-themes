@@ -1,5 +1,5 @@
 {
-     "Description": {
-         "message": "Extension for applying custom themes on websites"
-     }
+	"Description": {
+		"message": "Apply CSS themes to any website. Dark/AMOLED themes for ChatGPT, YouTube, Discord, plus user-created ones."
+	}
 }

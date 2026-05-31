@@ -1,0 +1,44 @@
+.about {
+	max-width: 318px;
+	margin: 10px auto;
+	animation: slide-down 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.title {
+	position: sticky;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--surface);
+}
+
+.back {
+	position: absolute;
+	left: 0;
+	padding: 5px;
+	border: none;
+	background: transparent;
+
+	.icon {
+		margin: 0;
+	}
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	color: var(--text-secondary);
+	gap: 6px;
+
+	p,
+	label {
+		font-size: 16px;
+		margin: 0;
+	}
+
+	h2 {
+		margin: 10px 0 0;
+		font-size: 18px;
+	}
+}

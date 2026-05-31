@@ -1,0 +1,50 @@
+.settings {
+	max-width: 318px;
+	margin: 10px auto;
+	animation: slide-down 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.title {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.back {
+	position: absolute;
+	left: 0;
+	padding: 5px;
+	border: none;
+	background: transparent;
+
+	.icon {
+		margin: 0;
+	}
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.label {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+}
+
+.bottom {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-top: 10px;
+}

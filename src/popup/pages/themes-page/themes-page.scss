@@ -1,0 +1,65 @@
+.layout {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	padding: 4px;
+
+	&.full {
+		flex-direction: row;
+		gap: 10px;
+		padding: 10px;
+	}
+}
+
+.list-pane {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	.full & {
+		min-width: 318px;
+		max-width: 20%;
+	}
+}
+
+.cards {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	min-height: 0;
+}
+
+.local-actions {
+	display: flex;
+	gap: 6px;
+	margin-bottom: 10px;
+}
+
+.repo-error {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	padding: 20px 0;
+}
+
+.detail-pane {
+	flex: 1;
+	border-radius: 20px;
+	background-color: var(--surface);
+	overflow: hidden;
+}
+
+.empty {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	gap: 10px;
+
+	label {
+		font-size: 20px;
+	}
+}

@@ -1,0 +1,19 @@
+.loader {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px;
+}
+
+.loader-icon {
+	width: 16px;
+	height: 16px;
+	border: 3px solid var(--primary);
+	border-top: 3px solid transparent;
+	border-radius: 50%;
+	animation: rotation 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+label {
+	font-size: 16px;
+}
