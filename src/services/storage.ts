@@ -128,11 +128,17 @@ export async function migrateStorage(): Promise<void> {
 	// Read raw to defend against malformed legacy entries that pre-date the schema.
 	const raw = ((await get('userSettings')) ?? {}) as Record<string, unknown>;
 	const migrated: UserSettings = {};
-	for (const [key, theme] of Object.entries(raw)) {
-		if (!theme || typeof theme !== 'object') continue;
-		migrated[key] = normalizeUserTheme(
-			theme as Partial<UserTheme> & { id: UserTheme['id']; name: string },
-		);
+	for (const [key, value] of Object.entries(raw)) {
+		if (!value || typeof value !== 'object') continue;
+		const theme = value as Partial<UserTheme>;
+		// A nameless entry is unrecoverable junk; the id falls back to the
+		// storage key, which already equals `String(id)` for every real theme.
+		if (typeof theme.name !== 'string') continue;
+		migrated[key] = normalizeUserTheme({
+			...theme,
+			id: theme.id ?? key,
+			name: theme.name,
+		});
 	}
 
 	await setUserSettings(migrated);
