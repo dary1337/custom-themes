@@ -1,19 +1,21 @@
 <script setup lang="ts">
+	import { useI18n } from 'vue-i18n';
 	import { type ScreenshotsProps, useScreenshots } from './screenshots';
 
 	defineProps<ScreenshotsProps>();
 
+	const { t } = useI18n();
 	const { lightbox, lightboxRef, open, close } = useScreenshots();
 </script>
 
 <template>
 	<div class="screenshots no-select">
 		<img
-			v-for="src in screenshots"
+			v-for="(src, i) in screenshots"
 			:key="src"
 			:src="src"
 			loading="lazy"
-			alt=""
+			:alt="`${t('labels.screenshot')} ${i + 1}`"
 			role="button"
 			tabindex="0"
 			@click="open(src)"

@@ -12,6 +12,7 @@
 	<div class="tabs no-select">
 		<div v-if="searchOpen" class="input-container search">
 			<Icon name="search" />
+			<!-- target is this bound text <input>, so the HTMLInputElement cast is safe -->
 			<input
 				:value="ui.search"
 				type="text"
@@ -37,7 +38,14 @@
 			</div>
 		</div>
 
-		<button v-if="full" class="search-toggle" @click="toggleSearch">
+		<button
+			v-if="full"
+			class="search-toggle"
+			:aria-label="
+				searchOpen ? t('labels.closeSearch') : t('labels.openSearch')
+			"
+			@click="toggleSearch"
+		>
 			<Icon :name="searchOpen ? 'close' : 'search'" />
 		</button>
 	</div>

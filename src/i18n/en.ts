@@ -77,6 +77,9 @@ export const en = {
 			'*Perhaps there are screenshots in the repository, look at the source',
 		linkPlaceholder: 'https://example.com or *',
 		search: 'Search',
+		openSearch: 'Open search',
+		closeSearch: 'Close search',
+		screenshot: 'Screenshot',
 	},
 	about: {
 		intro: 'Custom Themes is a free, passion-driven extension. The main idea is to share my "creations" with people, as well as give this opportunity to others.',
