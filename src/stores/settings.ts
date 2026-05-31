@@ -21,8 +21,9 @@ export const useSettingsStore = defineStore('settings', () => {
 		key: K,
 		value: ExtensionSettings[K],
 	): Promise<void> {
-		settings.value = { ...settings.value, [key]: value };
+		// Persist first so a storage failure leaves the in-memory store unchanged.
 		await setExtensionSetting(key, value);
+		settings.value = { ...settings.value, [key]: value };
 	}
 
 	async function reset(): Promise<void> {
