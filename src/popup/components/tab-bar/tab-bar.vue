@@ -20,13 +20,18 @@
 			/>
 		</div>
 
-		<div v-show="!searchOpen" class="tab-group">
+		<div v-show="!searchOpen" class="tab-group" role="tablist">
 			<div
 				v-for="tab in tabs"
 				:key="tab.id"
 				class="tab"
 				:class="{ selected: tab.id === currentTab }"
+				role="tab"
+				:tabindex="tab.id === currentTab ? 0 : -1"
+				:aria-selected="tab.id === currentTab"
 				@click="selectTab(tab.id)"
+				@keydown.enter.prevent="selectTab(tab.id)"
+				@keydown.space.prevent="selectTab(tab.id)"
 			>
 				{{ tab.label }}
 			</div>
