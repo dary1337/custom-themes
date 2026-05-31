@@ -13,9 +13,7 @@
 		target="_blank"
 		rel="noopener noreferrer"
 	>
-		<button class="filled">
-			<Icon name="update" />{{ t('buttons.updateExtension') }}
-		</button>
+		<Icon name="update" />{{ t('buttons.updateExtension') }}
 	</a>
 
 	<router-view />
