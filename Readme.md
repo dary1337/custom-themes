@@ -6,11 +6,11 @@
 
 - Author's
     - [Smaller Scrollbar](https://github.com/dary1337/custom-themes/tree/master/themes/smaller-scrollbar)
-    - [Chat-GPT Amoled](https://github.com/dary1337/custom-themes/tree/master/themes/smaller-scrollbar)
+    - [Chat-GPT Amoled](https://github.com/dary1337/custom-themes/tree/master/themes/chatgpt-amoled)
     - [Material GPT](https://github.com/dary1337/custom-themes/tree/master/themes/material-gpt)
     - [YouTube Amoled](https://github.com/dary1337/custom-themes/tree/master/themes/youtube-amoled)
     - [YouTube Music](https://github.com/dary1337/custom-themes/tree/master/themes/youtube-music)
-    - [Anilibria Amoled](https://github.com/dary1337/anilibria-amoled)
+    - [Anilibria Amoled](https://github.com/dary1337/custom-themes/tree/master/themes/anilibria-amoled)
     - [Win10T Forum Fix](https://github.com/dary1337/custom-themes/tree/master/themes/win10t-forum-fix)
 
 - Community
