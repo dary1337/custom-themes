@@ -10,6 +10,15 @@ export interface CompileOptions {
 const defaultLoadCss: CssLoader = async (url) => {
 	try {
 		const response = await fetch(url);
+		if (!response.ok) {
+			console.warn(
+				'[css-compiler] failed to load import',
+				url,
+				response.status,
+				response.statusText,
+			);
+			return '';
+		}
 		return await response.text();
 	} catch (error) {
 		console.warn('[css-compiler] failed to load import', url, error);

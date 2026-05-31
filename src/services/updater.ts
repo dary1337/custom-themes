@@ -28,6 +28,15 @@ export interface UpdatableTheme {
 export async function loadStyles(url: string): Promise<string> {
 	try {
 		const response = await fetch(url);
+		if (!response.ok) {
+			console.warn(
+				'[updater] failed to load styles',
+				url,
+				response.status,
+				response.statusText,
+			);
+			return '';
+		}
 		return await response.text();
 	} catch (error) {
 		console.warn('[updater] failed to load styles', url, error);
