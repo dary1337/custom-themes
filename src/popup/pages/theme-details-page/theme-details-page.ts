@@ -117,8 +117,13 @@ export function useThemeDetailsPage(
 			link: local.link,
 			css: local.sourceCSS,
 		});
-		await navigator.clipboard.writeText(message);
-		notify({ type: 'success', text: t('strings.copiedPreset') });
+		try {
+			await navigator.clipboard.writeText(message);
+			notify({ type: 'success', text: t('strings.copiedPreset') });
+		} catch (error) {
+			console.warn('[suggest] clipboard write failed', error);
+			notify({ type: 'error', text: t('strings.somethingWrong') });
+		}
 		window.open(
 			channel === 'github' ? links.newIssue : links.telegram,
 			'_blank',
