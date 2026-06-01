@@ -68,7 +68,12 @@ export const useThemesStore = defineStore('themes', () => {
 	async function mutate(
 		fn: (draft: UserSettings) => Promise<unknown>,
 	): Promise<void> {
-		const draft = structuredClone(userSettings.value);
+		// `userSettings.value` is a Vue reactive proxy, which `structuredClone`
+		// can't clone (DataCloneError). The data is pure JSON (it's what we
+		// persist), so a JSON round-trip both deep-clones and strips reactivity.
+		const draft = JSON.parse(
+			JSON.stringify(userSettings.value),
+		) as UserSettings;
 		await fn(draft);
 		userSettings.value = draft;
 	}
