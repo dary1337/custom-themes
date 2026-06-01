@@ -10,6 +10,20 @@ export interface AppState {
 	releaseUrl: Ref<string | undefined>;
 }
 
+/** True only when `latest` is a strictly higher semantic version than `current`. */
+function isNewerVersion(latest: string, current: string): boolean {
+	const toParts = (v: string): number[] =>
+		v.split('.').map((n) => Number.parseInt(n, 10) || 0);
+	const a = toParts(latest);
+	const b = toParts(current);
+	for (let i = 0; i < Math.max(a.length, b.length); i++) {
+		const x = a[i] ?? 0;
+		const y = b[i] ?? 0;
+		if (x !== y) return x > y;
+	}
+	return false;
+}
+
 export function useApp(): AppState {
 	const { t } = useI18n();
 	const settings = useSettingsStore();
@@ -25,7 +39,8 @@ export function useApp(): AppState {
 			const release = githubReleaseSchema.parse(await response.json());
 			const latest = release.tag_name.replace(/^v/, '');
 			const current = chrome.runtime.getManifest().version;
-			if (latest !== current) releaseUrl.value = release.html_url;
+			if (isNewerVersion(latest, current))
+				releaseUrl.value = release.html_url;
 		} catch (error) {
 			console.warn('[app] update check failed', error);
 		}
