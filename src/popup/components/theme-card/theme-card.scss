@@ -1,0 +1,61 @@
+.card {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 6px;
+	gap: 6px;
+
+	&.selectable {
+		padding: 10px;
+		border-radius: 20px;
+		cursor: pointer;
+
+		&:hover,
+		&.selected {
+			background-color: var(--onSurface);
+		}
+	}
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	overflow: hidden;
+
+	a {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		max-width: 100%;
+		width: max-content;
+
+		.selectable & {
+			pointer-events: none;
+		}
+	}
+}
+
+.title-row {
+	display: flex;
+	align-items: center;
+}
+
+.name {
+	max-width: 90%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.edit-flag {
+	padding: 0;
+	border: none;
+	background: transparent;
+	margin-left: 6px;
+
+	.icon {
+		width: 14px;
+		height: 14px;
+	}
+}

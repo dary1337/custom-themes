@@ -1,0 +1,58 @@
+.screenshots {
+	display: flex;
+	gap: 10px;
+	height: 200px;
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding-bottom: 20px;
+
+	img {
+		background-color: var(--onSurface);
+		border-radius: 10px;
+		min-width: 80px;
+		cursor: pointer;
+		object-fit: cover;
+		transition: transform 0.3s ease-in-out;
+
+		&:hover {
+			transform: scale(1.02);
+		}
+	}
+}
+
+.lightbox {
+	position: fixed;
+	inset: 0;
+	z-index: 50;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.7);
+	cursor: zoom-out;
+
+	img {
+		max-width: 90%;
+		max-height: 90%;
+		object-fit: contain;
+		border-radius: 10px;
+	}
+}
+
+.lightbox-enter-active,
+.lightbox-leave-active {
+	transition: opacity 0.25s ease;
+
+	img {
+		transition: transform 0.25s cubic-bezier(0.08, 1.2, 0.76, 0.93);
+	}
+}
+
+.lightbox-enter-from,
+.lightbox-leave-to {
+	opacity: 0;
+
+	img {
+		transform: scale(0.85);
+	}
+}

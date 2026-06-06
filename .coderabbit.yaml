@@ -1,0 +1,182 @@
+# CodeRabbit review configuration
+# Schema: https://coderabbit.ai/docs/configure-coderabbit
+#
+# House style: terse, opinionated, technical. Reviewers are expected to
+# behave like a senior engineer / tech lead — flag concrete problems with
+# evidence, name the rule or principle being violated, demand justification
+# for deviations. No filler, no "great work" comments, no celebratory tone.
+
+language: en-US
+early_access: false
+
+reviews:
+    profile: assertive
+    request_changes_workflow: true
+    high_level_summary: true
+    high_level_summary_placeholder: '@coderabbitai summary'
+    poem: false
+    review_status: true
+    collapse_walkthrough: false
+    sequence_diagrams: false
+
+    auto_review:
+        enabled: true
+        drafts: false
+        base_branches:
+            - master
+            - main
+
+    path_filters:
+        - '!dist/**'
+        - '!node_modules/**'
+        - '!coverage/**'
+        - '!**/*.min.*'
+        - '!package-lock.json'
+
+    path_instructions:
+        - path: 'src/**/*.{ts,vue}'
+          instructions: |
+              You are reviewing as a TS-strict tech lead. Hold this bar:
+
+              - Strict TS only. No `any`, no `as` casts without a written reason in a
+                comment, no `!` non-null assertions, no `// @ts-ignore`. If a cast is
+                load-bearing (third-party types lying about reality, runtime narrowing
+                TS can't see), require a one-line comment justifying it.
+              - Runtime validation at trust boundaries. Anything crossing the wire
+                (`fetch`, `chrome.storage`, file imports, postMessage) must be parsed
+                with zod before use. Schema-by-example object literals are not
+                validation.
+              - Async control flow uses async/await + try/catch. Reject callback-style
+                APIs and `.then().catch()` chains in new code. Floating promises must
+                be either awaited or explicitly `void`-marked.
+              - No mutable global side effects in module init or store init (no
+                `window.addEventListener` in `defineStore(() => {...})` without
+                cleanup). Side effects belong in component lifecycle hooks with
+                paired teardown.
+              - No `chrome.*` API call without thinking about the MV3 service-worker
+                lifecycle (workers go to sleep; listeners must be top-level).
+              - Names: kebab-case for `.ts`, PascalCase for `.vue`. Variables
+                camelCase, types PascalCase, constants UPPER_CASE. If the linter
+                misses a violation, flag it.
+              - Defensive code that the type system already proves unreachable is
+                noise — remove it. Defensive code at trust boundaries stays.
+
+        - path: 'src/**/*.vue'
+          instructions: |
+              Vue 3 expectations:
+
+              - `<script setup lang="ts">` only. Options API and `defineComponent({
+                setup() { return () => ... } })` render-functions are rejected for
+                anything but genuinely dynamic UI (slot composition, runtime element
+                choice). Justify deviations.
+              - `defineProps` and `defineEmits` must use type-based declarations.
+              - No `v-html` without a comment explaining why the content is trusted
+                (compile-time constant, sanitized upstream, etc.). Default answer is
+                "don't".
+              - All external `<a target="_blank">` links must carry
+                `rel="noopener noreferrer"`.
+              - Composables follow the `use-*` kebab-case file convention and return
+                a plain object — no implicit reactivity leaks through closure.
+              - Inline styles and ad-hoc magic numbers belong in tokens or scoped
+                styles, not in templates.
+
+        - path: 'src/stores/**'
+          instructions: |
+              Pinia setup-style stores only (`defineStore('x', () => ...)`). No
+              options-API stores in new code — they have worse type inference and
+              tree-shaking.
+
+              State shape must not lie about loading status. Don't initialize an
+              entity as `{} as User` and call it loaded; either type as
+              `User | undefined` and narrow, or carry an explicit `loaded` flag.
+
+              Actions that touch chrome.storage must round-trip through the
+              `@/services/storage` wrapper, not call `chrome.storage.local.*`
+              directly. The wrapper is where migration and type discipline live.
+
+        - path: 'src/services/**'
+          instructions: |
+              Service modules are framework-free pure logic. Reject any import from
+              `vue`, `pinia`, or `vue-router` here. If a service needs reactive
+              state, the store calls it, not the other way around.
+
+              Anything that can fail (network, parsing, fs, chrome API) must return
+              a meaningful failure value (`undefined`, a `Result`-like, or throw an
+              `Error` subclass) — never swallow silently except with a `console.warn`
+              that names the operation.
+
+        - path: 'src/background/**'
+          instructions: |
+              MV3 service worker code. The worker is restarted on demand — any
+              top-level state will be lost. All listeners (`chrome.*.on*.addListener`)
+              must be registered synchronously at module top level, not inside
+              callbacks or after `await`.
+
+              Listener callbacks cannot be `async` directly (their return type is
+              `void`); use a sync wrapper that calls an async IIFE and either awaits
+              `sendResponse` or returns `true` to keep the channel open.
+
+              No persistent in-memory caches that the popup expects to outlive a
+              navigation event.
+
+        - path: 'tests/**'
+          instructions: |
+              Tests document behavior, not implementation. Reject tests that:
+
+              - Assert internal call counts on private helpers when an observable
+                outcome would prove the same thing.
+              - Mock the module under test (`vi.mock('../the-thing-being-tested')`).
+              - Use `as any` to coerce inputs the production code couldn't possibly
+                receive — if the type can't reach the function, neither should the
+                test.
+
+              Every behavioral change in `src/services` or `src/background` requires
+              a test or a written reason it can't be tested.
+
+        - path: '{vite,vitest,eslint,tsconfig}*.{js,ts,json}'
+          instructions: |
+              Tooling changes are reviewed as carefully as runtime code. Loosening
+              a lint rule, lowering `tsconfig` strictness, or excluding files from
+              type-checking needs a one-line rationale in the PR description.
+              "It was annoying" is not a rationale.
+
+        - path: '{manifest.ts,src/manifest.ts}'
+          instructions: |
+              Changes to permissions, host_permissions, or content_scripts trigger
+              Chrome Web Store re-review and may surprise users. Require an
+              explanation in the PR body for any addition. Removals are fine.
+
+        - path: 'repos.json'
+          instructions: |
+              `repos.json` is fetched by every installed extension. Validate any
+              edit against `src/shared/schemas.ts` (`repoIndexSchema`) before
+              merging. New entries must have working `cssLink` and `repoLink` URLs
+              (HTTP 200 on a fresh check).
+
+        - path: 'Readme.md'
+          instructions: |
+              The README has a deliberate casual voice (lowercase, "u", playful
+              headings). Don't corporate-ify it. Preserve tone unless the author
+              changes it themselves.
+
+    finishing_touches:
+        docstrings:
+            enabled: false
+
+    tools:
+        languagetool:
+            enabled: false # focus reviewer attention on code, not grammar nits
+        markdownlint:
+            enabled: true
+        eslint:
+            enabled: true
+        gitleaks:
+            enabled: true
+
+chat:
+    auto_reply: true
+
+knowledge_base:
+    opt_out: false
+    learnings:
+        scope: auto

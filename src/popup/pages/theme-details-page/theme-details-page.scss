@@ -1,0 +1,61 @@
+.details {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 0 10px 10px;
+	overflow-y: auto;
+	animation: slide-down 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: sticky;
+	top: 0;
+	z-index: 5;
+	background-color: var(--surface);
+}
+
+.close {
+	position: absolute;
+	right: 0;
+}
+
+.meta {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	gap: 4px 8px;
+	margin: 10px 0;
+	font-size: 16px;
+
+	dt {
+		color: var(--text-secondary);
+	}
+
+	dd {
+		margin: 0;
+		overflow-wrap: anywhere;
+	}
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.icon-btn {
+	padding: 5px;
+	border: none;
+	background: transparent;
+	border-radius: 100%;
+
+	&:hover {
+		background-color: var(--onSurface);
+	}
+
+	.icon {
+		margin: 0;
+	}
+}

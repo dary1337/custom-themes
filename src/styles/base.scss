@@ -1,0 +1,185 @@
+@use './tokens';
+
+* {
+	box-sizing: border-box;
+}
+
+*::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+*::-webkit-scrollbar-thumb {
+	background-color: #cfc9c5;
+	border-radius: 2px;
+}
+*::-webkit-scrollbar {
+	width: 2px;
+	height: 2px;
+}
+*::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-button {
+	height: 0;
+	width: 0;
+}
+
+/* Toolbar popup: a fixed narrow column (< 290px keeps `isFullPage` false). */
+html {
+	min-width: 280px;
+	max-width: 280px;
+}
+
+body {
+	margin: 0;
+	background-color: var(--bodySurface);
+	color: var(--text-primary);
+	font-family:
+		system-ui,
+		-apple-system,
+		'Segoe UI',
+		Roboto,
+		sans-serif;
+}
+
+/* Full window (opened in a tab): expand to the viewport. */
+@media (min-width: 290px) {
+	html {
+		min-width: 0;
+		max-width: none;
+	}
+	body {
+		width: 100vw;
+		height: 100vh;
+		overflow: hidden;
+	}
+}
+
+h1 {
+	margin: 0;
+	padding: 0 0 10px;
+	text-align: center;
+	font-size: 1.5rem;
+}
+
+a {
+	color: var(--dimmed);
+	text-decoration: none;
+
+	&:hover {
+		color: var(--gray);
+	}
+	&:has(button) {
+		text-decoration: none;
+	}
+}
+
+.dimmed {
+	color: var(--dimmed);
+}
+
+.no-select {
+	user-select: none;
+}
+
+input {
+	color: var(--text-secondary);
+	border: none;
+	outline: none;
+	font-size: 16px;
+	background-color: transparent;
+}
+
+.input-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+	background-color: var(--dimmedSurface);
+	border: 2px solid var(--onSurface);
+	border-radius: 10px;
+	padding: 0 4px;
+	transition: border-color 0.15s;
+
+	&:has(input[type='text']:focus) {
+		border-color: var(--gray);
+	}
+
+	.icon {
+		pointer-events: none;
+	}
+}
+
+button {
+	user-select: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 8px 10px;
+	gap: 4px;
+
+	background-color: var(--surface);
+	color: var(--primary);
+	border: 2px solid var(--secondary);
+	border-radius: 20px;
+	cursor: pointer;
+	font-size: 14px;
+
+	&:hover {
+		background-color: var(--onSurface);
+	}
+
+	&.danger {
+		border-color: var(--danger);
+		color: var(--danger);
+	}
+
+	&.filled,
+	&.filled:hover {
+		border-color: var(--primary);
+		background-color: var(--primary);
+		color: var(--secondary);
+	}
+
+	.icon {
+		width: 17px;
+		height: 17px;
+		fill: var(--primary);
+		padding: 0;
+		border-radius: 0;
+	}
+	&.filled .icon {
+		fill: var(--secondary);
+	}
+	&.danger .icon {
+		fill: var(--danger);
+	}
+}
+
+main {
+	width: 100%;
+	border-radius: 20px;
+	background-color: var(--surface);
+	padding: 10px;
+	margin-bottom: 6px;
+}
+
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	40% {
+		transform: rotate(360deg);
+	}
+	100% {
+		transform: rotate(720deg);
+	}
+}
+
+@keyframes slide-down {
+	from {
+		margin-top: 10px;
+		opacity: 0.4;
+	}
+	to {
+		margin-top: 0;
+		opacity: 1;
+	}
+}

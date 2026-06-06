@@ -1,0 +1,31 @@
+.footer {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	min-height: 36px;
+
+	a {
+		color: var(--gray);
+	}
+}
+
+.actions {
+	display: flex;
+}
+
+.icon-btn {
+	padding: 5px;
+	border: none;
+	background: transparent;
+	border-radius: 100%;
+
+	&:hover {
+		background-color: var(--onSurface);
+	}
+
+	.icon {
+		width: 20px;
+		height: 20px;
+		margin: 0;
+	}
+}

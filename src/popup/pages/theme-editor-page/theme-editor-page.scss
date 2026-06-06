@@ -1,0 +1,59 @@
+.editor-page {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 0 10px 10px;
+}
+
+.title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	min-height: 44px;
+}
+
+.back {
+	position: absolute;
+	left: 0;
+}
+
+.name-input input {
+	font-size: 22px;
+	font-weight: bold;
+	padding: 4px;
+}
+
+.link-input {
+	margin-bottom: 10px;
+
+	input {
+		width: 100%;
+	}
+}
+
+.code {
+	flex: 1;
+	min-height: 0;
+}
+
+.panel {
+	display: flex;
+	gap: 6px;
+	margin-top: 16px;
+}
+
+.icon-btn {
+	padding: 5px;
+	border: none;
+	background: transparent;
+	border-radius: 100%;
+
+	&:hover {
+		background-color: var(--onSurface);
+	}
+
+	.icon {
+		margin: 0;
+	}
+}

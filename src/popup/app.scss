@@ -1,0 +1,14 @@
+.update-banner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	margin: 10px 10px 0;
+	padding: 8px 10px;
+	border: 2px solid var(--primary);
+	border-radius: 20px;
+	background-color: var(--primary);
+	color: var(--secondary);
+	cursor: pointer;
+	font-size: 14px;
+}

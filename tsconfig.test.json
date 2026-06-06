@@ -1,0 +1,11 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": true,
+		// Tests index fixtures directly (e.g. `userSettings['1'].compiledCss`); the
+		// extra `| undefined` would force non-null assertions throughout the specs.
+		"noUncheckedIndexedAccess": false,
+		"types": ["chrome", "vitest/globals", "node"]
+	},
+	"include": ["tests/**/*.ts", "src/**/*.d.ts"]
+}
